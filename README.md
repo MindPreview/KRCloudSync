@@ -18,7 +18,7 @@ it simply add the following line to your Podfile:
 
 ## Author
 
-allting, allting@gmail.com
+MindPreview, support@MindPreview.com
 
 ## License
 
