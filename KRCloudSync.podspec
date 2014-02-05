@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes/CloudSync/*.{h,m}', 'Classes/Dropbox.framework/Headers/*.h'
+  s.source_files = 'Classes/CloudSync/*.{h,m}'
+  s.header_dir = 'Classes/Dropbox.framework/Headers/*.h'
   s.resources = 'Assets'
 
   # s.ios.exclude_files = 'Classes/osx'
