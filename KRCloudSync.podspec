@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Classes/CloudSync/*.{h,m}', 'Classes/Dropbox.framework/Headers/*.h'
   # s.header_dir = 'Classes/Dropbox.framework/Headers/*.h'
-  s.resources = 'Assets'
+  # s.resources = 'Assets'
 
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
