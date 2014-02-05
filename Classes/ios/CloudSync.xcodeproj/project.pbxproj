@@ -106,9 +106,6 @@
 		DF99A9521633C1F700374D4E /* KRiCloudFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloudFactory.m; sourceTree = "<group>"; };
 		DFA04A2816342354008FFF55 /* KRiCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRiCloud.h; sourceTree = "<group>"; };
 		DFA04A2916342354008FFF55 /* KRiCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloud.m; sourceTree = "<group>"; };
-		DFC703B318A1E79700819CC6 /* SimpleDropboxSyncTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleDropboxSyncTests-Info.plist"; sourceTree = "<group>"; };
-		DFC703B518A1E79700819CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DFC703B718A1E79700819CC6 /* SimpleDropboxSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleDropboxSyncTests.m; sourceTree = "<group>"; };
 		DFC703BF18A205E200819CC6 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		DFC747471657F9DE0019C1B6 /* KRResourceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRResourceFilter.h; sourceTree = "<group>"; };
 		DFC747481657F9DE0019C1B6 /* KRResourceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRResourceFilter.m; sourceTree = "<group>"; };
@@ -158,29 +155,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DFC703B118A1E79700819CC6 /* SimpleDropboxSyncTests */ = {
-			isa = PBXGroup;
-			children = (
-				DFC703B718A1E79700819CC6 /* SimpleDropboxSyncTests.m */,
-				DFC703B218A1E79700819CC6 /* Supporting Files */,
-			);
-			path = SimpleDropboxSyncTests;
-			sourceTree = "<group>";
-		};
-		DFC703B218A1E79700819CC6 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				DFC703B318A1E79700819CC6 /* SimpleDropboxSyncTests-Info.plist */,
-				DFC703B418A1E79700819CC6 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		DFFE0313162575DD0091DF16 = {
 			isa = PBXGroup;
 			children = (
 				DFFE0323162575DD0091DF16 /* CloudSync */,
-				DFC703B118A1E79700819CC6 /* SimpleDropboxSyncTests */,
 				DFFE0320162575DD0091DF16 /* Frameworks */,
 				DFFE031F162575DD0091DF16 /* Products */,
 			);
@@ -365,17 +343,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DFC703B418A1E79700819CC6 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DFC703B518A1E79700819CC6 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DFFE0341162575DE0091DF16 /* Debug */ = {
