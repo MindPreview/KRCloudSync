@@ -32,8 +32,38 @@
 		DFC7049218A259AD00819CC6 /* KRiCloudResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7048C18A259AD00819CC6 /* KRiCloudResourceManager.m */; };
 		DFC7049318A259AD00819CC6 /* KRResourceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7048E18A259AD00819CC6 /* KRResourceFilter.m */; };
 		DFC7049418A259AD00819CC6 /* KRResourceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7049018A259AD00819CC6 /* KRResourceProperty.m */; };
+		DFC704B318A25B4800819CC6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D313F189E220B0039EB1F /* XCTest.framework */; };
+		DFC704B418A25B4800819CC6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE0321162575DD0091DF16 /* Foundation.framework */; };
+		DFC704B518A25B4800819CC6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE0332162575DE0091DF16 /* UIKit.framework */; };
+		DFC704C418A25C4400819CC6 /* CloudPreferencesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7049818A25AF400819CC6 /* CloudPreferencesTests.m */; };
+		DFC704C518A25C4400819CC6 /* CloudSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7049B18A25AF400819CC6 /* CloudSyncTests.m */; };
+		DFC704C618A25C4400819CC6 /* iCloudSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7049F18A25AF400819CC6 /* iCloudSyncTests.m */; };
+		DFC704C718A25C4400819CC6 /* MockCloudFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704A118A25AF400819CC6 /* MockCloudFactory.m */; };
+		DFC704C818A25C4400819CC6 /* MockFileService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704A318A25AF400819CC6 /* MockFileService.m */; };
+		DFC704C918A25C4400819CC6 /* MockiCloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704A518A25AF400819CC6 /* MockiCloudService.m */; };
+		DFC704CA18A25C4400819CC6 /* ResourceComparerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704A718A25AF400819CC6 /* ResourceComparerTest.m */; };
+		DFC704CB18A25C4400819CC6 /* ResourceFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704A918A25AF400819CC6 /* ResourceFilterTests.m */; };
+		DFC704CC18A25C4400819CC6 /* SynchronizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704AB18A25AF400819CC6 /* SynchronizerTests.m */; };
+		DFC704CD18A25C4400819CC6 /* SyncItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704AD18A25AF400819CC6 /* SyncItemTests.m */; };
+		DFC704CE18A25D6D00819CC6 /* libCloudSync.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE031E162575DD0091DF16 /* libCloudSync.a */; };
+		DFC704CF18A25D8600819CC6 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7045918A2584C00819CC6 /* Dropbox.framework */; };
+		DFC704D018A25DA200819CC6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D31261898D6720039EB1F /* CFNetwork.framework */; };
+		DFC704D118A25DAF00819CC6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D31281898D67C0039EB1F /* Security.framework */; };
+		DFC704D218A25DB700819CC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312A1898D6870039EB1F /* SystemConfiguration.framework */; };
+		DFC704D318A25DBD00819CC6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312C1898D6910039EB1F /* QuartzCore.framework */; };
+		DFC704D418A25DC400819CC6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312E1898D6A40039EB1F /* libc++.dylib */; };
 		DFFE0322162575DD0091DF16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE0321162575DD0091DF16 /* Foundation.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DFC704BF18A25B4800819CC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFFE0315162575DD0091DF16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFFE031D162575DD0091DF16;
+			remoteInfo = CloudSync;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DFFE031C162575DD0091DF16 /* CopyFiles */ = {
@@ -96,12 +126,52 @@
 		DFC7048F18A259AD00819CC6 /* KRResourceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KRResourceProperty.h; path = Classes/KRResourceProperty.h; sourceTree = SOURCE_ROOT; };
 		DFC7049018A259AD00819CC6 /* KRResourceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KRResourceProperty.m; path = Classes/KRResourceProperty.m; sourceTree = SOURCE_ROOT; };
 		DFC7049518A259BD00819CC6 /* CloudSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CloudSync-Prefix.pch"; path = "Classes/CloudSync-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		DFC7049718A25AF400819CC6 /* CloudPreferencesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudPreferencesTests.h; sourceTree = "<group>"; };
+		DFC7049818A25AF400819CC6 /* CloudPreferencesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudPreferencesTests.m; sourceTree = "<group>"; };
+		DFC7049918A25AF400819CC6 /* CloudSyncTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CloudSyncTests-Info.plist"; sourceTree = "<group>"; };
+		DFC7049A18A25AF400819CC6 /* CloudSyncTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudSyncTests.h; sourceTree = "<group>"; };
+		DFC7049B18A25AF400819CC6 /* CloudSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudSyncTests.m; sourceTree = "<group>"; };
+		DFC7049D18A25AF400819CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFC7049E18A25AF400819CC6 /* iCloudSyncTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCloudSyncTests.h; sourceTree = "<group>"; };
+		DFC7049F18A25AF400819CC6 /* iCloudSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCloudSyncTests.m; sourceTree = "<group>"; };
+		DFC704A018A25AF400819CC6 /* MockCloudFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockCloudFactory.h; sourceTree = "<group>"; };
+		DFC704A118A25AF400819CC6 /* MockCloudFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockCloudFactory.m; sourceTree = "<group>"; };
+		DFC704A218A25AF400819CC6 /* MockFileService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockFileService.h; sourceTree = "<group>"; };
+		DFC704A318A25AF400819CC6 /* MockFileService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockFileService.m; sourceTree = "<group>"; };
+		DFC704A418A25AF400819CC6 /* MockiCloudService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockiCloudService.h; sourceTree = "<group>"; };
+		DFC704A518A25AF400819CC6 /* MockiCloudService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockiCloudService.m; sourceTree = "<group>"; };
+		DFC704A618A25AF400819CC6 /* ResourceComparerTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceComparerTest.h; sourceTree = "<group>"; };
+		DFC704A718A25AF400819CC6 /* ResourceComparerTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceComparerTest.m; sourceTree = "<group>"; };
+		DFC704A818A25AF400819CC6 /* ResourceFilterTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceFilterTests.h; sourceTree = "<group>"; };
+		DFC704A918A25AF400819CC6 /* ResourceFilterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceFilterTests.m; sourceTree = "<group>"; };
+		DFC704AA18A25AF400819CC6 /* SynchronizerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynchronizerTests.h; sourceTree = "<group>"; };
+		DFC704AB18A25AF400819CC6 /* SynchronizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynchronizerTests.m; sourceTree = "<group>"; };
+		DFC704AC18A25AF400819CC6 /* SyncItemTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyncItemTests.h; sourceTree = "<group>"; };
+		DFC704AD18A25AF400819CC6 /* SyncItemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyncItemTests.m; sourceTree = "<group>"; };
+		DFC704B218A25B4800819CC6 /* CloudSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFFE031E162575DD0091DF16 /* libCloudSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCloudSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFFE0321162575DD0091DF16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DFFE0332162575DE0091DF16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DFC704AF18A25B4800819CC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFC704D418A25DC400819CC6 /* libc++.dylib in Frameworks */,
+				DFC704D318A25DBD00819CC6 /* QuartzCore.framework in Frameworks */,
+				DFC704D218A25DB700819CC6 /* SystemConfiguration.framework in Frameworks */,
+				DFC704D118A25DAF00819CC6 /* Security.framework in Frameworks */,
+				DFC704D018A25DA200819CC6 /* CFNetwork.framework in Frameworks */,
+				DFC704CF18A25D8600819CC6 /* Dropbox.framework in Frameworks */,
+				DFC704CE18A25D6D00819CC6 /* libCloudSync.a in Frameworks */,
+				DFC704B318A25B4800819CC6 /* XCTest.framework in Frameworks */,
+				DFC704B518A25B4800819CC6 /* UIKit.framework in Frameworks */,
+				DFC704B418A25B4800819CC6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFFE031B162575DD0091DF16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -119,10 +189,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DFC7049618A25AF400819CC6 /* CloudSyncTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFC7049718A25AF400819CC6 /* CloudPreferencesTests.h */,
+				DFC7049818A25AF400819CC6 /* CloudPreferencesTests.m */,
+				DFC7049918A25AF400819CC6 /* CloudSyncTests-Info.plist */,
+				DFC7049A18A25AF400819CC6 /* CloudSyncTests.h */,
+				DFC7049B18A25AF400819CC6 /* CloudSyncTests.m */,
+				DFC7049C18A25AF400819CC6 /* InfoPlist.strings */,
+				DFC7049E18A25AF400819CC6 /* iCloudSyncTests.h */,
+				DFC7049F18A25AF400819CC6 /* iCloudSyncTests.m */,
+				DFC704A018A25AF400819CC6 /* MockCloudFactory.h */,
+				DFC704A118A25AF400819CC6 /* MockCloudFactory.m */,
+				DFC704A218A25AF400819CC6 /* MockFileService.h */,
+				DFC704A318A25AF400819CC6 /* MockFileService.m */,
+				DFC704A418A25AF400819CC6 /* MockiCloudService.h */,
+				DFC704A518A25AF400819CC6 /* MockiCloudService.m */,
+				DFC704A618A25AF400819CC6 /* ResourceComparerTest.h */,
+				DFC704A718A25AF400819CC6 /* ResourceComparerTest.m */,
+				DFC704A818A25AF400819CC6 /* ResourceFilterTests.h */,
+				DFC704A918A25AF400819CC6 /* ResourceFilterTests.m */,
+				DFC704AA18A25AF400819CC6 /* SynchronizerTests.h */,
+				DFC704AB18A25AF400819CC6 /* SynchronizerTests.m */,
+				DFC704AC18A25AF400819CC6 /* SyncItemTests.h */,
+				DFC704AD18A25AF400819CC6 /* SyncItemTests.m */,
+			);
+			path = CloudSyncTests;
+			sourceTree = "<group>";
+		};
 		DFFE0313162575DD0091DF16 = {
 			isa = PBXGroup;
 			children = (
 				DFFE0323162575DD0091DF16 /* CloudSync */,
+				DFC7049618A25AF400819CC6 /* CloudSyncTests */,
 				DFFE0320162575DD0091DF16 /* Frameworks */,
 				DFFE031F162575DD0091DF16 /* Products */,
 			);
@@ -132,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				DFFE031E162575DD0091DF16 /* libCloudSync.a */,
+				DFC704B218A25B4800819CC6 /* CloudSyncTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,6 +336,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DFC704B118A25B4800819CC6 /* CloudSyncTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFC704C118A25B4800819CC6 /* Build configuration list for PBXNativeTarget "CloudSyncTests" */;
+			buildPhases = (
+				DFC704AE18A25B4800819CC6 /* Sources */,
+				DFC704AF18A25B4800819CC6 /* Frameworks */,
+				DFC704B018A25B4800819CC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFC704C018A25B4800819CC6 /* PBXTargetDependency */,
+			);
+			name = CloudSyncTests;
+			productName = CloudSyncTests;
+			productReference = DFC704B218A25B4800819CC6 /* CloudSyncTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DFFE031D162575DD0091DF16 /* CloudSync */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DFFE0343162575DE0091DF16 /* Build configuration list for PBXNativeTarget "CloudSync" */;
@@ -260,6 +379,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = allting;
+				TargetAttributes = {
+					DFC704B118A25B4800819CC6 = {
+						TestTargetID = DFFE031D162575DD0091DF16;
+					};
+				};
 			};
 			buildConfigurationList = DFFE0318162575DD0091DF16 /* Build configuration list for PBXProject "CloudSync" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -275,11 +399,39 @@
 			projectRoot = "";
 			targets = (
 				DFFE031D162575DD0091DF16 /* CloudSync */,
+				DFC704B118A25B4800819CC6 /* CloudSyncTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		DFC704B018A25B4800819CC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		DFC704AE18A25B4800819CC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFC704C418A25C4400819CC6 /* CloudPreferencesTests.m in Sources */,
+				DFC704C518A25C4400819CC6 /* CloudSyncTests.m in Sources */,
+				DFC704C618A25C4400819CC6 /* iCloudSyncTests.m in Sources */,
+				DFC704C718A25C4400819CC6 /* MockCloudFactory.m in Sources */,
+				DFC704C818A25C4400819CC6 /* MockFileService.m in Sources */,
+				DFC704C918A25C4400819CC6 /* MockiCloudService.m in Sources */,
+				DFC704CA18A25C4400819CC6 /* ResourceComparerTest.m in Sources */,
+				DFC704CB18A25C4400819CC6 /* ResourceFilterTests.m in Sources */,
+				DFC704CC18A25C4400819CC6 /* SynchronizerTests.m in Sources */,
+				DFC704CD18A25C4400819CC6 /* SyncItemTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFFE031A162575DD0091DF16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,7 +460,91 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DFC704C018A25B4800819CC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFFE031D162575DD0091DF16 /* CloudSync */;
+			targetProxy = DFC704BF18A25B4800819CC6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DFC7049C18A25AF400819CC6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFC7049D18A25AF400819CC6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		DFC704C218A25B4800819CC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CloudSyncTests/CloudSyncTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "CloudSyncTests/CloudSyncTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		DFC704C318A25B4800819CC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CloudSyncTests/CloudSyncTests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "CloudSyncTests/CloudSyncTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		DFFE0341162575DE0091DF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -404,6 +640,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DFC704C118A25B4800819CC6 /* Build configuration list for PBXNativeTarget "CloudSyncTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFC704C218A25B4800819CC6 /* Debug */,
+				DFC704C318A25B4800819CC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		DFFE0318162575DD0091DF16 /* Build configuration list for PBXProject "CloudSync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
