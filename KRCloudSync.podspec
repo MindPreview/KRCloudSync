@@ -10,8 +10,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "allting" => "support@mindpreview.com" }
   s.source       = { :git => "https://github.com/MindPreview/KRCloudSync.git", :tag => s.version.to_s }
-  s.social_media-url = 'https://twitter.com/mindpreview'
-
+  
   s.platform     = :ios, '5.0'
   s.ios.deployment_target = '5.0'
   # s.osx.deployment_target = '10.7'
