@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KRCloudSync"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Sync your files with iCloud, Dropbox etc via KRCloudSync."
   s.description  = <<-DESC
                     * Sync your files with iCloud, Dropbox etc via KRCloudSync.
