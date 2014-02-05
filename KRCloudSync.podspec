@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes'
+  s.source_files = 'Classes/ios/*.{h,m}'
   s.resources = 'Assets'
 
   s.ios.exclude_files = 'Classes/osx'
