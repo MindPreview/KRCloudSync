@@ -1,0 +1,719 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DF37CA5F162C191700BD5725 /* KRSyncItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DF37CA5E162C191700BD5725 /* KRSyncItem.m */; };
+		DF3D311C1898A56E0039EB1F /* KRDropboxFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D311B1898A56E0039EB1F /* KRDropboxFactory.m */; };
+		DF3D311F1898A58D0039EB1F /* KRDropboxService.m in Sources */ = {isa = PBXBuildFile; fileRef = DF3D311E1898A58D0039EB1F /* KRDropboxService.m */; };
+		DF3D31251898D6430039EB1F /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D31241898D6430039EB1F /* Dropbox.framework */; };
+		DF3D31271898D6720039EB1F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D31261898D6720039EB1F /* CFNetwork.framework */; };
+		DF3D31291898D67C0039EB1F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D31281898D67C0039EB1F /* Security.framework */; };
+		DF3D312B1898D6870039EB1F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312A1898D6870039EB1F /* SystemConfiguration.framework */; };
+		DF3D312D1898D6910039EB1F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312C1898D6910039EB1F /* QuartzCore.framework */; };
+		DF3D312F1898D6A40039EB1F /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312E1898D6A40039EB1F /* libc++.dylib */; };
+		DF99A8F716339B0B00374D4E /* KRiCloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = DF99A8F616339B0B00374D4E /* KRiCloudService.m */; };
+		DF99A9501633BF8500374D4E /* KRLocalFileService.m in Sources */ = {isa = PBXBuildFile; fileRef = DF99A94F1633BF8400374D4E /* KRLocalFileService.m */; };
+		DF99A9531633C1F700374D4E /* KRiCloudFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DF99A9521633C1F700374D4E /* KRiCloudFactory.m */; };
+		DFA04A2A16342354008FFF55 /* KRiCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA04A2916342354008FFF55 /* KRiCloud.m */; };
+		DFA04A6A16345637008FFF55 /* KRResourceLoader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE0378162AD2C00091DF16 /* KRResourceLoader.h */; };
+		DFA04A6B16345637008FFF55 /* KRResourceComparer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE037B162AD2D50091DF16 /* KRResourceComparer.h */; };
+		DFA04A6C16345637008FFF55 /* KRSynchronizer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE037E162AD2E60091DF16 /* KRSynchronizer.h */; };
+		DFA04A6D16345637008FFF55 /* KRSyncItem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF37CA5D162C191600BD5725 /* KRSyncItem.h */; };
+		DFA04A6E16345637008FFF55 /* KRCloudSyncBlocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF99A8F01630EE4200374D4E /* KRCloudSyncBlocks.h */; };
+		DFA04A6F16345637008FFF55 /* KRCloudService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE03651627FB800091DF16 /* KRCloudService.h */; };
+		DFA04A7016345637008FFF55 /* KRFileService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE03711629B00F0091DF16 /* KRFileService.h */; };
+		DFA04A7116345637008FFF55 /* KRiCloudService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF99A8F516339B0B00374D4E /* KRiCloudService.h */; };
+		DFA04A7216345637008FFF55 /* KRLocalFileService.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF99A94E1633BF8400374D4E /* KRLocalFileService.h */; };
+		DFA04A7316345637008FFF55 /* KRiCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFA04A2816342354008FFF55 /* KRiCloud.h */; };
+		DFA04A7416345637008FFF55 /* KRCloudFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE035C1627FA050091DF16 /* KRCloudFactory.h */; };
+		DFA04A7516345637008FFF55 /* KRiCloudFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF99A9511633C1F700374D4E /* KRiCloudFactory.h */; };
+		DFA04A7616345637008FFF55 /* KRConflictResolver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE0382162AD9C10091DF16 /* KRConflictResolver.h */; };
+		DFA04A7716345637008FFF55 /* KRiCloudResourceManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE034C1626A04B0091DF16 /* KRiCloudResourceManager.h */; };
+		DFA04A7816345637008FFF55 /* KRResourceProperty.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE03501626ADA00091DF16 /* KRResourceProperty.h */; };
+		DFA04A7916345637008FFF55 /* KRCloudPreferences.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE03541627F37B0091DF16 /* KRCloudPreferences.h */; };
+		DFC747491657F9DE0019C1B6 /* KRResourceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC747481657F9DE0019C1B6 /* KRResourceFilter.m */; };
+		DFC747531658C1540019C1B6 /* KRResourceFilter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFC747471657F9DE0019C1B6 /* KRResourceFilter.h */; };
+		DFFE0322162575DD0091DF16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE0321162575DD0091DF16 /* Foundation.framework */; };
+		DFFE0327162575DD0091DF16 /* KRCloudSync.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DFFE0326162575DD0091DF16 /* KRCloudSync.h */; };
+		DFFE0329162575DD0091DF16 /* KRCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE0328162575DD0091DF16 /* KRCloudSync.m */; };
+		DFFE034E1626A04B0091DF16 /* KRiCloudResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE034D1626A04B0091DF16 /* KRiCloudResourceManager.m */; };
+		DFFE03521626ADA00091DF16 /* KRResourceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE03511626ADA00091DF16 /* KRResourceProperty.m */; };
+		DFFE03561627F37C0091DF16 /* KRCloudPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE03551627F37C0091DF16 /* KRCloudPreferences.m */; };
+		DFFE035E1627FA050091DF16 /* KRCloudFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE035D1627FA050091DF16 /* KRCloudFactory.m */; };
+		DFFE03671627FB800091DF16 /* KRCloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE03661627FB800091DF16 /* KRCloudService.m */; };
+		DFFE03731629B00F0091DF16 /* KRFileService.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE03721629B00F0091DF16 /* KRFileService.m */; };
+		DFFE037A162AD2C20091DF16 /* KRResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE0379162AD2C10091DF16 /* KRResourceLoader.m */; };
+		DFFE037D162AD2D50091DF16 /* KRResourceComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE037C162AD2D50091DF16 /* KRResourceComparer.m */; };
+		DFFE0380162AD2E70091DF16 /* KRSynchronizer.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE037F162AD2E70091DF16 /* KRSynchronizer.m */; };
+		DFFE0384162AD9C10091DF16 /* KRConflictResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFE0383162AD9C10091DF16 /* KRConflictResolver.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFFE031C162575DD0091DF16 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				DFC747531658C1540019C1B6 /* KRResourceFilter.h in CopyFiles */,
+				DFA04A6A16345637008FFF55 /* KRResourceLoader.h in CopyFiles */,
+				DFA04A6B16345637008FFF55 /* KRResourceComparer.h in CopyFiles */,
+				DFA04A6C16345637008FFF55 /* KRSynchronizer.h in CopyFiles */,
+				DFA04A6D16345637008FFF55 /* KRSyncItem.h in CopyFiles */,
+				DFA04A6E16345637008FFF55 /* KRCloudSyncBlocks.h in CopyFiles */,
+				DFA04A6F16345637008FFF55 /* KRCloudService.h in CopyFiles */,
+				DFA04A7016345637008FFF55 /* KRFileService.h in CopyFiles */,
+				DFA04A7116345637008FFF55 /* KRiCloudService.h in CopyFiles */,
+				DFA04A7216345637008FFF55 /* KRLocalFileService.h in CopyFiles */,
+				DFA04A7316345637008FFF55 /* KRiCloud.h in CopyFiles */,
+				DFA04A7416345637008FFF55 /* KRCloudFactory.h in CopyFiles */,
+				DFA04A7516345637008FFF55 /* KRiCloudFactory.h in CopyFiles */,
+				DFA04A7616345637008FFF55 /* KRConflictResolver.h in CopyFiles */,
+				DFA04A7716345637008FFF55 /* KRiCloudResourceManager.h in CopyFiles */,
+				DFA04A7816345637008FFF55 /* KRResourceProperty.h in CopyFiles */,
+				DFA04A7916345637008FFF55 /* KRCloudPreferences.h in CopyFiles */,
+				DFFE0327162575DD0091DF16 /* KRCloudSync.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DF37CA5D162C191600BD5725 /* KRSyncItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRSyncItem.h; sourceTree = "<group>"; };
+		DF37CA5E162C191700BD5725 /* KRSyncItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRSyncItem.m; sourceTree = "<group>"; };
+		DF37CA62162C196500BD5725 /* SyncItemTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncItemTests.h; sourceTree = "<group>"; };
+		DF37CA63162C196500BD5725 /* SyncItemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncItemTests.m; sourceTree = "<group>"; };
+		DF3D31191897AC9A0039EB1F /* CSDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDefines.h; sourceTree = "<group>"; };
+		DF3D311A1898A56E0039EB1F /* KRDropboxFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRDropboxFactory.h; sourceTree = "<group>"; };
+		DF3D311B1898A56E0039EB1F /* KRDropboxFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRDropboxFactory.m; sourceTree = "<group>"; };
+		DF3D311D1898A58D0039EB1F /* KRDropboxService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRDropboxService.h; sourceTree = "<group>"; };
+		DF3D311E1898A58D0039EB1F /* KRDropboxService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRDropboxService.m; sourceTree = "<group>"; };
+		DF3D31241898D6430039EB1F /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+		DF3D31261898D6720039EB1F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		DF3D31281898D67C0039EB1F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		DF3D312A1898D6870039EB1F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DF3D312C1898D6910039EB1F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DF3D312E1898D6A40039EB1F /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		DF3D313F189E220B0039EB1F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DF99A8F01630EE4200374D4E /* KRCloudSyncBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KRCloudSyncBlocks.h; sourceTree = "<group>"; };
+		DF99A8F21630EF4B00374D4E /* SynchronizerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchronizerTests.h; sourceTree = "<group>"; };
+		DF99A8F31630EF4B00374D4E /* SynchronizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynchronizerTests.m; sourceTree = "<group>"; };
+		DF99A8F516339B0B00374D4E /* KRiCloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRiCloudService.h; sourceTree = "<group>"; };
+		DF99A8F616339B0B00374D4E /* KRiCloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloudService.m; sourceTree = "<group>"; };
+		DF99A91016339DC900374D4E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DF99A91416339DC900374D4E /* CloudSyncSample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CloudSyncSample-Info.plist"; sourceTree = "<group>"; };
+		DF99A91616339DC900374D4E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DF99A91816339DC900374D4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DF99A91A16339DC900374D4E /* CloudSyncSample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CloudSyncSample-Prefix.pch"; sourceTree = "<group>"; };
+		DF99A91B16339DC900374D4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DF99A91C16339DC900374D4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DF99A91E16339DC900374D4E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		DF99A92016339DC900374D4E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		DF99A92216339DC900374D4E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DF99A92516339DC900374D4E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		DF99A92816339DC900374D4E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		DF99A92A16339DC900374D4E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DF99A92B16339DC900374D4E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DF99A93A16339DCA00374D4E /* CloudSyncSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CloudSyncSampleTests-Info.plist"; sourceTree = "<group>"; };
+		DF99A93C16339DCA00374D4E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DF99A93E16339DCA00374D4E /* CloudSyncSampleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudSyncSampleTests.h; sourceTree = "<group>"; };
+		DF99A93F16339DCA00374D4E /* CloudSyncSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudSyncSampleTests.m; sourceTree = "<group>"; };
+		DF99A94E1633BF8400374D4E /* KRLocalFileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRLocalFileService.h; sourceTree = "<group>"; };
+		DF99A94F1633BF8400374D4E /* KRLocalFileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRLocalFileService.m; sourceTree = "<group>"; };
+		DF99A9511633C1F700374D4E /* KRiCloudFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRiCloudFactory.h; sourceTree = "<group>"; };
+		DF99A9521633C1F700374D4E /* KRiCloudFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloudFactory.m; sourceTree = "<group>"; };
+		DFA04A2816342354008FFF55 /* KRiCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRiCloud.h; sourceTree = "<group>"; };
+		DFA04A2916342354008FFF55 /* KRiCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloud.m; sourceTree = "<group>"; };
+		DFA04A2C163428CF008FFF55 /* CloudSyncSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = CloudSyncSample.entitlements; sourceTree = "<group>"; };
+		DFC7039518A1E79600819CC6 /* SimpleDropboxSync-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleDropboxSync-Info.plist"; sourceTree = "<group>"; };
+		DFC7039718A1E79600819CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFC7039918A1E79600819CC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DFC7039B18A1E79700819CC6 /* SimpleDropboxSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleDropboxSync-Prefix.pch"; sourceTree = "<group>"; };
+		DFC7039C18A1E79700819CC6 /* CSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSAppDelegate.h; sourceTree = "<group>"; };
+		DFC7039D18A1E79700819CC6 /* CSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSAppDelegate.m; sourceTree = "<group>"; };
+		DFC703A018A1E79700819CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DFC703A218A1E79700819CC6 /* CSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSViewController.h; sourceTree = "<group>"; };
+		DFC703A318A1E79700819CC6 /* CSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSViewController.m; sourceTree = "<group>"; };
+		DFC703A518A1E79700819CC6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DFC703B318A1E79700819CC6 /* SimpleDropboxSyncTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleDropboxSyncTests-Info.plist"; sourceTree = "<group>"; };
+		DFC703B518A1E79700819CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFC703B718A1E79700819CC6 /* SimpleDropboxSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleDropboxSyncTests.m; sourceTree = "<group>"; };
+		DFC747471657F9DE0019C1B6 /* KRResourceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRResourceFilter.h; sourceTree = "<group>"; };
+		DFC747481657F9DE0019C1B6 /* KRResourceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRResourceFilter.m; sourceTree = "<group>"; };
+		DFC7474C1658B0A60019C1B6 /* ResourceFilterTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceFilterTests.h; sourceTree = "<group>"; };
+		DFC7474D1658B0A60019C1B6 /* ResourceFilterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceFilterTests.m; sourceTree = "<group>"; };
+		DFFE031E162575DD0091DF16 /* libCloudSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCloudSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFFE0321162575DD0091DF16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DFFE0325162575DD0091DF16 /* CloudSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CloudSync-Prefix.pch"; sourceTree = "<group>"; };
+		DFFE0326162575DD0091DF16 /* KRCloudSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KRCloudSync.h; sourceTree = "<group>"; };
+		DFFE0328162575DD0091DF16 /* KRCloudSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KRCloudSync.m; sourceTree = "<group>"; };
+		DFFE0332162575DE0091DF16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		DFFE033A162575DE0091DF16 /* CloudSyncTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CloudSyncTests-Info.plist"; sourceTree = "<group>"; };
+		DFFE033C162575DE0091DF16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DFFE033E162575DE0091DF16 /* CloudSyncTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudSyncTests.h; sourceTree = "<group>"; };
+		DFFE033F162575DE0091DF16 /* CloudSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudSyncTests.m; sourceTree = "<group>"; };
+		DFFE034916269CF70091DF16 /* iCloudSyncTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCloudSyncTests.h; sourceTree = "<group>"; };
+		DFFE034A16269CF70091DF16 /* iCloudSyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCloudSyncTests.m; sourceTree = "<group>"; };
+		DFFE034C1626A04B0091DF16 /* KRiCloudResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRiCloudResourceManager.h; sourceTree = "<group>"; };
+		DFFE034D1626A04B0091DF16 /* KRiCloudResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRiCloudResourceManager.m; sourceTree = "<group>"; };
+		DFFE03501626ADA00091DF16 /* KRResourceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRResourceProperty.h; sourceTree = "<group>"; };
+		DFFE03511626ADA00091DF16 /* KRResourceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRResourceProperty.m; sourceTree = "<group>"; };
+		DFFE03541627F37B0091DF16 /* KRCloudPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRCloudPreferences.h; sourceTree = "<group>"; };
+		DFFE03551627F37C0091DF16 /* KRCloudPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRCloudPreferences.m; sourceTree = "<group>"; };
+		DFFE03581627F3A50091DF16 /* CloudPreferencesTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudPreferencesTests.h; sourceTree = "<group>"; };
+		DFFE03591627F3A50091DF16 /* CloudPreferencesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudPreferencesTests.m; sourceTree = "<group>"; };
+		DFFE035C1627FA050091DF16 /* KRCloudFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRCloudFactory.h; sourceTree = "<group>"; };
+		DFFE035D1627FA050091DF16 /* KRCloudFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRCloudFactory.m; sourceTree = "<group>"; };
+		DFFE03651627FB800091DF16 /* KRCloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRCloudService.h; sourceTree = "<group>"; };
+		DFFE03661627FB800091DF16 /* KRCloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRCloudService.m; sourceTree = "<group>"; };
+		DFFE036A1627FD3C0091DF16 /* MockiCloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockiCloudService.h; sourceTree = "<group>"; };
+		DFFE036B1627FD3C0091DF16 /* MockiCloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockiCloudService.m; sourceTree = "<group>"; };
+		DFFE036E1627FD980091DF16 /* MockCloudFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockCloudFactory.h; sourceTree = "<group>"; };
+		DFFE036F1627FD980091DF16 /* MockCloudFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockCloudFactory.m; sourceTree = "<group>"; };
+		DFFE03711629B00F0091DF16 /* KRFileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRFileService.h; sourceTree = "<group>"; };
+		DFFE03721629B00F0091DF16 /* KRFileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRFileService.m; sourceTree = "<group>"; };
+		DFFE0375162A90B70091DF16 /* MockFileService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockFileService.h; sourceTree = "<group>"; };
+		DFFE0376162A90B70091DF16 /* MockFileService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockFileService.m; sourceTree = "<group>"; };
+		DFFE0378162AD2C00091DF16 /* KRResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRResourceLoader.h; sourceTree = "<group>"; };
+		DFFE0379162AD2C10091DF16 /* KRResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRResourceLoader.m; sourceTree = "<group>"; };
+		DFFE037B162AD2D50091DF16 /* KRResourceComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRResourceComparer.h; sourceTree = "<group>"; };
+		DFFE037C162AD2D50091DF16 /* KRResourceComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRResourceComparer.m; sourceTree = "<group>"; };
+		DFFE037E162AD2E60091DF16 /* KRSynchronizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRSynchronizer.h; sourceTree = "<group>"; };
+		DFFE037F162AD2E70091DF16 /* KRSynchronizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRSynchronizer.m; sourceTree = "<group>"; };
+		DFFE0382162AD9C10091DF16 /* KRConflictResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConflictResolver.h; sourceTree = "<group>"; };
+		DFFE0383162AD9C10091DF16 /* KRConflictResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRConflictResolver.m; sourceTree = "<group>"; };
+		DFFE0385162AE5E80091DF16 /* ResourceComparerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceComparerTest.h; sourceTree = "<group>"; };
+		DFFE0386162AE5E80091DF16 /* ResourceComparerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceComparerTest.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFFE031B162575DD0091DF16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF3D312F1898D6A40039EB1F /* libc++.dylib in Frameworks */,
+				DF3D312D1898D6910039EB1F /* QuartzCore.framework in Frameworks */,
+				DF3D312B1898D6870039EB1F /* SystemConfiguration.framework in Frameworks */,
+				DF3D31291898D67C0039EB1F /* Security.framework in Frameworks */,
+				DF3D31271898D6720039EB1F /* CFNetwork.framework in Frameworks */,
+				DFFE0322162575DD0091DF16 /* Foundation.framework in Frameworks */,
+				DF3D31251898D6430039EB1F /* Dropbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DF99A91216339DC900374D4E /* CloudSyncSample */ = {
+			isa = PBXGroup;
+			children = (
+				DFA04A2C163428CF008FFF55 /* CloudSyncSample.entitlements */,
+				DF99A91B16339DC900374D4E /* AppDelegate.h */,
+				DF99A91C16339DC900374D4E /* AppDelegate.m */,
+				DF99A92416339DC900374D4E /* MainStoryboard_iPhone.storyboard */,
+				DF99A92716339DC900374D4E /* MainStoryboard_iPad.storyboard */,
+				DF99A92A16339DC900374D4E /* ViewController.h */,
+				DF99A92B16339DC900374D4E /* ViewController.m */,
+				DF99A91316339DC900374D4E /* Supporting Files */,
+				DF3D31191897AC9A0039EB1F /* CSDefines.h */,
+			);
+			path = CloudSyncSample;
+			sourceTree = "<group>";
+		};
+		DF99A91316339DC900374D4E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DF99A91416339DC900374D4E /* CloudSyncSample-Info.plist */,
+				DF99A91516339DC900374D4E /* InfoPlist.strings */,
+				DF99A91816339DC900374D4E /* main.m */,
+				DF99A91A16339DC900374D4E /* CloudSyncSample-Prefix.pch */,
+				DF99A91E16339DC900374D4E /* Default.png */,
+				DF99A92016339DC900374D4E /* Default@2x.png */,
+				DF99A92216339DC900374D4E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DF99A93816339DCA00374D4E /* CloudSyncSampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				DF99A93E16339DCA00374D4E /* CloudSyncSampleTests.h */,
+				DF99A93F16339DCA00374D4E /* CloudSyncSampleTests.m */,
+				DF99A93916339DCA00374D4E /* Supporting Files */,
+			);
+			path = CloudSyncSampleTests;
+			sourceTree = "<group>";
+		};
+		DF99A93916339DCA00374D4E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DF99A93A16339DCA00374D4E /* CloudSyncSampleTests-Info.plist */,
+				DF99A93B16339DCA00374D4E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFC7039318A1E79600819CC6 /* SimpleDropboxSync */ = {
+			isa = PBXGroup;
+			children = (
+				DFC7039C18A1E79700819CC6 /* CSAppDelegate.h */,
+				DFC7039D18A1E79700819CC6 /* CSAppDelegate.m */,
+				DFC7039F18A1E79700819CC6 /* Main.storyboard */,
+				DFC703A218A1E79700819CC6 /* CSViewController.h */,
+				DFC703A318A1E79700819CC6 /* CSViewController.m */,
+				DFC703A518A1E79700819CC6 /* Images.xcassets */,
+				DFC7039418A1E79600819CC6 /* Supporting Files */,
+			);
+			path = SimpleDropboxSync;
+			sourceTree = "<group>";
+		};
+		DFC7039418A1E79600819CC6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFC7039518A1E79600819CC6 /* SimpleDropboxSync-Info.plist */,
+				DFC7039618A1E79600819CC6 /* InfoPlist.strings */,
+				DFC7039918A1E79600819CC6 /* main.m */,
+				DFC7039B18A1E79700819CC6 /* SimpleDropboxSync-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFC703B118A1E79700819CC6 /* SimpleDropboxSyncTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFC703B718A1E79700819CC6 /* SimpleDropboxSyncTests.m */,
+				DFC703B218A1E79700819CC6 /* Supporting Files */,
+			);
+			path = SimpleDropboxSyncTests;
+			sourceTree = "<group>";
+		};
+		DFC703B218A1E79700819CC6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFC703B318A1E79700819CC6 /* SimpleDropboxSyncTests-Info.plist */,
+				DFC703B418A1E79700819CC6 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFFE0313162575DD0091DF16 = {
+			isa = PBXGroup;
+			children = (
+				DFFE0323162575DD0091DF16 /* CloudSync */,
+				DFFE0338162575DE0091DF16 /* CloudSyncTests */,
+				DF99A91216339DC900374D4E /* CloudSyncSample */,
+				DF99A93816339DCA00374D4E /* CloudSyncSampleTests */,
+				DFC7039318A1E79600819CC6 /* SimpleDropboxSync */,
+				DFC703B118A1E79700819CC6 /* SimpleDropboxSyncTests */,
+				DFFE0320162575DD0091DF16 /* Frameworks */,
+				DFFE031F162575DD0091DF16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DFFE031F162575DD0091DF16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE031E162575DD0091DF16 /* libCloudSync.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFFE0320162575DD0091DF16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DF3D313F189E220B0039EB1F /* XCTest.framework */,
+				DF3D312E1898D6A40039EB1F /* libc++.dylib */,
+				DF3D312C1898D6910039EB1F /* QuartzCore.framework */,
+				DF3D312A1898D6870039EB1F /* SystemConfiguration.framework */,
+				DF3D31281898D67C0039EB1F /* Security.framework */,
+				DF3D31261898D6720039EB1F /* CFNetwork.framework */,
+				DF3D31241898D6430039EB1F /* Dropbox.framework */,
+				DFFE0321162575DD0091DF16 /* Foundation.framework */,
+				DFFE0332162575DE0091DF16 /* UIKit.framework */,
+				DF99A91016339DC900374D4E /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DFFE0323162575DD0091DF16 /* CloudSync */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE0326162575DD0091DF16 /* KRCloudSync.h */,
+				DFFE0328162575DD0091DF16 /* KRCloudSync.m */,
+				DFFE0378162AD2C00091DF16 /* KRResourceLoader.h */,
+				DFFE0379162AD2C10091DF16 /* KRResourceLoader.m */,
+				DFFE037B162AD2D50091DF16 /* KRResourceComparer.h */,
+				DFFE037C162AD2D50091DF16 /* KRResourceComparer.m */,
+				DFFE037E162AD2E60091DF16 /* KRSynchronizer.h */,
+				DFFE037F162AD2E70091DF16 /* KRSynchronizer.m */,
+				DF37CA5D162C191600BD5725 /* KRSyncItem.h */,
+				DF37CA5E162C191700BD5725 /* KRSyncItem.m */,
+				DF99A8F01630EE4200374D4E /* KRCloudSyncBlocks.h */,
+				DFFE03641627FB6E0091DF16 /* Service */,
+				DFFE035B1627F9F00091DF16 /* Factory */,
+				DFFE0381162AD87F0091DF16 /* ConflictResolve */,
+				DFFE034C1626A04B0091DF16 /* KRiCloudResourceManager.h */,
+				DFFE034D1626A04B0091DF16 /* KRiCloudResourceManager.m */,
+				DFFE03501626ADA00091DF16 /* KRResourceProperty.h */,
+				DFFE03511626ADA00091DF16 /* KRResourceProperty.m */,
+				DFFE03541627F37B0091DF16 /* KRCloudPreferences.h */,
+				DFFE03551627F37C0091DF16 /* KRCloudPreferences.m */,
+				DFC747471657F9DE0019C1B6 /* KRResourceFilter.h */,
+				DFC747481657F9DE0019C1B6 /* KRResourceFilter.m */,
+				DFFE0324162575DD0091DF16 /* Supporting Files */,
+			);
+			path = CloudSync;
+			sourceTree = "<group>";
+		};
+		DFFE0324162575DD0091DF16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE0325162575DD0091DF16 /* CloudSync-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFFE0338162575DE0091DF16 /* CloudSyncTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE03691627FCDB0091DF16 /* Mocks */,
+				DFFE033E162575DE0091DF16 /* CloudSyncTests.h */,
+				DFFE033F162575DE0091DF16 /* CloudSyncTests.m */,
+				DFFE034916269CF70091DF16 /* iCloudSyncTests.h */,
+				DFFE034A16269CF70091DF16 /* iCloudSyncTests.m */,
+				DFFE0339162575DE0091DF16 /* Supporting Files */,
+				DFFE03581627F3A50091DF16 /* CloudPreferencesTests.h */,
+				DFFE03591627F3A50091DF16 /* CloudPreferencesTests.m */,
+				DFFE0385162AE5E80091DF16 /* ResourceComparerTest.h */,
+				DFFE0386162AE5E80091DF16 /* ResourceComparerTest.m */,
+				DF37CA62162C196500BD5725 /* SyncItemTests.h */,
+				DF37CA63162C196500BD5725 /* SyncItemTests.m */,
+				DF99A8F21630EF4B00374D4E /* SynchronizerTests.h */,
+				DF99A8F31630EF4B00374D4E /* SynchronizerTests.m */,
+				DFC7474C1658B0A60019C1B6 /* ResourceFilterTests.h */,
+				DFC7474D1658B0A60019C1B6 /* ResourceFilterTests.m */,
+			);
+			path = CloudSyncTests;
+			sourceTree = "<group>";
+		};
+		DFFE0339162575DE0091DF16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE033A162575DE0091DF16 /* CloudSyncTests-Info.plist */,
+				DFFE033B162575DE0091DF16 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFFE035B1627F9F00091DF16 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE035C1627FA050091DF16 /* KRCloudFactory.h */,
+				DFFE035D1627FA050091DF16 /* KRCloudFactory.m */,
+				DF99A9511633C1F700374D4E /* KRiCloudFactory.h */,
+				DF99A9521633C1F700374D4E /* KRiCloudFactory.m */,
+				DF3D311A1898A56E0039EB1F /* KRDropboxFactory.h */,
+				DF3D311B1898A56E0039EB1F /* KRDropboxFactory.m */,
+			);
+			name = Factory;
+			sourceTree = "<group>";
+		};
+		DFFE03641627FB6E0091DF16 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE03651627FB800091DF16 /* KRCloudService.h */,
+				DFFE03661627FB800091DF16 /* KRCloudService.m */,
+				DFFE03711629B00F0091DF16 /* KRFileService.h */,
+				DFFE03721629B00F0091DF16 /* KRFileService.m */,
+				DF99A8F516339B0B00374D4E /* KRiCloudService.h */,
+				DF99A8F616339B0B00374D4E /* KRiCloudService.m */,
+				DF99A94E1633BF8400374D4E /* KRLocalFileService.h */,
+				DF99A94F1633BF8400374D4E /* KRLocalFileService.m */,
+				DFA04A2816342354008FFF55 /* KRiCloud.h */,
+				DFA04A2916342354008FFF55 /* KRiCloud.m */,
+				DF3D311D1898A58D0039EB1F /* KRDropboxService.h */,
+				DF3D311E1898A58D0039EB1F /* KRDropboxService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		DFFE03691627FCDB0091DF16 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE036E1627FD980091DF16 /* MockCloudFactory.h */,
+				DFFE036F1627FD980091DF16 /* MockCloudFactory.m */,
+				DFFE036A1627FD3C0091DF16 /* MockiCloudService.h */,
+				DFFE036B1627FD3C0091DF16 /* MockiCloudService.m */,
+				DFFE0375162A90B70091DF16 /* MockFileService.h */,
+				DFFE0376162A90B70091DF16 /* MockFileService.m */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		DFFE0381162AD87F0091DF16 /* ConflictResolve */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE0382162AD9C10091DF16 /* KRConflictResolver.h */,
+				DFFE0383162AD9C10091DF16 /* KRConflictResolver.m */,
+			);
+			name = ConflictResolve;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFFE031D162575DD0091DF16 /* CloudSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFFE0343162575DE0091DF16 /* Build configuration list for PBXNativeTarget "CloudSync" */;
+			buildPhases = (
+				DFFE031A162575DD0091DF16 /* Sources */,
+				DFFE031B162575DD0091DF16 /* Frameworks */,
+				DFFE031C162575DD0091DF16 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CloudSync;
+			productName = CloudSync;
+			productReference = DFFE031E162575DD0091DF16 /* libCloudSync.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFFE0315162575DD0091DF16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = allting;
+			};
+			buildConfigurationList = DFFE0318162575DD0091DF16 /* Build configuration list for PBXProject "CloudSync" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DFFE0313162575DD0091DF16;
+			productRefGroup = DFFE031F162575DD0091DF16 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFFE031D162575DD0091DF16 /* CloudSync */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFFE031A162575DD0091DF16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF3D311F1898A58D0039EB1F /* KRDropboxService.m in Sources */,
+				DFFE0329162575DD0091DF16 /* KRCloudSync.m in Sources */,
+				DFFE034E1626A04B0091DF16 /* KRiCloudResourceManager.m in Sources */,
+				DFFE03521626ADA00091DF16 /* KRResourceProperty.m in Sources */,
+				DFFE03561627F37C0091DF16 /* KRCloudPreferences.m in Sources */,
+				DF3D311C1898A56E0039EB1F /* KRDropboxFactory.m in Sources */,
+				DFFE035E1627FA050091DF16 /* KRCloudFactory.m in Sources */,
+				DFFE03671627FB800091DF16 /* KRCloudService.m in Sources */,
+				DFFE03731629B00F0091DF16 /* KRFileService.m in Sources */,
+				DFFE037A162AD2C20091DF16 /* KRResourceLoader.m in Sources */,
+				DFFE037D162AD2D50091DF16 /* KRResourceComparer.m in Sources */,
+				DFFE0380162AD2E70091DF16 /* KRSynchronizer.m in Sources */,
+				DFFE0384162AD9C10091DF16 /* KRConflictResolver.m in Sources */,
+				DF37CA5F162C191700BD5725 /* KRSyncItem.m in Sources */,
+				DF99A8F716339B0B00374D4E /* KRiCloudService.m in Sources */,
+				DF99A9501633BF8500374D4E /* KRLocalFileService.m in Sources */,
+				DF99A9531633C1F700374D4E /* KRiCloudFactory.m in Sources */,
+				DFA04A2A16342354008FFF55 /* KRiCloud.m in Sources */,
+				DFC747491657F9DE0019C1B6 /* KRResourceFilter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DF99A91516339DC900374D4E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF99A91616339DC900374D4E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DF99A92416339DC900374D4E /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF99A92516339DC900374D4E /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		DF99A92716339DC900374D4E /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF99A92816339DC900374D4E /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		DF99A93B16339DCA00374D4E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF99A93C16339DCA00374D4E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DFC7039618A1E79600819CC6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFC7039718A1E79600819CC6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DFC7039F18A1E79700819CC6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFC703A018A1E79700819CC6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DFC703B418A1E79700819CC6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFC703B518A1E79700819CC6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DFFE033B162575DE0091DF16 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFFE033C162575DE0091DF16 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DFFE0341162575DE0091DF16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DFFE0342162575DE0091DF16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DFFE0344162575DE0091DF16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CloudSync.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/allting/workspace/tests/ios/network/KRCloudSync/CloudSync,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CloudSync/CloudSync-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DFFE0345162575DE0091DF16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CloudSync.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/allting/workspace/tests/ios/network/KRCloudSync/CloudSync,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CloudSync/CloudSync-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFFE0318162575DD0091DF16 /* Build configuration list for PBXProject "CloudSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFFE0341162575DE0091DF16 /* Debug */,
+				DFFE0342162575DE0091DF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFFE0343162575DE0091DF16 /* Build configuration list for PBXNativeTarget "CloudSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFFE0344162575DE0091DF16 /* Debug */,
+				DFFE0345162575DE0091DF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DFFE0315162575DD0091DF16 /* Project object */;
+}
