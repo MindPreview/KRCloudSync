@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   # s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
   # s.frameworks = 'Dropbox'
-  s.weak_framework = 'Dropbox'
+  # s.weak_framework = 'Dropbox'
   s.vendored_frameworks = 'Classes/Dropbox.framework'
   s.preserve_paths = "Classes/*.framework"
   # s.dependency 'JSONKit', '~> 1.4'
