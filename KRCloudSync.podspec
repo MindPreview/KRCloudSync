@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "allting" => "support@mindpreview.com" }
   s.source       = { :git => "https://github.com/MindPreview/KRCloudSync.git", :tag => s.version.to_s }
+  s.social_media-url = 'https://twitter.com/mindpreview'
 
   s.platform     = :ios, '5.0'
   s.ios.deployment_target = '5.0'
@@ -23,6 +24,9 @@ Pod::Spec.new do |s|
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
-  s.frameworks = 'Dropbox'
+  # s.frameworks = 'Dropbox'
+  s.weak_framework = 'Dropbox'
+  s.vendored_frameworks = 'Classes/Dropbox.framework'
+  s.preserve_paths = "Classes/*.framework"
   # s.dependency 'JSONKit', '~> 1.4'
 end
