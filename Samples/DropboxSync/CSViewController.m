@@ -8,6 +8,9 @@
 
 #import "CSViewController.h"
 #import "KRCloudSync.h"
+#import "KRDropboxFactory.h"
+
+#import <Dropbox/Dropbox.h>
 
 @interface CSViewController ()
 @property (nonatomic) KRCloudSync* cloudSync;
@@ -20,6 +23,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self showSyncButton];
 }
 
 - (void)didReceiveMemoryWarning

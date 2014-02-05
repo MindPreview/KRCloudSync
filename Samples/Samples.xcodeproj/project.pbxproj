@@ -21,6 +21,13 @@
 		DFC7043918A253BA00819CC6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7041B18A253BA00819CC6 /* UIKit.framework */; };
 		DFC7044118A253BA00819CC6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DFC7043F18A253BA00819CC6 /* InfoPlist.strings */; };
 		DFC7044318A253BA00819CC6 /* DropboxSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC7044218A253BA00819CC6 /* DropboxSyncTests.m */; };
+		DFC704DE18A25FDF00819CC6 /* libCloudSync.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704DB18A25F9B00819CC6 /* libCloudSync.a */; };
+		DFC704E018A2604A00819CC6 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704DF18A2604A00819CC6 /* Dropbox.framework */; };
+		DFC704E318A263A600819CC6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E218A263A600819CC6 /* CFNetwork.framework */; };
+		DFC704E818A263C400819CC6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E418A263C400819CC6 /* libc++.dylib */; };
+		DFC704E918A263C400819CC6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E518A263C400819CC6 /* QuartzCore.framework */; };
+		DFC704EA18A263C400819CC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E618A263C400819CC6 /* SystemConfiguration.framework */; };
+		DFC704EB18A263C400819CC6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E718A263C400819CC6 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +37,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = DFC7041318A253BA00819CC6;
 			remoteInfo = DropboxSync;
+		};
+		DFC704DA18A25F9B00819CC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DFFE031E162575DD0091DF16;
+			remoteInfo = CloudSync;
+		};
+		DFC704DC18A25F9B00819CC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DFC704B218A25B4800819CC6;
+			remoteInfo = CloudSyncTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -53,6 +74,14 @@
 		DFC7043E18A253BA00819CC6 /* DropboxSyncTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DropboxSyncTests-Info.plist"; sourceTree = "<group>"; };
 		DFC7044018A253BA00819CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DFC7044218A253BA00819CC6 /* DropboxSyncTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DropboxSyncTests.m; sourceTree = "<group>"; };
+		DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CloudSync.xcodeproj; path = ../CloudSync.xcodeproj; sourceTree = "<group>"; };
+		DFC704DF18A2604A00819CC6 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = ../Frameworks/Dropbox.framework; sourceTree = "<group>"; };
+		DFC704E218A263A600819CC6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		DFC704E418A263C400819CC6 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libc++.dylib"; sourceTree = "<absolute>"; };
+		DFC704E518A263C400819CC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		DFC704E618A263C400819CC6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		DFC704E718A263C400819CC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		DFC704EC18A2643800819CC6 /* CSDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +89,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFC704E918A263C400819CC6 /* QuartzCore.framework in Frameworks */,
+				DFC704EA18A263C400819CC6 /* SystemConfiguration.framework in Frameworks */,
+				DFC704E318A263A600819CC6 /* CFNetwork.framework in Frameworks */,
+				DFC704DE18A25FDF00819CC6 /* libCloudSync.a in Frameworks */,
+				DFC704E018A2604A00819CC6 /* Dropbox.framework in Frameworks */,
 				DFC7041A18A253BA00819CC6 /* CoreGraphics.framework in Frameworks */,
+				DFC704EB18A263C400819CC6 /* Security.framework in Frameworks */,
 				DFC7041C18A253BA00819CC6 /* UIKit.framework in Frameworks */,
 				DFC7041818A253BA00819CC6 /* Foundation.framework in Frameworks */,
+				DFC704E818A263C400819CC6 /* libc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +118,8 @@
 		DFC7040918A2539500819CC6 = {
 			isa = PBXGroup;
 			children = (
+				DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */,
+				DFC704EC18A2643800819CC6 /* CSDefines.h */,
 				DFC7041D18A253BA00819CC6 /* DropboxSync */,
 				DFC7043C18A253BA00819CC6 /* DropboxSyncTests */,
 				DFC7041618A253BA00819CC6 /* Frameworks */,
@@ -101,6 +139,12 @@
 		DFC7041618A253BA00819CC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DFC704E418A263C400819CC6 /* libc++.dylib */,
+				DFC704E518A263C400819CC6 /* QuartzCore.framework */,
+				DFC704E618A263C400819CC6 /* SystemConfiguration.framework */,
+				DFC704E718A263C400819CC6 /* Security.framework */,
+				DFC704E218A263A600819CC6 /* CFNetwork.framework */,
+				DFC704DF18A2604A00819CC6 /* Dropbox.framework */,
 				DFC7041718A253BA00819CC6 /* Foundation.framework */,
 				DFC7041918A253BA00819CC6 /* CoreGraphics.framework */,
 				DFC7041B18A253BA00819CC6 /* UIKit.framework */,
@@ -150,6 +194,15 @@
 				DFC7043F18A253BA00819CC6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DFC704D618A25F9B00819CC6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFC704DB18A25F9B00819CC6 /* libCloudSync.a */,
+				DFC704DD18A25F9B00819CC6 /* CloudSyncTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +267,12 @@
 			mainGroup = DFC7040918A2539500819CC6;
 			productRefGroup = DFC7041518A253BA00819CC6 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DFC704D618A25F9B00819CC6 /* Products */;
+					ProjectRef = DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				DFC7041318A253BA00819CC6 /* DropboxSync */,
@@ -221,6 +280,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DFC704DB18A25F9B00819CC6 /* libCloudSync.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCloudSync.a;
+			remoteRef = DFC704DA18A25F9B00819CC6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DFC704DD18A25F9B00819CC6 /* CloudSyncTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CloudSyncTests.xctest;
+			remoteRef = DFC704DC18A25F9B00819CC6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DFC7041218A253BA00819CC6 /* Resources */ = {
@@ -337,6 +413,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					/Users/allting/workspace/projects/pods/KRCloudSync/Samples,
+					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -359,6 +436,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = ../Classes;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -389,6 +467,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					/Users/allting/workspace/projects/pods/KRCloudSync/Samples,
+					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -403,6 +482,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = ../Classes;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

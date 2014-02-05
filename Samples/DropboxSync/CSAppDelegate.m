@@ -8,6 +8,7 @@
 
 #import "CSAppDelegate.h"
 #import <Dropbox/Dropbox.h>
+#import "CSDefines.h"
 
 @implementation CSAppDelegate
 
