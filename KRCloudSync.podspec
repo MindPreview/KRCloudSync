@@ -6,16 +6,16 @@
 #
 Pod::Spec.new do |s|
   s.name         = "KRCloudSync"
-  s.version      = "0.1.0"
+  s.version      = "0.0.1"
   s.summary      = "Sync your files with iCloud, Dropbox etc via KRCloudSync."
   s.description  = <<-DESC
-                    * Support iCloud, Dropbox.
+                    * Sync your files with iCloud, Dropbox etc via KRCloudSync.
                    DESC
   s.homepage     = "http://mindpreview.com"
   s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license      = 'MIT'
   s.author       = { "allting" => "allting@gmail.com" }
-  s.source       = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
+  s.source       = { :git => "http://github.com/mindpreview/KRCloudSync.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '5.0'
   s.ios.deployment_target = '5.0'
