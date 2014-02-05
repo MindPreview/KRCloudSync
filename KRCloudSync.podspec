@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
                     * Sync your files with iCloud, Dropbox etc via KRCloudSync.
                    DESC
   s.homepage     = "http://mindpreview.com"
-  s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  # s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license      = 'MIT'
   s.author       = { "allting" => "support@mindpreview.com" }
   s.source       = { :git => "https://github.com/MindPreview/KRCloudSync.git", :tag => s.version.to_s }
@@ -17,12 +17,12 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Classes/CloudSync/*.{h,m}'
-  s.header_dir = 'Classes/Dropbox.framework/Headers/*.h'
+  # s.header_dir = 'Classes/Dropbox.framework/Headers/*.h'
   s.resources = 'Assets'
 
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
-  s.frameworks = 'Classes/Dropbox'
+  s.frameworks = 'Dropbox'
   # s.dependency 'JSONKit', '~> 1.4'
 end
