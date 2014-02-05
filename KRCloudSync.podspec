@@ -16,12 +16,12 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes/CloudSync/*.{h,m}', 'Classes/Dropbox.framework/Headers/*.h'
+  s.source_files = 'Classes/CloudSync/*.{h,m}'
   s.resources = 'Assets'
 
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
-  s.public_header_files = 'Classes/**/*.h'
-  # s.frameworks = 'SomeFramework', 'AnotherFramework'
+  # s.public_header_files = 'Classes/**/*.h'
+  s.frameworks = 'Classes/Dropbox.framework'
   # s.dependency 'JSONKit', '~> 1.4'
 end
