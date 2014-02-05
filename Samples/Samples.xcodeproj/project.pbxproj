@@ -81,7 +81,6 @@
 		DFC704E518A263C400819CC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		DFC704E618A263C400819CC6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		DFC704E718A263C400819CC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
-		DFC704EC18A2643800819CC6 /* CSDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				DFC704D518A25F9B00819CC6 /* CloudSync.xcodeproj */,
-				DFC704EC18A2643800819CC6 /* CSDefines.h */,
 				DFC7041D18A253BA00819CC6 /* DropboxSync */,
 				DFC7043C18A253BA00819CC6 /* DropboxSyncTests */,
 				DFC7041618A253BA00819CC6 /* Frameworks */,
