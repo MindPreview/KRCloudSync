@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage     = "http://mindpreview.com"
   s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license      = 'MIT'
-  s.author       = { "allting" => "allting@gmail.com" }
+  s.author       = { "allting" => "support@mindpreview.com" }
   s.source       = { :git => "http://github.com/MindPreview/KRCloudSync.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '5.0'
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes/ios/*.{h,m}'
+  s.source_files = 'Classes'
   s.resources = 'Assets'
 
   s.ios.exclude_files = 'Classes/osx'
