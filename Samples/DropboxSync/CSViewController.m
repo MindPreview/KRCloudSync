@@ -63,20 +63,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 }
 
 -(void)syncDropboxDocumentFiles{
-    if(!_cloudSync){
-        NSString* documentPath = nil;
-        if(![self createDirectoryInDocument:@"dropbox" fullPath:&documentPath])
-            return;
-        
-        KRDropboxFactory* factory = [[KRDropboxFactory alloc] initWithDocumentsPaths:documentPath
-                                                                              remote:@"/"
-                                                                              filter:@[@"mnd"]
-                                                                cloudServiceDelegate:self];
-        
-        self.cloudSync = [[KRCloudSync alloc]initWithFactory:factory];
-    }
-    
-	[_cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
+	[self.cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
 		if(error){
 			NSLog(@"syncItems - %@", syncItems);
 			NSLog(@"Failed to sync : %@", error);
@@ -90,6 +77,24 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 	}];
     
     [[_cloudSync service] disableUpdate];
+}
+
+-(KRCloudSync*)cloudSync{
+    if(_cloudSync){
+        return _cloudSync;
+    }
+    
+    NSString* documentPath = nil;
+    if(![self createDirectoryInDocument:@"dropbox" fullPath:&documentPath])
+        return nil;
+    
+    KRDropboxFactory* factory = [[KRDropboxFactory alloc] initWithDocumentsPaths:documentPath
+                                                                          remote:@"/"
+                                                                          filter:@[@"mnd"]
+                                                            cloudServiceDelegate:self];
+    
+    _cloudSync = [[KRCloudSync alloc]initWithFactory:factory];
+    return _cloudSync;
 }
 
 -(BOOL)createDirectoryInDocument:(NSString*)path fullPath:(NSString**)fullpath{
