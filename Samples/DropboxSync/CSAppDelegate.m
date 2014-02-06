@@ -10,6 +10,8 @@
 #import <Dropbox/Dropbox.h>
 #import "CSDefines.h"
 
+extern NSString *dropboxLinkSucceeded;
+
 @implementation CSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -60,6 +62,8 @@
     DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
     if (account) {
         NSLog(@"App linked successfully!");
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:dropboxLinkSucceeded object:nil];
         return YES;
     }
     return NO;

@@ -12,6 +12,8 @@
 
 #import <Dropbox/Dropbox.h>
 
+NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
+
 @interface CSViewController ()
 @property (nonatomic) KRCloudSync* cloudSync;
 
@@ -23,7 +25,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSyncButton) name:dropboxLinkSucceeded object:nil];
+    
     [self showSyncButton];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,8 +45,10 @@
     if(!account)
         return;
     
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(syncWithDropbox)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(syncWithDropbox)];
+    UIBarButtonItem *unlinkButton = [[UIBarButtonItem alloc] initWithTitle:@"Unlink" style:UIBarButtonItemStylePlain target:self action:@selector(unlinkDropbox)];
+    self.navigationItem.rightBarButtonItem = syncButton;
+    self.navigationItem.leftBarButtonItem = unlinkButton;
 }
 
 -(void)syncWithDropbox{
@@ -100,6 +110,14 @@
 	return YES;
 }
 
+
+-(void)unlinkDropbox{
+    DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
+    if(!account)
+        return;
+    
+    [account unlink];
+}
 
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{

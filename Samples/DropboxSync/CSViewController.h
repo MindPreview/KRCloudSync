@@ -10,4 +10,6 @@
 
 @interface CSViewController : UITableViewController
 
+-(void)showSyncButton;
+
 @end
