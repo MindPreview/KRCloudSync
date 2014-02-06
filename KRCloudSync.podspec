@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KRCloudSync"
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
   s.summary      = "Sync your files with iCloud, Dropbox etc via KRCloudSync."
   s.description  = <<-DESC
                     * Sync your files with iCloud, Dropbox etc via KRCloudSync.
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = true
 
-  s.source_files = 'Classes/CloudSync/*.{h,m}', 'Classes/Dropbox.framework/Headers/*.h'
+  s.source_files = 'Classes/*.{h,m}'
   # s.header_dir = 'Classes/Dropbox.framework/Headers/*.h'
   # s.resources = 'Assets'
 
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Classes/**/*.h'
   # s.frameworks = 'Dropbox'
   # s.weak_framework = 'Dropbox'
-  s.vendored_frameworks = 'Classes/Dropbox.framework'
-  s.preserve_paths = "Classes/*.framework"
+  s.vendored_frameworks = 'Frameworks/Dropbox.framework'
+  s.preserve_paths = "Frameworks/*.framework"
   # s.dependency 'JSONKit', '~> 1.4'
 end
