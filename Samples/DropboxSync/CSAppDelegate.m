@@ -8,7 +8,11 @@
 
 #import "CSAppDelegate.h"
 #import <Dropbox/Dropbox.h>
-#import "CSDefines.h"
+
+// Sample key for KRCloudSyncSample. Change this and other setting for Dropbox.
+// See https://www.dropbox.com/developers
+static NSString* kDROPBOX_KEY = @"4ibrxvwy9xmb6o0";
+static NSString* kDROPBOX_SECRET = @"tr904xkznrhppsk";
 
 extern NSString *dropboxLinkSucceeded;
 
