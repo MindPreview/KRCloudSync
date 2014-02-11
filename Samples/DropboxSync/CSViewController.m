@@ -80,7 +80,12 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         [[_cloudSync service] enableUpdate];
         
         self.syncItems = syncItems;
-        [self.tableView reloadData];
+        if([syncItems count]){
+            [self.tableView reloadData];
+        }else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+        }
 	}];
     
     [[_cloudSync service] disableUpdate];
