@@ -79,7 +79,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         [[_cloudSync factory] setLastSyncTime:[NSDate date]];
         [[_cloudSync service] enableUpdate];
         
-        self.syncItems = syncItems;
+        self.syncItems = [self removeDeletedItems:syncItems];
         if([syncItems count]){
             [self.tableView reloadData];
         }else{
@@ -129,6 +129,15 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 	return YES;
 }
 
+-(NSArray*)removeDeletedItems:(NSArray*)syncItems{
+    NSMutableArray* array = [NSMutableArray arrayWithCapacity:[syncItems count]];
+    
+    for(KRSyncItem* item in syncItems){
+        if(KRSyncItemActionRemoveInLocal != item.action)
+            [array addObject:item];
+    }
+    return array;
+}
 
 -(void)unlinkDropbox{
     DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
