@@ -9,6 +9,8 @@
 #import "CSViewController.h"
 #import "KRCloudSync.h"
 #import "KRDropboxFactory.h"
+#import "KRSyncItem.h"
+#import "KRResourceProperty.h"
 
 #import <Dropbox/Dropbox.h>
 
@@ -16,6 +18,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
 @interface CSViewController ()
 @property (nonatomic) KRCloudSync* cloudSync;
+@property (nonatomic) NSArray* syncItems;
+@property (nonatomic) NSString* documentsPath;
 
 @end
 
@@ -74,6 +78,9 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         
         [[_cloudSync factory] setLastSyncTime:[NSDate date]];
         [[_cloudSync service] enableUpdate];
+        
+        self.syncItems = syncItems;
+        [self.tableView reloadData];
 	}];
     
     [[_cloudSync service] disableUpdate];
@@ -87,6 +94,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     NSString* documentPath = nil;
     if(![self createDirectoryInDocument:@"dropbox" fullPath:&documentPath])
         return nil;
+    
+    self.documentsPath = documentPath;
     
     KRDropboxFactory* factory = [[KRDropboxFactory alloc] initWithDocumentsPaths:documentPath
                                                                           remote:@"/"
@@ -130,5 +139,36 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [self syncDropboxDocumentFiles];
 }
 
+#pragma mark - UITableView source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [self.syncItems count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    KRSyncItem* item = self.syncItems[indexPath.row];
+    cell.textLabel.text = [[item localResource] displayName];
+    cell.detailTextLabel.text = [[item localResource] pathByDeletingSubPath:self.documentsPath];
+    
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Row pressed!!");
+}
 
 @end
