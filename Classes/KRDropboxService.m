@@ -9,7 +9,7 @@
 #import "KRDropboxService.h"
 #import "KRResourceProperty.h"
 #import "KRSyncItem.h"
-#import "NSFileManager+NewFileName.h"
+#import "KRFileService.h"
 
 #import <Dropbox/Dropbox.h>
 
@@ -262,7 +262,7 @@
     [fileManager createDirectoryAtURL:trashURL withIntermediateDirectories:YES attributes:nil error:outError];
     
     trashURL = [trashURL URLByAppendingPathComponent:fileName];
-    trashURL = [fileManager uniqueFileURL:trashURL];
+    trashURL = [KRFileService uniqueFileURL:trashURL];
     
     return [fileManager moveItemAtURL:url toURL:trashURL error:outError];
 }

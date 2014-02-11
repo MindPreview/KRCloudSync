@@ -52,8 +52,6 @@
 		DFC704D218A25DB700819CC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312A1898D6870039EB1F /* SystemConfiguration.framework */; };
 		DFC704D318A25DBD00819CC6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312C1898D6910039EB1F /* QuartzCore.framework */; };
 		DFC704D418A25DC400819CC6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3D312E1898D6A40039EB1F /* libc++.dylib */; };
-		DFC704F518AA08B900819CC6 /* NSFileManager+NewFileName.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704F418AA08B900819CC6 /* NSFileManager+NewFileName.m */; };
-		DFC704F618AA08B900819CC6 /* NSFileManager+NewFileName.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704F418AA08B900819CC6 /* NSFileManager+NewFileName.m */; };
 		DFFE0322162575DD0091DF16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFE0321162575DD0091DF16 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -151,8 +149,6 @@
 		DFC704AC18A25AF400819CC6 /* SyncItemTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyncItemTests.h; sourceTree = "<group>"; };
 		DFC704AD18A25AF400819CC6 /* SyncItemTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyncItemTests.m; sourceTree = "<group>"; };
 		DFC704B218A25B4800819CC6 /* CloudSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFC704F318AA08B900819CC6 /* NSFileManager+NewFileName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+NewFileName.h"; path = "Classes/NSFileManager+NewFileName.h"; sourceTree = SOURCE_ROOT; };
-		DFC704F418AA08B900819CC6 /* NSFileManager+NewFileName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+NewFileName.m"; path = "Classes/NSFileManager+NewFileName.m"; sourceTree = SOURCE_ROOT; };
 		DFFE031E162575DD0091DF16 /* libCloudSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCloudSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFFE0321162575DD0091DF16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DFFE0332162575DE0091DF16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -324,8 +320,6 @@
 				DFC7047418A2594A00819CC6 /* KRiCloudService.m */,
 				DFC7047518A2594A00819CC6 /* KRLocalFileService.h */,
 				DFC7047618A2594A00819CC6 /* KRLocalFileService.m */,
-				DFC704F318AA08B900819CC6 /* NSFileManager+NewFileName.h */,
-				DFC704F418AA08B900819CC6 /* NSFileManager+NewFileName.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -428,7 +422,6 @@
 				DFC704C418A25C4400819CC6 /* CloudPreferencesTests.m in Sources */,
 				DFC704C518A25C4400819CC6 /* CloudSyncTests.m in Sources */,
 				DFC704C618A25C4400819CC6 /* iCloudSyncTests.m in Sources */,
-				DFC704F618AA08B900819CC6 /* NSFileManager+NewFileName.m in Sources */,
 				DFC704C718A25C4400819CC6 /* MockCloudFactory.m in Sources */,
 				DFC704C818A25C4400819CC6 /* MockFileService.m in Sources */,
 				DFC704C918A25C4400819CC6 /* MockiCloudService.m in Sources */,
@@ -451,7 +444,6 @@
 				DFC7047718A2594A00819CC6 /* KRCloudService.m in Sources */,
 				DFC7048818A2597E00819CC6 /* KRConflictResolver.m in Sources */,
 				DFC7046918A2590B00819CC6 /* KRSynchronizer.m in Sources */,
-				DFC704F518AA08B900819CC6 /* NSFileManager+NewFileName.m in Sources */,
 				DFC7046A18A2590B00819CC6 /* KRSyncItem.m in Sources */,
 				DFC7049318A259AD00819CC6 /* KRResourceFilter.m in Sources */,
 				DFC7049218A259AD00819CC6 /* KRiCloudResourceManager.m in Sources */,

@@ -17,6 +17,10 @@
 @property (nonatomic) NSString* remoteDocumentsPath;
 @property (nonatomic) KRResourceFilter* filter;
 
++(NSString*)uniqueFilePath:(NSString*)filePath;
++(NSString*)uniqueFilePathInDirectory:(NSString*)dir fileName:(NSString*)fileName;
++(NSURL*)uniqueFileURL:(NSURL*)url;
+
 -(id)initWithDocumentsPaths:(NSString*)path remote:(NSString*)remotePath filter:(KRResourceFilter*)filter;
 
 -(NSArray*)load;

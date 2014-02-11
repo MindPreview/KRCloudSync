@@ -108,7 +108,7 @@
 		for(NSURL* url in urls){
 			NSString* fileName = [url lastPathComponent];
 			
-			NSString* newPath = uniqueFileFullPathInDirectory(path, fileName);
+			NSString* newPath = [KRFileService uniqueFilePathInDirectory:path fileName:fileName];
 			NSURL* localURL = [NSURL fileURLWithPath:newPath];
 			
 			[cloud saveToDocumentWithFileCoordinator:fileCoordinator
