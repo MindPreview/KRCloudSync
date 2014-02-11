@@ -49,10 +49,24 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     if(!account)
         return;
     
-    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(syncWithDropbox)];
     UIBarButtonItem *unlinkButton = [[UIBarButtonItem alloc] initWithTitle:@"Unlink" style:UIBarButtonItemStylePlain target:self action:@selector(unlinkDropbox)];
-    self.navigationItem.rightBarButtonItem = syncButton;
     self.navigationItem.leftBarButtonItem = unlinkButton;
+
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFile)];
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(syncWithDropbox)];
+    [self.navigationItem setRightBarButtonItems:@[syncButton, addButton]];
+}
+
+-(void)unlinkDropbox{
+    DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
+    if(!account)
+        return;
+    
+    [account unlink];
+}
+
+-(void)addFile{
+    
 }
 
 -(void)syncWithDropbox{
@@ -137,14 +151,6 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
             [array addObject:item];
     }
     return array;
-}
-
--(void)unlinkDropbox{
-    DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-    if(!account)
-        return;
-    
-    [account unlink];
 }
 
 #pragma mark - KRCloudServiceDelegate

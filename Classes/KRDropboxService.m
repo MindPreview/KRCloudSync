@@ -9,6 +9,8 @@
 #import "KRDropboxService.h"
 #import "KRResourceProperty.h"
 #import "KRSyncItem.h"
+#import "NSFileManager+NewFileName.h"
+
 #import <Dropbox/Dropbox.h>
 
 @interface KRDropboxService()
@@ -244,7 +246,10 @@
 }
 
 -(BOOL)removeInLocal:(KRSyncItem*)item error:(NSError**)outError{
-    NSURL* url = [[item localResource] URL];
+    NSString* filePath = [[[item localResource] URL] path];
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    NSURL* url = [NSURL fileURLWithPath:filePath];
     NSString* fileName = [url lastPathComponent];
     NSAssert([fileName length], @"Mustn't be nil");
     if(0 == [fileName length])
@@ -255,8 +260,10 @@
     trashURL = [trashURL URLByAppendingPathComponent:@".trash" isDirectory:YES];
     
     [fileManager createDirectoryAtURL:trashURL withIntermediateDirectories:YES attributes:nil error:outError];
+    
     trashURL = [trashURL URLByAppendingPathComponent:fileName];
-
+    trashURL = [fileManager uniqueFileURL:trashURL];
+    
     return [fileManager moveItemAtURL:url toURL:trashURL error:outError];
 }
 
