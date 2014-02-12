@@ -135,15 +135,13 @@
         NSString* path = file.info.path.stringValue;
         [self addMonitoringFile:path file:file];
         
-        __weak typeof(self) weakSelf = self;
-
         [file addObserver:self block:^{
             DBFile* file = [self monitoringFileWithPath:path];
             
             if(file.newerStatus.cached){
                 DBError *error;
                 if ([file update:&error]) {
-                    [file removeObserver:weakSelf];
+                    [file removeObserver:self];
                     
                     NSURL* url = [NSURL fileURLWithPath:path];
                     
@@ -153,7 +151,7 @@
                     [self removeMonitoringFile:path file:file];
                     
                     NSLog(@"%@ file download done", url);
-                    [weakSelf.delegate itemDidChanged:weakSelf URL:url];
+                    [self.delegate itemDidChanged:self URL:url];
                 }
             }else{
                 NSLog(@"%@ file progress:%f", path, file.newerStatus.progress);
