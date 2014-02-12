@@ -16,6 +16,7 @@
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
 @property (nonatomic) NSArray* monitorFiles;
+@property (nonatomic, assign) KRCloudSyncProgressBlock progressBlock;
 @end
 
 @implementation KRDropboxService
@@ -158,6 +159,9 @@
                 }
             }else{
                 NSLog(@"%@ file progress:%f", path, status.progress);
+                if(self.progressBlock){
+                    self.progressBlock(nil, status.progress);
+                }
             }
         }];
         
@@ -196,6 +200,8 @@
 	if(!completed)
 		return NO;
 	
+    self.progressBlock = progressBlock;
+    
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	dispatch_async(globalQueue, ^{
         NSError* lastError = nil;

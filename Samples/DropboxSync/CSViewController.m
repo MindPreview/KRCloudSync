@@ -73,7 +73,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
             NSLog(@"Dropbox service is available");
-            [self syncDropboxDocumentFiles];
+            [self syncDropboxDocumentFilesWithBlocks];
         }else{
             NSLog(@"Can't use Dropbox service");
         }
@@ -100,6 +100,40 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
             [alert show];
         }
 
+        [[_cloudSync service] enableUpdate];
+    }];
+    
+    [[_cloudSync service] disableUpdate];
+}
+
+-(void)syncDropboxDocumentFilesWithBlocks{
+    KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
+        NSLog(@"StartBlock-%@", syncItems);
+    };
+    
+    KRCloudSyncProgressBlock progressBlock = ^(KRSyncItem* item, CGFloat progress){
+        NSLog(@"ProgressBlock:%f", progress);
+    };
+    
+	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
+		if(error){
+			NSLog(@"Failed to sync : %@", error);
+            return;
+		}else{
+			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
+			NSLog(@"syncItems - %@", syncItems);
+		}
+        
+        [[_cloudSync factory] setLastSyncTime:[NSDate date]];
+        
+        self.syncItems = [self removeDeletedItems:syncItems];
+        if([syncItems count]){
+            [self.tableView reloadData];
+        }else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+        }
+        
         [[_cloudSync service] enableUpdate];
     }];
     
@@ -157,7 +191,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{
     NSLog(@"Cloud item changed - service:%@, url:%@", service, url);
-    [self syncDropboxDocumentFiles];
+    [self syncDropboxDocumentFilesWithBlocks];
 }
 
 #pragma mark - UITableView source
