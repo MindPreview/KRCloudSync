@@ -15,7 +15,7 @@
 
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
-@property (nonatomic) NSArray* monitoringFiles;
+@property (nonatomic) NSArray* monitorFiles;
 @end
 
 @implementation KRDropboxService
@@ -109,9 +109,12 @@
         if(!file || error)
             continue;
         
-        BOOL hasFileMonitor = [self monitoringFileIfHasNewVersion:file];
-        if(!hasFileMonitor)
-            [file close];
+        BOOL hasMonitor = [self monitorFileIfNotCached:file version:YES];
+        if(!hasMonitor){
+            hasMonitor = [self monitorFileIfNotCached:file version:NO];
+            if(!hasMonitor)
+                [file close];
+        }
         
         NSString* escapedFilePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
@@ -126,19 +129,19 @@
     return resources;
 }
 
--(BOOL)monitoringFileIfHasNewVersion:(DBFile*)file{
+-(BOOL)monitorFileIfNotCached:(DBFile*)file version:(BOOL)newerVersion{
     BOOL monitor = NO;
-    DBFileStatus* newFileStatus = [file newerStatus];
-    
-    if(newFileStatus && ![newFileStatus cached]){
+    DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
+    if(status && ![status cached]){
         
         NSString* path = file.info.path.stringValue;
         [self addMonitoringFile:path file:file];
         
         [file addObserver:self block:^{
             DBFile* file = [self monitoringFileWithPath:path];
+            DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
             
-            if(file.newerStatus.cached){
+            if(status.cached){
                 DBError *error;
                 if ([file update:&error]) {
                     [file removeObserver:self];
@@ -154,7 +157,7 @@
                     [self.delegate itemDidChanged:self URL:url];
                 }
             }else{
-                NSLog(@"%@ file progress:%f", path, file.newerStatus.progress);
+                NSLog(@"%@ file progress:%f", path, status.progress);
             }
         }];
         
@@ -165,13 +168,13 @@
 }
 
 -(void)addMonitoringFile:(NSString*)path file:(DBFile*)file{
-    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitoringFiles];
+    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
     [files addObject:@{path:file}];
-    self.monitoringFiles = files;
+    self.monitorFiles = files;
 }
 
 -(DBFile*)monitoringFileWithPath:(NSString*)path{
-    for(NSDictionary* dic in self.monitoringFiles){
+    for(NSDictionary* dic in self.monitorFiles){
         DBFile* file = [dic objectForKey:path];
         if(file)
             return file;
@@ -180,9 +183,9 @@
 }
 
 -(void)removeMonitoringFile:(NSString*)path file:(DBFile*)file{
-    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitoringFiles];
+    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
     [files removeObject:@{path:file}];
-    self.monitoringFiles = files;
+    self.monitorFiles = files;
 }
 
 
