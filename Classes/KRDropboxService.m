@@ -15,6 +15,7 @@
 
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
+@property (nonatomic) DBFile* file;
 @end
 
 @implementation KRDropboxService
@@ -102,6 +103,68 @@
         NSString* filePath = [[fileInfo path] stringValue];
         if(![_filter shouldPass:filePath])
             continue;
+
+        NSLog(@"%@ will be opened", filePath);
+        DBError* error = nil;
+        DBFile* file = [fileSystem openFile:[fileInfo path] error:&error];
+        if(!file || error)
+            continue;
+        NSLog(@"%@ being opened", filePath);
+        
+        DBFileStatus* newFileStatus = [file newerStatus];
+        if(newFileStatus && ![newFileStatus cached]){
+            DBFileState fileState = [newFileStatus state];
+            NSString* stateString;
+            switch (fileState) {
+                case DBFileStateDownloading:
+                    stateString = @"DBFileStateDownloading";
+                    break;
+                case DBFileStateUploading:
+                    stateString = @"DBFileStateUploading";
+                    break;
+                case DBFileStateIdle:
+                    stateString = @"DBFileStateIdle";
+                    break;
+                default:
+                    break;
+            }
+            NSLog(@"%@ file was not cached - newfilestatus:%@, progress:%f", [[fileInfo path] stringValue], stateString, [newFileStatus progress]);
+
+            self.file = file;
+            __weak typeof(self) weakSelf = self;
+            [self.file addObserver:self block:^{
+                if(weakSelf.file.newerStatus.cached){
+                    DBError *error;
+                    if ([weakSelf.file update:&error]) {
+                        [weakSelf.file removeObserver:weakSelf];
+                        
+                        NSURL* url = [NSURL fileURLWithPath:weakSelf.file.info.path.stringValue];
+
+                        if([weakSelf.file isOpen]){
+                            [weakSelf.file close];
+                            weakSelf.file = nil;
+                        }
+                        
+                        NSLog(@"%@ file download done", url);
+                        [weakSelf.delegate itemDidChanged:weakSelf URL:url];
+                    }
+                }else{
+                    NSLog(@"%@ file progress:%f", weakSelf.file.info.path.stringValue, weakSelf.file.newerStatus.progress);
+                }
+            }];
+            continue;
+        }
+        
+        DBFileStatus* fileStatus = [file status];
+        if(![fileStatus cached]){
+            NSLog(@"%@ file was not cached - filestatus", [[fileInfo path] stringValue]);
+            [fileSystem addObserver:self forPath:[fileInfo path] block:^{
+                [self.delegate itemDidChanged:self URL:nil];
+            }];
+            continue;
+        }
+        
+        [file close];
         
         NSString* escapedFilePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
@@ -224,6 +287,12 @@
         return NO;
     }
 
+    DBFileStatus* fileState = [file status];
+    if(![fileState cached]){
+        NSLog(@"file was not cached:%@", [path stringValue]);
+    }
+    
+    
     NSData *data = [file readData:&error];
     if(error){
         *outError = error;

@@ -83,15 +83,14 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(void)syncDropboxDocumentFiles{
 	[self.cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
 		if(error){
-			NSLog(@"syncItems - %@", syncItems);
 			NSLog(@"Failed to sync : %@", error);
+            return;
 		}else{
 			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
 			NSLog(@"syncItems - %@", syncItems);
 		}
         
         [[_cloudSync factory] setLastSyncTime:[NSDate date]];
-        [[_cloudSync service] enableUpdate];
         
         self.syncItems = [self removeDeletedItems:syncItems];
         if([syncItems count]){
@@ -100,7 +99,9 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
             [alert show];
         }
-	}];
+
+        [[_cloudSync service] enableUpdate];
+    }];
     
     [[_cloudSync service] disableUpdate];
 }
@@ -179,7 +180,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
     KRSyncItem* item = self.syncItems[indexPath.row];
     cell.textLabel.text = [[item localResource] displayName];
-    cell.detailTextLabel.text = [[item localResource] pathByDeletingSubPath:self.documentsPath];
+    NSString* detailText = [NSString stringWithFormat:@"%@ (%@)", [[item localResource] pathByDeletingSubPath:self.documentsPath], [[item localResource] size]];
+    cell.detailTextLabel.text = detailText;
     
     return cell;
 }
