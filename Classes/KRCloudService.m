@@ -28,7 +28,7 @@
 
 -(BOOL)syncUsingBlock:(NSArray*)syncItems
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
-	   completedBlock:(KRSynchronizerCompletedBlock)completed{
+	   completedBlock:(KRCloudSyncCompletedBlock)completed{
 	NSAssert(completed, @"Mustn't be nil");
 	if(!completed)
 		return NO;

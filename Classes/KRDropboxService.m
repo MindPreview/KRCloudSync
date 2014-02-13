@@ -123,7 +123,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 
 -(BOOL)syncUsingBlock:(NSArray*)syncItems
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
-	   completedBlock:(KRSynchronizerCompletedBlock)completedBlock{
+	   completedBlock:(KRCloudSyncCompletedBlock)completedBlock{
 	NSAssert(completedBlock, @"Mustn't be nil");
 	if(!completedBlock)
 		return NO;
@@ -134,7 +134,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 
 -(void)syncItems:(NSArray*)syncItems
    progressBlock:(KRCloudSyncProgressBlock)progressBlock
-  completedBlock:(KRSynchronizerCompletedBlock)completedBlock{
+  completedBlock:(KRCloudSyncCompletedBlock)completedBlock{
     
     NSUInteger count = [syncItems count];
     NSUInteger __block completed = 0;
@@ -163,9 +163,9 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
                 resultBlock(result, error);
                 break;
             case KRSyncItemActionRemoteAccept:
-                [self saveToLocal:item
-                    progressBlock:progressBlock
-                      resultBlock:resultBlock];
+                [self saveToLocalUsingBlocks:item
+                               progressBlock:progressBlock
+                                 resultBlock:resultBlock];
                 break;
             case KRSyncItemActionRemoveInLocal:
                 result = [self removeInLocal:item error:&error];
@@ -219,9 +219,9 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     return ret;
 }
 
--(BOOL)saveToLocal:(KRSyncItem*)item
-     progressBlock:(KRCloudSyncProgressBlock)progressBlock
-       resultBlock:(KRDropboxServiceResultBlock)resultBlock{
+-(BOOL)saveToLocalUsingBlocks:(KRSyncItem*)item
+                progressBlock:(KRCloudSyncProgressBlock)progressBlock
+                  resultBlock:(KRDropboxServiceResultBlock)resultBlock{
     NSString* filePath = [[[item remoteResource] URL] path];
     filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 

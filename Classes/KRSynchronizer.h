@@ -19,6 +19,6 @@
 
 -(BOOL)syncUsingBlock:(NSArray*)syncItems
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
-	   completedBlock:(KRSynchronizerCompletedBlock)completed;
+	   completedBlock:(KRCloudSyncCompletedBlock)completed;
 
 @end

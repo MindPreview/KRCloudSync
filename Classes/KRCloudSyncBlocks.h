@@ -18,7 +18,6 @@ typedef void (^KRCloudSyncCompletedBlock)(NSArray* syncItems, NSError* error);
 typedef void (^KRCloudSyncResultBlock)(BOOL succeeded, NSError* error);
 
 typedef void (^KRResourcesCompletedBlock)(NSArray* resources, NSError* error);
-typedef void (^KRSynchronizerCompletedBlock)(NSArray* syncResources, NSError* error);
 
 typedef void (^KRServiceAvailableBlock)(BOOL available);
 typedef void (^KRiCloudRemoveFileBlock)(BOOL succeeded, NSError* error);

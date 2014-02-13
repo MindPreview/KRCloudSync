@@ -20,7 +20,7 @@
 
 -(BOOL)syncUsingBlock:(NSArray*)syncItems
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
-	   completedBlock:(KRSynchronizerCompletedBlock)completed{
+	   completedBlock:(KRCloudSyncCompletedBlock)completed{
 	NSAssert(_cloudService, @"Mustn't be nil");
 	NSAssert(completed, @"Mustn't be nil");
 	if(!_cloudService || !completed)

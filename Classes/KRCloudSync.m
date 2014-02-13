@@ -82,9 +82,7 @@
 		}
 		 
 		KRSynchronizer* sync = [[KRSynchronizer alloc]initWithFactory:_factory];
-		[sync syncUsingBlock:syncItems progressBlock:progressBlock completedBlock:^(NSArray* syncItemsResult, NSError* error){
-			completedBlock(syncItemsResult, error);
-		}];
+		[sync syncUsingBlock:syncItems progressBlock:progressBlock completedBlock:completedBlock];
 	}];
 	
 	return YES;
