@@ -13,10 +13,13 @@
 
 #import <Dropbox/Dropbox.h>
 
+typedef void (^KRDropboxServiceProgressBlock)(NSURL* url, CGFloat progress);
+typedef void (^KRDropboxServiceDownloadResultBlock)(BOOL succeeded, NSError* error);
+typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
+
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
 @property (nonatomic) NSArray* monitorFiles;
-@property (nonatomic, assign) KRCloudSyncProgressBlock progressBlock;
 @end
 
 @implementation KRDropboxService
@@ -105,18 +108,6 @@
         if(![_filter shouldPass:filePath])
             continue;
 
-        DBError* error = nil;
-        DBFile* file = [fileSystem openFile:[fileInfo path] error:&error];
-        if(!file || error)
-            continue;
-        
-        BOOL hasMonitor = [self monitorFileIfNotCached:file version:YES];
-        if(!hasMonitor){
-            hasMonitor = [self monitorFileIfNotCached:file version:NO];
-            if(!hasMonitor)
-                [file close];
-        }
-        
         NSString* escapedFilePath = [filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         NSURL* url = [NSURL URLWithString:escapedFilePath];
@@ -130,109 +121,55 @@
     return resources;
 }
 
--(BOOL)monitorFileIfNotCached:(DBFile*)file version:(BOOL)newerVersion{
-    BOOL monitor = NO;
-    DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
-    if(status && ![status cached]){
-        
-        NSString* path = file.info.path.stringValue;
-        [self addMonitoringFile:path file:file];
-        
-        [file addObserver:self block:^{
-            DBFile* file = [self monitoringFileWithPath:path];
-            DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
-            
-            if(status.cached){
-                DBError *error;
-                if ([file update:&error]) {
-                    [file removeObserver:self];
-                    
-                    NSURL* url = [NSURL fileURLWithPath:path];
-                    
-                    if([file isOpen]){
-                        [file close];
-                    }
-                    [self removeMonitoringFile:path file:file];
-                    
-                    NSLog(@"%@ file download done", url);
-                    [self.delegate itemDidChanged:self URL:url];
-                }
-            }else{
-                NSLog(@"%@ file progress:%f", path, status.progress);
-                if(self.progressBlock){
-                    self.progressBlock(nil, status.progress);
-                }
-            }
-        }];
-        
-        monitor = YES;
-    }
-
-    return monitor;
-}
-
--(void)addMonitoringFile:(NSString*)path file:(DBFile*)file{
-    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
-    [files addObject:@{path:file}];
-    self.monitorFiles = files;
-}
-
--(DBFile*)monitoringFileWithPath:(NSString*)path{
-    for(NSDictionary* dic in self.monitorFiles){
-        DBFile* file = [dic objectForKey:path];
-        if(file)
-            return file;
-    }
-    return nil;
-}
-
--(void)removeMonitoringFile:(NSString*)path file:(DBFile*)file{
-    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
-    [files removeObject:@{path:file}];
-    self.monitorFiles = files;
-}
-
-
 -(BOOL)syncUsingBlock:(NSArray*)syncItems
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
-	   completedBlock:(KRSynchronizerCompletedBlock)completed{
-	NSAssert(completed, @"Mustn't be nil");
-	if(!completed)
+	   completedBlock:(KRSynchronizerCompletedBlock)completedBlock{
+	NSAssert(completedBlock, @"Mustn't be nil");
+	if(!completedBlock)
 		return NO;
 	
-    self.progressBlock = progressBlock;
-    
-    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	dispatch_async(globalQueue, ^{
-        NSError* lastError = nil;
-		
-		[self syncItems:syncItems error:&lastError];
-        
-		dispatch_queue_t mainQueue = dispatch_get_main_queue();
-		dispatch_async(mainQueue, ^{
-            completed(syncItems, lastError);
-		});
-	});
-    
+    [self syncItems:syncItems progressBlock:progressBlock completedBlock:completedBlock];
 	return YES;
 }
 
--(void)syncItems:(NSArray*)syncItems error:(NSError**)outError{
-    for(KRSyncItem* item in syncItems){
-        if(KRSyncItemActionNone == item.action)
-            continue;
+-(void)syncItems:(NSArray*)syncItems
+   progressBlock:(KRCloudSyncProgressBlock)progressBlock
+  completedBlock:(KRSynchronizerCompletedBlock)completedBlock{
+    
+    NSUInteger count = [syncItems count];
+    NSUInteger __block completed = 0;
+    NSError* __block lastError = nil;
+    KRDropboxServiceResultBlock resultBlock = ^(BOOL succeeded, NSError* error){
+        completed++;
+        if(error)
+            lastError = error;
         
+        if(count == completed)
+            completedBlock(syncItems, lastError);
+    };
+    
+    for(KRSyncItem* item in syncItems){
+        if(KRSyncItemActionNone == item.action){
+            resultBlock(YES, nil);
+            continue;
+        }
+        
+        BOOL result = NO;
         NSError* error = nil;
         switch (item.action) {
             case KRSyncItemActionLocalAccept:
             case KRSyncItemActionAddToRemote:
-                [self saveToCloud:item error:&error];
+                result = [self saveToCloud:item error:&error];
+                resultBlock(result, error);
                 break;
             case KRSyncItemActionRemoteAccept:
-                [self saveToLocal:item error:&error];
+                [self saveToLocal:item
+                    progressBlock:progressBlock
+                      resultBlock:resultBlock];
                 break;
             case KRSyncItemActionRemoveInLocal:
-                [self removeInLocal:item error:&error];
+                result = [self removeInLocal:item error:&error];
+                resultBlock(result, error);
                 break;
             case KRSyncItemActionNone:
             default:
@@ -240,9 +177,6 @@
         }
         
         item.error = error;
-        if(error){
-            *outError = error;
-        }
     }
 }
 
@@ -285,49 +219,144 @@
     return ret;
 }
 
--(BOOL)saveToLocal:(KRSyncItem*)item error:(NSError**)outError{
+-(BOOL)saveToLocal:(KRSyncItem*)item
+     progressBlock:(KRCloudSyncProgressBlock)progressBlock
+       resultBlock:(KRDropboxServiceResultBlock)resultBlock{
     NSString* filePath = [[[item remoteResource] URL] path];
     filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     NSString* fileName = [filePath lastPathComponent];
     NSAssert([fileName length], @"Mustn't be nil");
-    if(0 == [fileName length])
+    if(0 == [fileName length]){
+        resultBlock(NO, [NSError errorWithDomain:@"com.mindpreview.KRCloudSync" code:5 userInfo:nil]);
         return NO;
+    }
+
+    NSURL* url = [[item localResource] URL];
+    
+    NSURL* parentURL = [url URLByDeletingLastPathComponent];
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSError* error;
+    [fileManager createDirectoryAtURL:parentURL withIntermediateDirectories:YES attributes:nil error:&error];
 
     DBPath *path = [[DBPath root] childPath:filePath];
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
     
-    DBError* error = nil;
-    DBFile *file = [[DBFilesystem sharedFilesystem] openFile:path error:&error];
+    DBFile *file = [fileSystem openFile:path error:&error];
     if(error){
-        *outError = error;
+        resultBlock(NO, error);
         return NO;
     }
 
-    DBFileStatus* fileState = [file status];
-    if(![fileState cached]){
-        NSLog(@"file was not cached:%@", [path stringValue]);
+    KRDropboxServiceProgressBlock dropboxProgressBlock = ^(NSURL* url, CGFloat progress){
+        progressBlock(item, progress);
+    };
+    
+    KRDropboxServiceDownloadResultBlock downloadBlock = ^(BOOL succeeded, NSError* error){
+        if(succeeded){
+            NSError* error;
+            BOOL ret = [self saveToLocal:file url:url error:&error];
+            resultBlock(ret, error);
+        }else{
+            resultBlock(NO, error);
+        }
+    };
+    
+    BOOL hasMonitor = [self monitorFileIfNotCached:file
+                                           version:YES
+                                     progressBlock:dropboxProgressBlock
+                                     downloadBlock:downloadBlock];
+    if(hasMonitor){
+        return YES;
+    }else{
+        hasMonitor = [self monitorFileIfNotCached:file
+                                          version:NO
+                                    progressBlock:dropboxProgressBlock
+                                    downloadBlock:downloadBlock];
+        if(hasMonitor)
+            return YES;
     }
     
+    BOOL ret = [self saveToLocal:file url:url error:&error];
+    resultBlock(ret, error);
+    return YES;
+}
+
+-(BOOL)monitorFileIfNotCached:(DBFile*)file
+                      version:(BOOL)newerVersion
+                progressBlock:(KRDropboxServiceProgressBlock)progressBlock
+               downloadBlock:(KRDropboxServiceDownloadResultBlock)downloadBlock{
+    BOOL monitor = NO;
+    DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
+    if(status && ![status cached]){
+        
+        NSString* path = file.info.path.stringValue;
+        [self addMonitoringFile:path file:file];
+        NSURL* url = [NSURL fileURLWithPath:path];
+
+        [file addObserver:self block:^{
+            DBFile* file = [self monitoringFileWithPath:path];
+            DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
+            
+            if(status.cached){
+                DBError *error;
+                if ([file update:&error]) {
+                    [file removeObserver:self];
+
+                    [self removeMonitoringFile:path file:file];
+                    
+                    NSLog(@"%@ file download done", url);
+                    downloadBlock(YES, nil);
+                }else{
+                    downloadBlock(NO, error);
+                }
+            }else{
+                NSLog(@"%@ file progress:%f", path, status.progress);
+                progressBlock(url, status.progress);
+            }
+        }];
+        
+        monitor = YES;
+    }
     
+    return monitor;
+}
+
+-(void)addMonitoringFile:(NSString*)path file:(DBFile*)file{
+    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
+    [files addObject:@{path:file}];
+    self.monitorFiles = files;
+}
+
+-(DBFile*)monitoringFileWithPath:(NSString*)path{
+    for(NSDictionary* dic in self.monitorFiles){
+        DBFile* file = [dic objectForKey:path];
+        if(file)
+            return file;
+    }
+    return nil;
+}
+
+-(void)removeMonitoringFile:(NSString*)path file:(DBFile*)file{
+    NSMutableArray* files = [NSMutableArray arrayWithArray:self.monitorFiles];
+    [files removeObject:@{path:file}];
+    self.monitorFiles = files;
+}
+
+-(BOOL)saveToLocal:(DBFile*)file url:(NSURL*)localUrl error:(NSError**)outError{
+    DBError* error;
     NSData *data = [file readData:&error];
     if(error){
         *outError = error;
         return NO;
     }
     
-    NSURL* url = [[item localResource] URL];
-
-    NSURL* parentURL = [url URLByDeletingLastPathComponent];
-    NSFileManager* fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtURL:parentURL withIntermediateDirectories:YES attributes:nil error:outError];
-    
-    BOOL ret = [data writeToURL:url atomically:YES];
+    BOOL ret = [data writeToURL:localUrl atomically:YES];
     if(!ret)
         return ret;
     
-    DBFileInfo* fileInfo = [file info];
-    NSDictionary *attrs = @{NSFileModificationDate:[fileInfo modifiedTime]};
-    return [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:[url path] error:outError];
+    NSDictionary *attrs = @{NSFileModificationDate:[file.info modifiedTime]};
+    return [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:[localUrl path] error:outError];
 }
 
 -(BOOL)removeInLocal:(KRSyncItem*)item error:(NSError**)outError{

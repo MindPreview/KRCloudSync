@@ -23,6 +23,7 @@
 		DFC704E918A263C400819CC6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E518A263C400819CC6 /* QuartzCore.framework */; };
 		DFC704EA18A263C400819CC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E618A263C400819CC6 /* SystemConfiguration.framework */; };
 		DFC704EB18A263C400819CC6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E718A263C400819CC6 /* Security.framework */; };
+		DFC704F918ABC74E00819CC6 /* CSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		DFC704E518A263C400819CC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		DFC704E618A263C400819CC6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		DFC704E718A263C400819CC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		DFC704F718ABC74E00819CC6 /* CSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewCell.h; sourceTree = "<group>"; };
+		DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 				DFC7042D18A253BA00819CC6 /* CSViewController.m */,
 				DFC7042F18A253BA00819CC6 /* Images.xcassets */,
 				DFC7041E18A253BA00819CC6 /* Supporting Files */,
+				DFC704F718ABC74E00819CC6 /* CSTableViewCell.h */,
+				DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */,
 			);
 			path = DropboxSync;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFC7042818A253BA00819CC6 /* CSAppDelegate.m in Sources */,
+				DFC704F918ABC74E00819CC6 /* CSTableViewCell.m in Sources */,
 				DFC7042418A253BA00819CC6 /* main.m in Sources */,
 				DFC7042E18A253BA00819CC6 /* CSViewController.m in Sources */,
 			);

@@ -11,6 +11,7 @@
 #import "KRDropboxFactory.h"
 #import "KRSyncItem.h"
 #import "KRResourceProperty.h"
+#import "CSTableViewCell.h"
 
 #import <Dropbox/Dropbox.h>
 
@@ -113,6 +114,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     
     KRCloudSyncProgressBlock progressBlock = ^(KRSyncItem* item, CGFloat progress){
         NSLog(@"ProgressBlock:%f", progress);
+        CSTableViewCell* cell = [self cellForSyncItem:item];
+        [cell setProgressValue:progress];
     };
     
 	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
@@ -138,6 +141,21 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     }];
     
     [[_cloudSync service] disableUpdate];
+}
+
+-(CSTableViewCell*)cellForSyncItem:(KRSyncItem*)item{
+    
+//    NSInteger row = [self.syncItems indexOfObject:item];
+    NSString* path = [[[item localResource] URL] path];
+    NSInteger row = 0;
+    for(KRSyncItem* syncItem in self.syncItems){
+        if([path isEqualToString:[[[syncItem localResource] URL] path]])
+            break;
+        row++;
+    }
+    
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    return (CSTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 }
 
 -(KRCloudSync*)cloudSync{
@@ -210,12 +228,10 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CSTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     KRSyncItem* item = self.syncItems[indexPath.row];
-    cell.textLabel.text = [[item localResource] displayName];
-    NSString* detailText = [NSString stringWithFormat:@"%@ (%@)", [[item localResource] pathByDeletingSubPath:self.documentsPath], [[item localResource] size]];
-    cell.detailTextLabel.text = detailText;
+    [cell setSyncItem:item documentsPath:self.documentsPath];
     
     return cell;
 }
