@@ -15,6 +15,7 @@
 
 typedef void (^KRDropboxServiceProgressBlock)(NSURL* url, CGFloat progress);
 typedef void (^KRDropboxServiceDownloadResultBlock)(BOOL succeeded, NSError* error);
+typedef void (^KRDropboxServiceUploadResultBlock)(BOOL succeeded, NSError* error);
 typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 
 @interface KRDropboxService()
@@ -159,8 +160,9 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         switch (item.action) {
             case KRSyncItemActionLocalAccept:
             case KRSyncItemActionAddToRemote:
-                result = [self saveToCloud:item error:&error];
-                resultBlock(result, error);
+                [self saveToCloudUsingBlocks:item
+                               progressBlock:progressBlock
+                                 resultBlock:resultBlock];
                 break;
             case KRSyncItemActionRemoteAccept:
                 [self saveToLocalUsingBlocks:item
@@ -180,12 +182,17 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     }
 }
 
--(BOOL)saveToCloud:(KRSyncItem*)item error:(NSError**)outError{
+-(BOOL)saveToCloudUsingBlocks:(KRSyncItem*)item
+                progressBlock:(KRCloudSyncProgressBlock)progressBlock
+                  resultBlock:(KRCloudSyncResultBlock)resultBlock
+{
     NSString* filePath = [[item localResource] pathByDeletingSubPath:self.localDocumentsPath];
     NSString* fileName = [filePath lastPathComponent];
     NSAssert([fileName length], @"Mustn't be nil");
-    if(0 == [fileName length])
+    if(0 == [fileName length]){
+        resultBlock(NO, [NSError errorWithDomain:@"com.mindpreview.KRCloudSync" code:5 userInfo:nil]);
         return NO;
+    }
     
     NSData* data = [NSData dataWithContentsOfURL:[[item localResource] URL]];
     
@@ -204,19 +211,78 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     }
     
     if(error){
-        *outError = error;
+        resultBlock(NO, error);
         return NO;
     }
     
     DBFileStatus* fileStatus = [file status];
     if(![fileStatus cached]){
+        resultBlock(NO, [NSError errorWithDomain:@"com.mindpreview.KRCloudSync" code:5 userInfo:nil]);
         return NO;
     }
     
     ret = [file writeData:data error:&error];
-    [file close];
-    *outError = error;
+    
+    KRDropboxServiceProgressBlock dropboxProgressBlock = ^(NSURL* url, CGFloat progress){
+        progressBlock(item, progress);
+    };
+    
+    KRDropboxServiceUploadResultBlock uploadResultBlock = ^(BOOL succeeded, NSError* error){
+        resultBlock(succeeded, error);
+    };
+    
+    BOOL hasMonitor = [self monitorFileIfUploading:file
+                                        newVersion:NO
+                                     progressBlock:dropboxProgressBlock
+                                     downloadBlock:uploadResultBlock];
+    if(!hasMonitor){
+        [file close];
+        resultBlock(ret, error);
+    }
+    
     return ret;
+}
+
+-(BOOL)monitorFileIfUploading:(DBFile*)file
+                   newVersion:(BOOL)newerVersion
+                progressBlock:(KRDropboxServiceProgressBlock)progressBlock
+                downloadBlock:(KRDropboxServiceDownloadResultBlock)uploadResultBlock{
+    BOOL monitor = NO;
+    DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
+    DBFileState state = [status state];
+    if(status && DBFileStateUploading == state){
+        
+        NSString* path = file.info.path.stringValue;
+        [self addMonitoringFile:path file:file];
+        NSURL* url = [NSURL fileURLWithPath:path];
+        
+        [file addObserver:self block:^{
+            DBFile* file = [self monitoringFileWithPath:path];
+            DBFileStatus* status = newerVersion ? file.newerStatus : file.status;
+            DBFileState state = [status state];
+            
+            if(state == DBFileStateIdle){
+                DBError *error;
+                if ([file update:&error]) {
+                    [file removeObserver:self];
+                    
+                    [self removeMonitoringFile:path file:file];
+                    
+                    NSLog(@"%@ file uploading done", url);
+                    uploadResultBlock(YES, nil);
+                }else{
+                    uploadResultBlock(NO, error);
+                }
+            }else{
+                NSLog(@"%@ file progress:%f", path, status.progress);
+                progressBlock(url, status.progress);
+            }
+        }];
+        
+        monitor = YES;
+    }
+    
+    return monitor;
 }
 
 -(BOOL)saveToLocalUsingBlocks:(KRSyncItem*)item
@@ -263,14 +329,14 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     };
     
     BOOL hasMonitor = [self monitorFileIfNotCached:file
-                                           version:YES
+                                        newVersion:YES
                                      progressBlock:dropboxProgressBlock
                                      downloadBlock:downloadBlock];
     if(hasMonitor){
         return YES;
     }else{
         hasMonitor = [self monitorFileIfNotCached:file
-                                          version:NO
+                                       newVersion:NO
                                     progressBlock:dropboxProgressBlock
                                     downloadBlock:downloadBlock];
         if(hasMonitor)
@@ -283,7 +349,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 }
 
 -(BOOL)monitorFileIfNotCached:(DBFile*)file
-                      version:(BOOL)newerVersion
+                   newVersion:(BOOL)newerVersion
                 progressBlock:(KRDropboxServiceProgressBlock)progressBlock
                downloadBlock:(KRDropboxServiceDownloadResultBlock)downloadBlock{
     BOOL monitor = NO;
