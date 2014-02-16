@@ -25,7 +25,13 @@
 }
 
 -(void)setProgressValue:(CGFloat)value{
+    if(0<value)
+       [self.progressView setHidden:NO];
+    
     self.progressView.progress = value;
+    
+    if(1.f<=value)
+        [self.progressView setHidden:YES];
 }
 
 @end
