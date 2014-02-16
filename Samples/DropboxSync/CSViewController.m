@@ -215,13 +215,11 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - UITableView source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.syncItems count];
 }
 
@@ -234,6 +232,23 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [cell setSyncItem:item documentsPath:self.documentsPath];
     
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        KRSyncItem* item = [self.syncItems objectAtIndex:indexPath.row];
+        NSURL* url = [[item localResource] URL];
+        NSFileManager* fileManager = [NSFileManager defaultManager];
+        NSError* error;
+        BOOL ret = [fileManager removeItemAtURL:url error:&error];
+        if(ret){
+            [self syncDropboxDocumentFilesWithBlocks];
+        }
+    }
 }
 
 #pragma mark - Table view delegate

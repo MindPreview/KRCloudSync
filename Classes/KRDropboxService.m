@@ -169,6 +169,10 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
                                progressBlock:progressBlock
                                  resultBlock:resultBlock];
                 break;
+            case KRSyncItemActionRemoveRemoteItem:
+                result = [self removeRemoteItem:item error:&error];
+                resultBlock(result, error);
+                break;
             case KRSyncItemActionRemoveInLocal:
                 result = [self removeInLocal:item error:&error];
                 resultBlock(result, error);
@@ -423,6 +427,68 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     
     NSDictionary *attrs = @{NSFileModificationDate:[file.info modifiedTime]};
     return [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:[localUrl path] error:outError];
+}
+
+-(BOOL)removeRemoteItem:(KRSyncItem*)item error:(NSError**)outError{
+    NSString* filePath = [[[item remoteResource] URL] path];
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL* url = [NSURL fileURLWithPath:filePath];
+    NSString* fileName = [url lastPathComponent];
+    NSAssert([fileName length], @"Mustn't be nil");
+    if(0 == [fileName length])
+        return NO;
+    
+    DBPath *path = [[DBPath root] childPath:filePath];
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+
+    NSURL* trashURL = [url URLByDeletingLastPathComponent];
+    trashURL = [trashURL URLByAppendingPathComponent:@".trash" isDirectory:YES];
+    DBPath* trashPath = [[DBPath root] childPath:[trashURL path]];
+    DBError* error;
+    BOOL ret = [fileSystem createFolder:trashPath error:&error];
+    if(!ret){
+        *outError = error;
+        return NO;
+    }
+    
+    NSString* uniqueFileName = [self uniqueFileNameInDirectory:fileName directory:[trashURL path]];
+    NSURL* trashFullURL = [trashURL URLByAppendingPathComponent:uniqueFileName];
+    DBPath* trashFilePath = [[DBPath root] childPath:[trashFullURL path]];
+    ret = [fileSystem movePath:path toPath:trashFilePath error:&error];
+    if(!ret){
+        *outError = error;
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(NSString*)uniqueFileNameInDirectory:(NSString*)fileName directory:(NSString*)directory{
+    NSString* uniqueFileName = fileName;
+    NSString* fileNameOnly = [fileName stringByDeletingPathExtension];
+    NSString* extension = [fileName pathExtension];
+    
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+    NSString* pathString = [directory stringByAppendingPathComponent:fileName];
+    DBPath* path = [[DBPath root] childPath:pathString];
+    NSInteger index = 0;
+    DBError* error;
+    
+    while (1) {
+        DBFileInfo* fileInfo = [fileSystem fileInfoForPath:path error:&error];
+        if(!fileInfo && DBErrorParamsNotFound == error.code){
+            break;
+        }else{
+            uniqueFileName = [NSString stringWithFormat:@"%@ (%u)", fileNameOnly, ++index];
+            uniqueFileName = [uniqueFileName stringByAppendingPathExtension:extension];
+            
+            pathString = [directory stringByAppendingPathComponent:uniqueFileName];
+            path = [[DBPath root] childPath:pathString];
+        }
+    }
+    
+    return uniqueFileName;
 }
 
 -(BOOL)removeInLocal:(KRSyncItem*)item error:(NSError**)outError{

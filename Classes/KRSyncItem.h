@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, KRSyncItemAction) {
 	KRSyncItemActionRemoteAccept,
 	KRSyncItemActionLocalAccept,
     KRSyncItemActionAddToRemote,
+    KRSyncItemActionRemoveRemoteItem,
     KRSyncItemActionRemoveInLocal
 };
 

@@ -44,20 +44,27 @@
 		KRResourceProperty* remoteResource = [self findResourceWithKeyInResources:key resources:remoteResources basePath:[self.cloudService remoteDocumentsPath]];
 		KRSyncItemAction action = KRSyncItemActionNone;
 		if(!localResource){
-			action = KRSyncItemActionRemoteAccept;
-            localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
+            if(!self.lastSyncTime){
+                action = KRSyncItemActionRemoteAccept;
+                localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
+            }else{
+                NSDate* modifiedDate = [remoteResource modifiedDate];
+                NSComparisonResult result = [self.lastSyncTime compare:modifiedDate];
+                if(NSOrderedAscending == result){
+                    action = KRSyncItemActionRemoteAccept;
+                }else{
+                    action = KRSyncItemActionRemoveRemoteItem;
+                }
+            }
 		}else if(!remoteResource){
             if(!self.lastSyncTime){
-                // 동기화된 적이 없는 경우, 로컬 파일을 추가함.
                 action = KRSyncItemActionAddToRemote;
             }else{
                 NSDate* modifiedDate = [localResource modifiedDate];
                 NSComparisonResult result = [self.lastSyncTime compare:modifiedDate];
                 if(NSOrderedAscending == result){
-                    // 동기화 이후에 수정된 경우, 로컬 파일을 추가함.
                     action = KRSyncItemActionAddToRemote;
                 }else{
-                    // 동기화 이전에 수정된 경우, (다른 디바이스에서 리모트 파일이 삭제된 경우) 제거함.
                     action = KRSyncItemActionRemoveInLocal;
                 }
             }

@@ -25,7 +25,22 @@
 }
 
 -(NSString*)description{
-	NSString* action = nil;
+	NSString* action = [self stringFromAction];
+	
+	NSString* result = nil;
+	if(KRSyncItemResultNone==_result)
+		result = @"None";
+	else if(KRSyncItemResultConflicted==_result)
+		result = @"Conflicted";
+	else
+		result = @"Completed";
+	
+	return [NSString stringWithFormat:@"action:%@,result:%@,localResources:%@,remoteResources:%@, error:%@",
+										action, result, _localResource, _remoteResource, _error];
+}
+
+-(NSString*)stringFromAction{
+    NSString* action = @"Unknown";
     switch (_action) {
         case KRSyncItemActionNone:
             action = @"None";
@@ -39,23 +54,16 @@
         case KRSyncItemActionAddToRemote:
             action = @"AddToRemote";
             break;
+        case KRSyncItemActionRemoveRemoteItem:
+            action = @"RemoveFromRemote";
+            break;
         case KRSyncItemActionRemoveInLocal:
             action = @"RemoveInLocal";
             break;
         default:
             break;
     }
-	
-	NSString* result = nil;
-	if(KRSyncItemResultNone==_result)
-		result = @"None";
-	else if(KRSyncItemResultConflicted==_result)
-		result = @"Conflicted";
-	else
-		result = @"Completed";
-	
-	return [NSString stringWithFormat:@"action:%@,result:%@,localResources:%@,remoteResources:%@, error:%@",
-										action, result, _localResource, _remoteResource, _error];
+    return action;
 }
 
 @end
