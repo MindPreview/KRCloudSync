@@ -124,6 +124,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(void)syncDropboxDocumentFilesWithBlocks{
     KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
         NSLog(@"StartBlock-%@", syncItems);
+        self.syncItems = syncItems;
+        [self.tableView reloadData];
     };
     
     KRCloudSyncProgressBlock progressBlock = ^(KRSyncItem* item, CGFloat progress){
