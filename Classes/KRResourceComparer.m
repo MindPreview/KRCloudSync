@@ -44,9 +44,9 @@
 		KRResourceProperty* remoteResource = [self findResourceWithKeyInResources:key resources:remoteResources basePath:[self.cloudService remoteDocumentsPath]];
 		KRSyncItemAction action = KRSyncItemActionNone;
 		if(!localResource){
+            localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
             if(!self.lastSyncTime){
                 action = KRSyncItemActionRemoteAccept;
-                localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
             }else{
                 NSDate* modifiedDate = [remoteResource modifiedDate];
                 NSComparisonResult result = [self.lastSyncTime compare:modifiedDate];
