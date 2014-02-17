@@ -177,19 +177,24 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         return _cloudSync;
     }
     
-    NSString* documentPath = nil;
-    if(![self createDirectoryInDocument:@"dropbox" fullPath:&documentPath])
-        return nil;
-    
-    self.documentsPath = documentPath;
-    
-    KRDropboxFactory* factory = [[KRDropboxFactory alloc] initWithDocumentsPaths:documentPath
+    KRDropboxFactory* factory = [[KRDropboxFactory alloc] initWithDocumentsPaths:self.documentsPath
                                                                           remote:@"/"
                                                                           filter:@[@"mnd"]
                                                             cloudServiceDelegate:self];
     
     _cloudSync = [[KRCloudSync alloc]initWithFactory:factory];
     return _cloudSync;
+}
+
+-(NSString*)documentsPath{
+    if(_documentsPath)
+        return _documentsPath;
+    
+    NSString* documentsPath = nil;
+    if(![self createDirectoryInDocument:@"dropbox" fullPath:&documentsPath])
+        return nil;
+    _documentsPath = documentsPath;
+    return documentsPath;
 }
 
 -(BOOL)createDirectoryInDocument:(NSString*)path fullPath:(NSString**)fullpath{
