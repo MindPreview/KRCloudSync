@@ -11,6 +11,7 @@
 #import "KRDropboxFactory.h"
 #import "KRSyncItem.h"
 #import "KRResourceProperty.h"
+#import "KRFileService.h"
 #import "CSTableViewCell.h"
 
 #import <Dropbox/Dropbox.h>
@@ -67,7 +68,20 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 }
 
 -(void)addFile{
+    NSString *testFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"test.mnd"];
+    NSFileManager* fileManager = [NSFileManager defaultManager];
     
+    NSString* uniqueFilePath = [KRFileService uniqueFilePathInDirectory:self.documentsPath fileName:@"test.mnd"];
+    NSError* error = nil;
+    BOOL ret = [fileManager copyItemAtPath:testFilePath toPath:uniqueFilePath error:&error];
+    
+    if(ret){
+        NSDictionary *attrs = @{NSFileModificationDate:[NSDate date]};
+        ret = [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:uniqueFilePath error:&error];
+        if(ret){
+            [self syncWithDropbox];
+        }
+    }
 }
 
 -(void)syncWithDropbox{

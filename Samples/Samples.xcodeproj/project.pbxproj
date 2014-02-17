@@ -24,6 +24,7 @@
 		DFC704EA18A263C400819CC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E618A263C400819CC6 /* SystemConfiguration.framework */; };
 		DFC704EB18A263C400819CC6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC704E718A263C400819CC6 /* Security.framework */; };
 		DFC704F918ABC74E00819CC6 /* CSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */; };
+		DFC704FC18B20C4C00819CC6 /* test.mnd in Resources */ = {isa = PBXBuildFile; fileRef = DFC704FB18B20C4C00819CC6 /* test.mnd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		DFC704E718A263C400819CC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		DFC704F718ABC74E00819CC6 /* CSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewCell.h; sourceTree = "<group>"; };
 		DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewCell.m; sourceTree = "<group>"; };
+		DFC704FB18B20C4C00819CC6 /* test.mnd */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mnd; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 		DFC7041D18A253BA00819CC6 /* DropboxSync */ = {
 			isa = PBXGroup;
 			children = (
+				DFC704FA18B20C2400819CC6 /* SampleFile */,
 				DFC7042618A253BA00819CC6 /* CSAppDelegate.h */,
 				DFC7042718A253BA00819CC6 /* CSAppDelegate.m */,
 				DFC7042918A253BA00819CC6 /* Main.storyboard */,
@@ -160,6 +163,14 @@
 				DFC704DD18A25F9B00819CC6 /* CloudSyncTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DFC704FA18B20C2400819CC6 /* SampleFile */ = {
+			isa = PBXGroup;
+			children = (
+				DFC704FB18B20C4C00819CC6 /* test.mnd */,
+			);
+			name = SampleFile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFC7043018A253BA00819CC6 /* Images.xcassets in Resources */,
+				DFC704FC18B20C4C00819CC6 /* test.mnd in Resources */,
 				DFC7042218A253BA00819CC6 /* InfoPlist.strings in Resources */,
 				DFC7042B18A253BA00819CC6 /* Main.storyboard in Resources */,
 			);
