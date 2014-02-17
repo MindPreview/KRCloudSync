@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "KRCloudSyncBlocks.h"
 
+@class KRResourceProperty;
+
 @protocol KRCloudServiceDelegate;
 
 @interface KRCloudService : NSObject
@@ -39,6 +41,8 @@
 
 -(void)enableUpdate;
 -(void)disableUpdate;
+
+-(KRResourceProperty*)createResourceFromLocalResource:(KRResourceProperty*)resource;
 
 @end
 

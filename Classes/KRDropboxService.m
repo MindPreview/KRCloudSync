@@ -209,6 +209,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     
     DBFileInfo* fileInfo = [fileSystem fileInfoForPath:newPath error:&error];
     if(!fileInfo){
+        error = nil;
         file = [fileSystem createFile:newPath error:&error];
     }else{
         file = [fileSystem openFile:newPath error:&error];

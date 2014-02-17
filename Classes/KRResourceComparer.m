@@ -57,6 +57,7 @@
                 }
             }
 		}else if(!remoteResource){
+            remoteResource = [self.cloudService createResourceFromLocalResource:localResource];
             if(!self.lastSyncTime){
                 action = KRSyncItemActionAddToRemote;
             }else{

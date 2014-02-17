@@ -7,6 +7,7 @@
 //
 
 #import "KRCloudService.h"
+#import "KRResourceProperty.h"
 
 @implementation KRCloudService
 
@@ -61,6 +62,17 @@
 
 -(void)disableUpdate{
     
+}
+
+-(KRResourceProperty*)createResourceFromLocalResource:(KRResourceProperty*)resource{
+    NSString* filePath = [resource pathByDeletingSubPath:self.localDocumentsPath];
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString* path = [self.remoteDocumentsPath stringByAppendingPathComponent:filePath];
+    
+    return [[KRResourceProperty alloc] initWithProperties:[NSURL fileURLWithPath:path]
+                                              createdDate:[resource createdDate]
+                                             modifiedDate:[resource modifiedDate]
+                                                     size:[resource size]];
 }
 
 @end
