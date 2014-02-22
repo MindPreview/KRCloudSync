@@ -201,7 +201,7 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 			};
-			buildConfigurationList = DFC7040D18A2539500819CC6 /* Build configuration list for PBXProject "Samples" */;
+			buildConfigurationList = DFC7040D18A2539500819CC6 /* Build configuration list for PBXProject "Examples" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -407,7 +407,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DFC7040D18A2539500819CC6 /* Build configuration list for PBXProject "Samples" */ = {
+		DFC7040D18A2539500819CC6 /* Build configuration list for PBXProject "Examples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DFC7040E18A2539500819CC6 /* Debug */,
