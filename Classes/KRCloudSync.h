@@ -10,6 +10,16 @@
 #import "KRCloudPreferences.h"
 #import "KRCloudFactory.h"
 #import "KRCloudSyncBlocks.h"
+#import "KRSyncItem.h"
+#import "KRiCloudFactory.h"
+#import "KRiCloudService.h"
+#import "KRiCloud.h"
+#import "KRDropboxFactory.h"
+#import "KRDropboxService.h"
+#import "KRResourceProperty.h"
+#import "KRResourceFilter.h"
+#import "KRFileService.h"
+#import "KRLocalFileService.h"
 
 typedef enum {
 	kKRiCloudService,
