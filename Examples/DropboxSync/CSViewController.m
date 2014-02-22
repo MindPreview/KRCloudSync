@@ -8,10 +8,6 @@
 
 #import "CSViewController.h"
 #import "KRCloudSync.h"
-#import "KRDropboxFactory.h"
-#import "KRSyncItem.h"
-#import "KRResourceProperty.h"
-#import "KRFileService.h"
 #import "CSTableViewCell.h"
 
 #import <Dropbox/Dropbox.h>
