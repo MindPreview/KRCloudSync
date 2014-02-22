@@ -16,8 +16,6 @@ typedef void (^KRiCloudServiceLoadingResultBlock)(NSMetadataQuery* query, NSErro
 typedef void (^KRiCloudServiceProgressBlock)(NSURL* url, double progress);
 typedef void (^KRiCloudServiceDownloadResultBlock)(BOOL succeeded, NSUInteger count, NSError* error);
 
-@protocol KRiCloudServiceDelegate;
-
 @interface KRiCloudService : KRCloudService<KRiCloudDelegate>{
 	KRiCloud* _iCloud;
 }
