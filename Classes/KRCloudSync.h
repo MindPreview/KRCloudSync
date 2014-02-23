@@ -20,6 +20,7 @@
 #import "KRResourceFilter.h"
 #import "KRFileService.h"
 #import "KRLocalFileService.h"
+#import "KRCloudSyncBlocks.h"
 
 typedef enum {
 	kKRiCloudService,
