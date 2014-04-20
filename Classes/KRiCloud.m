@@ -479,12 +479,7 @@ static NSString* createUUID()
 										options:NSFileCoordinatorReadingWithoutChanges
 										  error:&outError
 									 byAccessor:^(NSURL *updatedURL) {
-#ifdef DEBUG
-										 BOOL ret = [self copyFile:updatedURL toURL:destinationURL error:&innerError];
-										 NSLog(@"copyFile-url:%@, ret:%@", updatedURL, ret?@"YES":@"NO");
-#elif DEBUG
 										 [self copyFile:updatedURL toURL:destinationURL error:&innerError];
-#endif
 									 }];
 	if([outError code]){
 		*error = outError;

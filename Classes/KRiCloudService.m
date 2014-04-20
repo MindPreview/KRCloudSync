@@ -134,7 +134,11 @@
 }
 
 -(id)initWithDocumentsPath:(NSString*)path filter:(KRResourceFilter*)filter{
-	self = [super initWithDocumentsPaths:path remote:@"/"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSURL *ubiquityContainer = [fileManager URLForUbiquityContainerIdentifier:nil];
+    NSString* remoteBasePath = [[ubiquityContainer path] stringByAppendingPathComponent:@"Documents"];
+
+	self = [super initWithDocumentsPaths:path remote:remoteBasePath];
 	if(self){
 		self.filter = filter;
 		_iCloud = [[KRiCloud alloc]init];
@@ -211,7 +215,7 @@
 			
 			NSError* error = nil;
 
-			if(KRSyncItemActionRemoteAccept == item.action){
+			if(KRSyncItemActionLocalAccept == item.action){
 				if(0 == item.localResource.size.unsignedIntegerValue)
 					continue;
 				

@@ -64,8 +64,10 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	dispatch_async(globalQueue, ^{
         DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-        if(!account)
+        if(!account){
+            // TODO: must call block func.
             return;
+        }
         
         if(![DBFilesystem sharedFilesystem]){
             DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];

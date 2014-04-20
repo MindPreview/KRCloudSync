@@ -28,7 +28,7 @@
 		KRiCloudService* cloudService = [[KRiCloudService alloc]initWithDocumentsPath:path filter:filter];
 		cloudService.delegate = delegate;
 		self.cloudService = cloudService;
-		self.fileService = [[KRLocalFileService alloc]initWithDocumentsPaths:path remote:@"/" filter:filter];
+		self.fileService = [[KRLocalFileService alloc]initWithDocumentsPaths:path remote:cloudService.remoteDocumentsPath filter:filter];
 	}
 	return self;
 }
