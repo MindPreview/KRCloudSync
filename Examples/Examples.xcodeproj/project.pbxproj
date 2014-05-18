@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0FACAC0519286C7B00AF01C7 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FACAC0419286C7B00AF01C7 /* Dropbox.framework */; };
+		0FACAC0B1928802100AF01C7 /* CSDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FACAC0A1928802100AF01C7 /* CSDetailViewController.m */; };
 		DFC7041818A253BA00819CC6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7041718A253BA00819CC6 /* Foundation.framework */; };
 		DFC7041A18A253BA00819CC6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7041918A253BA00819CC6 /* CoreGraphics.framework */; };
 		DFC7041C18A253BA00819CC6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC7041B18A253BA00819CC6 /* UIKit.framework */; };
@@ -60,6 +61,8 @@
 		0FACAC0019286C5800AF01C7 /* test.mnd */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mnd; sourceTree = "<group>"; };
 		0FACAC0119286C5800AF01C7 /* Examples.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Examples.xcodeproj; sourceTree = "<group>"; };
 		0FACAC0419286C7B00AF01C7 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = ../Frameworks/Dropbox.framework; sourceTree = "<group>"; };
+		0FACAC091928802100AF01C7 /* CSDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDetailViewController.h; sourceTree = "<group>"; };
+		0FACAC0A1928802100AF01C7 /* CSDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDetailViewController.m; sourceTree = "<group>"; };
 		DFC7041418A253BA00819CC6 /* DropboxSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropboxSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC7041718A253BA00819CC6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DFC7041918A253BA00819CC6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -190,6 +193,8 @@
 				DFC7041E18A253BA00819CC6 /* Supporting Files */,
 				DFC704F718ABC74E00819CC6 /* CSTableViewCell.h */,
 				DFC704F818ABC74E00819CC6 /* CSTableViewCell.m */,
+				0FACAC091928802100AF01C7 /* CSDetailViewController.h */,
+				0FACAC0A1928802100AF01C7 /* CSDetailViewController.m */,
 			);
 			path = DropboxSync;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FACAC0B1928802100AF01C7 /* CSDetailViewController.m in Sources */,
 				DFC7042818A253BA00819CC6 /* CSAppDelegate.m in Sources */,
 				DFC704F918ABC74E00819CC6 /* CSTableViewCell.m in Sources */,
 				DFC7042418A253BA00819CC6 /* main.m in Sources */,

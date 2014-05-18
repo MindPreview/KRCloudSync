@@ -13,6 +13,7 @@
 #import "KRResourceProperty.h"
 #import "KRFileService.h"
 #import "CSTableViewCell.h"
+#import "CSDetailViewController.h"
 
 #import <Dropbox/Dropbox.h>
 
@@ -265,6 +266,14 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"Row pressed!!");
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"masterToDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        id object = [self.syncItems objectAtIndex:[indexPath row]];
+        [(CSDetailViewController*)[segue destinationViewController] setSyncItem:object];
+    }
 }
 
 @end
