@@ -97,28 +97,32 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
 -(void)syncDropboxDocumentFiles{
 	[self.cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
-		if(error){
-			NSLog(@"Failed to sync : %@", error);
-            return;
-		}else{
-			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
-			NSLog(@"syncItems - %@", syncItems);
-		}
-        
-        [[_cloudSync factory] setLastSyncTime:[NSDate date]];
-        
-        self.syncItems = [self removeDeletedItems:syncItems];
-        if([syncItems count]){
-            [self.tableView reloadData];
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-        }
+        [self processSyncedItem:syncItems error:error];
 
         [[_cloudSync service] enableUpdate];
     }];
     
     [[_cloudSync service] disableUpdate];
+}
+
+-(void)processSyncedItem:(NSArray*)syncItems error:(NSError*)error{
+    if(error){
+        NSLog(@"Failed to sync : %@", error);
+        return;
+    }else{
+        NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
+        NSLog(@"syncItems - %@", syncItems);
+    }
+    
+    [[_cloudSync factory] setLastSyncTime:[NSDate date]];
+    
+    self.syncItems = [self removeDeletedItems:syncItems];
+    if([syncItems count]){
+        [self.tableView reloadData];
+    }else{
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
 }
 
 -(void)syncDropboxDocumentFilesUsingBlocks{
@@ -135,23 +139,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     };
     
 	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
-		if(error){
-			NSLog(@"Failed to sync : %@", error);
-            return;
-		}else{
-			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
-			NSLog(@"syncItems - %@", syncItems);
-		}
-        
-        [[_cloudSync factory] setLastSyncTime:[NSDate date]];
-        
-        self.syncItems = [self removeDeletedItems:syncItems];
-        if([syncItems count]){
-            [self.tableView reloadData];
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-        }
+		[self processSyncedItem:syncItems error:error];
         
         [[_cloudSync service] enableUpdate];
     }];
