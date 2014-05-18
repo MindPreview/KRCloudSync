@@ -481,7 +481,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         if(!fileInfo && DBErrorParamsNotFound == error.code){
             break;
         }else{
-            uniqueFileName = [NSString stringWithFormat:@"%@ (%u)", fileNameOnly, ++index];
+            uniqueFileName = [NSString stringWithFormat:@"%@ (%ld)", fileNameOnly, ++index];
             uniqueFileName = [uniqueFileName stringByAppendingPathExtension:extension];
             
             pathString = [directory stringByAppendingPathComponent:uniqueFileName];
@@ -512,6 +512,37 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     trashURL = [KRFileService uniqueFileURL:trashURL];
     
     return [fileManager moveItemAtURL:url toURL:trashURL error:outError];
+}
+
+-(void)renameFileUsingBlock:(KRSyncItem*)item
+				newFileName:(NSString*)newFileName
+			 completedBlock:(KRCloudSyncResultBlock)block{
+	NSAssert(block, @"Mustn't be nil");
+	if(!block)
+		return;
+	
+    NSString* filePath = [[[item remoteResource] URL] path];
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL* url = [NSURL fileURLWithPath:filePath];
+    NSString* fileName = [url lastPathComponent];
+    NSAssert([fileName length], @"Mustn't be nil");
+    if(0 == [fileName length])
+        return;
+    
+    DBPath *path = [[DBPath root] childPath:filePath];
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+
+    NSString* newFilePath = [filePath stringByDeletingLastPathComponent];
+    newFilePath = [newFilePath stringByAppendingPathComponent:newFileName];
+    newFilePath = [newFilePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    DBPath* toPath = [[DBPath root] childPath:newFilePath];
+    
+    NSError* error;
+    BOOL ret = [fileSystem movePath:path toPath:toPath error:&error];
+    
+    block(ret, error);
+	return;
 }
 
 -(void)enableUpdate{

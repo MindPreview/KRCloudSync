@@ -29,13 +29,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSAssert(_syncItem, @"Must not be nil");
-    self.textField.text = [[[[self.syncItem localResource] URL] path] lastPathComponent];
+    self.textField.text = [self fileName];
+}
+
+- (NSString*)fileName{
+    return [[[[self.syncItem localResource] URL] path] lastPathComponent];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    if([[self fileName] isEqualToString:self.textField.text])
+        return;
+        
+    if([self.delegate respondsToSelector:@selector(didChangeFileName:name:)])
+        [self.delegate didChangeFileName:self name:self.textField.text];
 }
 
 /*

@@ -19,7 +19,7 @@
 
 NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
-@interface CSViewController ()
+@interface CSViewController () <CSDetailViewControllerDelegate>
 @property (nonatomic) KRCloudSync* cloudSync;
 @property (nonatomic) NSArray* syncItems;
 @property (nonatomic) NSString* documentsPath;
@@ -272,8 +272,29 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     if ([[segue identifier] isEqualToString:@"masterToDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         id object = [self.syncItems objectAtIndex:[indexPath row]];
+        [[segue destinationViewController] setDelegate:self];
         [(CSDetailViewController*)[segue destinationViewController] setSyncItem:object];
+        [(CSDetailViewController*)[segue destinationViewController] setIndexPath:indexPath];
     }
+}
+
+/// MARK: CSDetailViewController delegate
+- (void)didChangeFileName:(CSDetailViewController*)viewController name:(NSString *)fileName{
+    KRSyncItem* syncItem = viewController.syncItem;
+    NSString* srcPath = [[[syncItem localResource] URL] path];
+    NSString* destPath = [self.documentsPath stringByAppendingPathComponent:fileName];
+    destPath = [KRFileService uniqueFilePath:destPath];
+    
+    NSError* error;
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    if(![fileManager moveItemAtPath:srcPath toPath:destPath error:&error]){
+        NSLog(@"Can't rename file - src:%@, dest:%@", srcPath, destPath);
+        return;
+    }
+
+    [[self.cloudSync service] renameFileUsingBlock:syncItem newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"renameFile - ret:%@, error:%@", succeeded?@"YES":@"NO", error);
+    }];
 }
 
 @end

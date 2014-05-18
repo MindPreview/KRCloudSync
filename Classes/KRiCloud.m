@@ -502,13 +502,14 @@ static NSString* createUUID()
 
 
 #pragma mark - rename File
--(void)renameFileUsingBlock:(NSString*)fileName
+-(void)renameFileUsingBlock:(NSURL*)fileURL
 					newName:(NSString*)newFileName
 					  block:(KRiCloudResultBlock)block{
 	NSAssert(block, @"Mustn't be nil");
 	if(!block)
 		return;
 	
+    NSString* fileName = [[fileURL path] lastPathComponent];
 	if(![_query isStarted] || 0==[_query resultCount]){
 		block(NO, [self createFileNotFoundError:fileName]);
 		return;
