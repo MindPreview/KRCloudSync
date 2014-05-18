@@ -88,7 +88,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
             NSLog(@"Dropbox service is available");
-            [self syncDropboxDocumentFilesWithBlocks];
+            [self syncDropboxDocumentFilesUsingBlocks];
         }else{
             NSLog(@"Can't use Dropbox service");
         }
@@ -121,7 +121,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [[_cloudSync service] disableUpdate];
 }
 
--(void)syncDropboxDocumentFilesWithBlocks{
+-(void)syncDropboxDocumentFilesUsingBlocks{
     KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
         NSLog(@"StartBlock-%@", syncItems);
         self.syncItems = syncItems;
@@ -230,7 +230,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{
     NSLog(@"Cloud item changed - service:%@, url:%@", service, url);
-    [self syncDropboxDocumentFilesWithBlocks];
+    [self syncDropboxDocumentFilesUsingBlocks];
 }
 
 #pragma mark - UITableView source
@@ -267,7 +267,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         NSError* error;
         BOOL ret = [fileManager removeItemAtURL:url error:&error];
         if(ret){
-            [self syncDropboxDocumentFilesWithBlocks];
+            [self syncDropboxDocumentFilesUsingBlocks];
         }
     }
 }
