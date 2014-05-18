@@ -608,7 +608,7 @@
 				DSTROOT = /tmp/CloudSync.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/CloudSync-Prefix.pch";
@@ -626,7 +626,7 @@
 				DSTROOT = /tmp/CloudSync.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/CloudSync-Prefix.pch";
