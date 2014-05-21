@@ -72,7 +72,7 @@ typedef void (^KRiCloudProgressBlock)(NSURL* url, double progress);
 								   error:(NSError**)error;
 
 
--(void)renameFileUsingBlock:(NSString*)fileName
+-(void)renameFileUsingBlock:(NSURL*)fileURL
 					newName:(NSString*)newFileName
 					  block:(KRiCloudResultBlock)block;
 

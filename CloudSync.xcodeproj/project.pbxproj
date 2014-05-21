@@ -310,14 +310,14 @@
 			children = (
 				DFC7046B18A2594A00819CC6 /* KRCloudService.h */,
 				DFC7046C18A2594A00819CC6 /* KRCloudService.m */,
+				DFC7047318A2594A00819CC6 /* KRiCloudService.h */,
+				DFC7047418A2594A00819CC6 /* KRiCloudService.m */,
 				DFC7046D18A2594A00819CC6 /* KRDropboxService.h */,
 				DFC7046E18A2594A00819CC6 /* KRDropboxService.m */,
 				DFC7046F18A2594A00819CC6 /* KRFileService.h */,
 				DFC7047018A2594A00819CC6 /* KRFileService.m */,
 				DFC7047118A2594A00819CC6 /* KRiCloud.h */,
 				DFC7047218A2594A00819CC6 /* KRiCloud.m */,
-				DFC7047318A2594A00819CC6 /* KRiCloudService.h */,
-				DFC7047418A2594A00819CC6 /* KRiCloudService.m */,
 				DFC7047518A2594A00819CC6 /* KRLocalFileService.h */,
 				DFC7047618A2594A00819CC6 /* KRLocalFileService.m */,
 			);
@@ -608,7 +608,7 @@
 				DSTROOT = /tmp/CloudSync.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/CloudSync-Prefix.pch";
@@ -626,7 +626,7 @@
 				DSTROOT = /tmp/CloudSync.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/allting/workspace/projects/pods/KRCloudSync/Frameworks,
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/CloudSync-Prefix.pch";

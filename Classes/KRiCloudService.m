@@ -400,19 +400,18 @@
 	return YES;
 }
 
--(void)renameFileUsingBlock:(NSString*)fileName
+-(void)renameFileUsingBlock:(KRSyncItem*)item
 				newFileName:(NSString*)newFileName
 			 completedBlock:(KRCloudSyncResultBlock)block{
 	NSAssert(block, @"Mustn't be nil");
 	if(!block)
 		return;
 	
-	if([fileName isEqualToString:newFileName])
-		return;
-	
-	[_iCloud renameFileUsingBlock:fileName newName:newFileName block:^(BOOL ret, NSError* error){
+    NSURL* fileURL = [[item remoteResource] URL];
+	[_iCloud renameFileUsingBlock:fileURL newName:newFileName block:^(BOOL ret, NSError* error){
 		block(ret, error);
 	}];
+    
 	return;
 }
 

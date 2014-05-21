@@ -9,12 +9,13 @@
 #import "CSViewController.h"
 #import "KRCloudSync.h"
 #import "CSTableViewCell.h"
+#import "CSDetailViewController.h"
 
 #import <Dropbox/Dropbox.h>
 
 NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
-@interface CSViewController ()
+@interface CSViewController () <CSDetailViewControllerDelegate>
 @property (nonatomic) KRCloudSync* cloudSync;
 @property (nonatomic) NSArray* syncItems;
 @property (nonatomic) NSString* documentsPath;
@@ -84,7 +85,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
             NSLog(@"Dropbox service is available");
-            [self syncDropboxDocumentFilesWithBlocks];
+            [self syncDropboxDocumentFilesUsingBlocks];
         }else{
             NSLog(@"Can't use Dropbox service");
         }
@@ -93,23 +94,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
 -(void)syncDropboxDocumentFiles{
 	[self.cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
-		if(error){
-			NSLog(@"Failed to sync : %@", error);
-            return;
-		}else{
-			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
-			NSLog(@"syncItems - %@", syncItems);
-		}
-        
-        [[_cloudSync factory] setLastSyncTime:[NSDate date]];
-        
-        self.syncItems = [self removeDeletedItems:syncItems];
-        if([syncItems count]){
-            [self.tableView reloadData];
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-        }
+        [self processSyncedItem:syncItems error:error];
 
         [[_cloudSync service] enableUpdate];
     }];
@@ -117,7 +102,27 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     [[_cloudSync service] disableUpdate];
 }
 
--(void)syncDropboxDocumentFilesWithBlocks{
+-(void)processSyncedItem:(NSArray*)syncItems error:(NSError*)error{
+    if(error){
+        NSLog(@"Failed to sync : %@", error);
+        return;
+    }else{
+        NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
+        NSLog(@"syncItems - %@", syncItems);
+    }
+    
+    [[_cloudSync factory] setLastSyncTime:[NSDate date]];
+    
+    self.syncItems = [self removeDeletedItems:syncItems];
+    if([syncItems count]){
+        [self.tableView reloadData];
+    }else{
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+}
+
+-(void)syncDropboxDocumentFilesUsingBlocks{
     KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
         NSLog(@"StartBlock-%@", syncItems);
         self.syncItems = syncItems;
@@ -131,23 +136,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     };
     
 	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
-		if(error){
-			NSLog(@"Failed to sync : %@", error);
-            return;
-		}else{
-			NSLog(@"Succeeded to sync - item count:%d", [syncItems count]);
-			NSLog(@"syncItems - %@", syncItems);
-		}
-        
-        [[_cloudSync factory] setLastSyncTime:[NSDate date]];
-        
-        self.syncItems = [self removeDeletedItems:syncItems];
-        if([syncItems count]){
-            [self.tableView reloadData];
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"There are no items to sync" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
-        }
+		[self processSyncedItem:syncItems error:error];
         
         [[_cloudSync service] enableUpdate];
     }];
@@ -226,7 +215,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{
     NSLog(@"Cloud item changed - service:%@, url:%@", service, url);
-    [self syncDropboxDocumentFilesWithBlocks];
+    [self syncDropboxDocumentFilesUsingBlocks];
 }
 
 #pragma mark - UITableView source
@@ -263,7 +252,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         NSError* error;
         BOOL ret = [fileManager removeItemAtURL:url error:&error];
         if(ret){
-            [self syncDropboxDocumentFilesWithBlocks];
+            [self syncDropboxDocumentFilesUsingBlocks];
         }
     }
 }
@@ -273,6 +262,35 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"Row pressed!!");
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"masterToDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        id object = [self.syncItems objectAtIndex:[indexPath row]];
+        [[segue destinationViewController] setDelegate:self];
+        [(CSDetailViewController*)[segue destinationViewController] setSyncItem:object];
+        [(CSDetailViewController*)[segue destinationViewController] setIndexPath:indexPath];
+    }
+}
+
+/// MARK: CSDetailViewController delegate
+- (void)didChangeFileName:(CSDetailViewController*)viewController name:(NSString *)fileName{
+    KRSyncItem* syncItem = viewController.syncItem;
+    NSString* srcPath = [[[syncItem localResource] URL] path];
+    NSString* destPath = [self.documentsPath stringByAppendingPathComponent:fileName];
+    destPath = [KRFileService uniqueFilePath:destPath];
+    
+    NSError* error;
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    if(![fileManager moveItemAtPath:srcPath toPath:destPath error:&error]){
+        NSLog(@"Can't rename file - src:%@, dest:%@", srcPath, destPath);
+        return;
+    }
+
+    [[self.cloudSync service] renameFileUsingBlock:syncItem newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"renameFile - ret:%@, error:%@", succeeded?@"YES":@"NO", error);
+    }];
 }
 
 @end

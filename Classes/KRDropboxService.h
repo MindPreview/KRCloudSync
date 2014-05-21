@@ -15,4 +15,5 @@
 
 -(id)initWithDocumentsPaths:(NSString*)path remote:(NSString *)remotePath filter:(KRResourceFilter*)filter;
 
+
 @end
