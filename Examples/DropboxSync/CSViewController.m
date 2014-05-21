@@ -284,7 +284,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     NSError* error;
     NSFileManager* fileManager = [NSFileManager defaultManager];
     if(![fileManager moveItemAtPath:srcPath toPath:destPath error:&error]){
-        NSLog(@"Can't rename file - src:%@, dest:%@", srcPath, destPath);
+        NSLog(@"Can't rename file - src:%@, dest:%@, error:%@", srcPath, destPath, error);
         return;
     }
 
