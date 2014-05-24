@@ -28,7 +28,7 @@
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
 	   completedBlock:(KRCloudSyncCompletedBlock)completed;
 
--(void)renameFileUsingBlock:(KRSyncItem*)item
+-(void)renameFileUsingBlock:(NSString*)filePath
 				newFileName:(NSString*)newFileName
 			 completedBlock:(KRCloudSyncResultBlock)block;
 

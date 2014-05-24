@@ -481,7 +481,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         if(!fileInfo && DBErrorParamsNotFound == error.code){
             break;
         }else{
-            uniqueFileName = [NSString stringWithFormat:@"%@ (%ld)", fileNameOnly, ++index];
+            uniqueFileName = [NSString stringWithFormat:@"%@ (%ld)", fileNameOnly, (long)++index];
             uniqueFileName = [uniqueFileName stringByAppendingPathExtension:extension];
             
             pathString = [directory stringByAppendingPathComponent:uniqueFileName];
@@ -514,14 +514,13 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     return [fileManager moveItemAtURL:url toURL:trashURL error:outError];
 }
 
--(void)renameFileUsingBlock:(KRSyncItem*)item
+-(void)renameFileUsingBlock:(NSString*)filePath
 				newFileName:(NSString*)newFileName
 			 completedBlock:(KRCloudSyncResultBlock)block{
 	NSAssert(block, @"Mustn't be nil");
 	if(!block)
 		return;
 	
-    NSString* filePath = [[[item remoteResource] URL] path];
     filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL* url = [NSURL fileURLWithPath:filePath];

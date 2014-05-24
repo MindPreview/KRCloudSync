@@ -292,7 +292,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         return;
     }
 
-    [[self.cloudSync service] renameFileUsingBlock:syncItem newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
+    NSString* filePath = [syncItem remotePath];
+    [[self.cloudSync service] renameFileUsingBlock:filePath newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"renameFile - ret:%@, error:%@", succeeded?@"YES":@"NO", error);
     }];
 }
