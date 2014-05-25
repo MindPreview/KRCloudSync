@@ -138,6 +138,11 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
   completedBlock:(KRCloudSyncCompletedBlock)completedBlock{
     
     NSUInteger count = [syncItems count];
+    if(0 == count){
+        completedBlock(syncItems, nil);
+        return;
+    }
+    
     NSUInteger __block completed = 0;
     NSError* __block lastError = nil;
     KRDropboxServiceResultBlock resultBlock = ^(BOOL succeeded, NSError* error){
@@ -542,6 +547,24 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     
     block(ret, error);
 	return;
+}
+
+-(BOOL)removeFileUsingBlock:(NSString*)filePath
+			 completedBlock:(KRCloudSyncResultBlock)block{
+	NSAssert(block, @"Mustn't be nil");
+	if(!block)
+		return NO;
+	
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    DBPath *path = [[DBPath root] childPath:filePath];
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+    
+    NSError* error;
+    BOOL ret = [fileSystem deletePath:path error:&error];
+    
+    block(ret, error);
+	return YES;
 }
 
 -(void)enableUpdate{
