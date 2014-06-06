@@ -21,6 +21,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
 @property (nonatomic) NSArray* monitorFiles;
+@property (nonatomic, assign, getter = isRegisteredObserver) BOOL registeredObserver;
 @end
 
 @implementation KRDropboxService
@@ -48,6 +49,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 	self = [super initWithDocumentsPaths:path remote:remotePath];
 	if(self){
 		self.filter = filter;
+        self.registeredObserver = NO;
 	}
 	return self;
 }
@@ -568,17 +570,27 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 }
 
 -(void)enableUpdate{
+    if(self.isRegisteredObserver)
+        return;
+    
     DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
 	[fileSystem addObserver:self forPathAndDescendants:[DBPath root] block:^{
         NSLog(@"%@ was changed", [[DBPath root] stringValue]);
         if([self.delegate respondsToSelector:@selector(itemDidChanged:URL:)])
             [self.delegate itemDidChanged:self URL:[NSURL URLWithString:[[DBPath root] stringValue]]];
     }];
+    
+    self.registeredObserver = YES;
 }
 
 -(void)disableUpdate{
+    if(!self.isRegisteredObserver)
+        return;
+    
     DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
 	[fileSystem removeObserver:self];
+    
+    self.registeredObserver = NO;
 }
 
 @end
