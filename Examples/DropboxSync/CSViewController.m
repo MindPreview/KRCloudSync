@@ -88,7 +88,6 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(void)syncWithDropbox{
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
-            NSLog(@"Dropbox service is available");
             [self syncDropboxDocumentFilesUsingBlocks];
         }else{
             NSLog(@"Can't use Dropbox service");
@@ -151,10 +150,10 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(CSTableViewCell*)cellForSyncItem:(KRSyncItem*)item{
     
 //    NSInteger row = [self.syncItems indexOfObject:item];
-    NSString* path = [[[item localResource] URL] path];
+    NSString* path = [item localPath];
     NSInteger row = 0;
     for(KRSyncItem* syncItem in self.syncItems){
-        if([path isEqualToString:[[[syncItem localResource] URL] path]])
+        if([path isEqualToString:[syncItem localPath]])
             break;
         row++;
     }
