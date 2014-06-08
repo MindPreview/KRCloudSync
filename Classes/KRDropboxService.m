@@ -65,17 +65,20 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	dispatch_async(globalQueue, ^{
-        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-        if(!account)
-            return;
-        
-        if(![DBFilesystem sharedFilesystem]){
-            DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-            [DBFilesystem setSharedFilesystem:fileSystem];
-        }
-
         DBError* error = nil;
-        NSArray* resources = [self resourcesFromDropbox:[DBPath root] error:&error];
+        NSArray* resources = nil;
+        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
+        if(!account){
+            NSDictionary* details = @{NSLocalizedDescriptionKey: @"Invalid dropbox account"};
+            error = [NSError errorWithDomain:@"com.mindpreview.cloudsync" code:401 userInfo:details];
+        }else{
+            if(![DBFilesystem sharedFilesystem]){
+                DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+                [DBFilesystem setSharedFilesystem:fileSystem];
+            }
+
+            resources = [self resourcesFromDropbox:[DBPath root] error:&error];
+        }
         
 		dispatch_queue_t mainQueue = dispatch_get_main_queue();
 		dispatch_async(mainQueue, ^{
