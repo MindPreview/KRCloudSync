@@ -38,7 +38,7 @@
 	return YES;
 }
 
--(void)renameFileUsingBlock:(KRSyncItem*)item
+-(void)renameFileUsingBlock:(NSString*)filePath
 				newFileName:(NSString*)newFileName
 			 completedBlock:(KRCloudSyncResultBlock)block{
 }

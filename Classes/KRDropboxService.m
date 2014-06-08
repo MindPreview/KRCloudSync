@@ -21,6 +21,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 @interface KRDropboxService()
 @property (nonatomic) KRResourceFilter* filter;
 @property (nonatomic) NSArray* monitorFiles;
+@property (nonatomic, assign, getter = isRegisteredObserver) BOOL registeredObserver;
 @end
 
 @implementation KRDropboxService
@@ -48,6 +49,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 	self = [super initWithDocumentsPaths:path remote:remotePath];
 	if(self){
 		self.filter = filter;
+        self.registeredObserver = NO;
 	}
 	return self;
 }
@@ -63,8 +65,11 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	dispatch_async(globalQueue, ^{
+        DBError* error = nil;
+        NSArray* resources = nil;
         DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
         if(!account){
+<<<<<<< HEAD
             // TODO: must call block func.
             return;
         }
@@ -73,9 +78,18 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
             DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
             [DBFilesystem setSharedFilesystem:fileSystem];
         }
+=======
+            NSDictionary* details = @{NSLocalizedDescriptionKey: @"Invalid dropbox account"};
+            error = [NSError errorWithDomain:@"com.mindpreview.cloudsync" code:401 userInfo:details];
+        }else{
+            if(![DBFilesystem sharedFilesystem]){
+                DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
+                [DBFilesystem setSharedFilesystem:fileSystem];
+            }
+>>>>>>> b3a8bf049c5df8c2f5d8196beebe14b739e3e341
 
-        DBError* error = nil;
-        NSArray* resources = [self resourcesFromDropbox:[DBPath root] error:&error];
+            resources = [self resourcesFromDropbox:[DBPath root] error:&error];
+        }
         
 		dispatch_queue_t mainQueue = dispatch_get_main_queue();
 		dispatch_async(mainQueue, ^{
@@ -140,6 +154,11 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
   completedBlock:(KRCloudSyncCompletedBlock)completedBlock{
     
     NSUInteger count = [syncItems count];
+    if(0 == count){
+        completedBlock(syncItems, nil);
+        return;
+    }
+    
     NSUInteger __block completed = 0;
     NSError* __block lastError = nil;
     KRDropboxServiceResultBlock resultBlock = ^(BOOL succeeded, NSError* error){
@@ -483,7 +502,7 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         if(!fileInfo && DBErrorParamsNotFound == error.code){
             break;
         }else{
-            uniqueFileName = [NSString stringWithFormat:@"%@ (%ld)", fileNameOnly, ++index];
+            uniqueFileName = [NSString stringWithFormat:@"%@ (%ld)", fileNameOnly, (long)++index];
             uniqueFileName = [uniqueFileName stringByAppendingPathExtension:extension];
             
             pathString = [directory stringByAppendingPathComponent:uniqueFileName];
@@ -516,14 +535,13 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     return [fileManager moveItemAtURL:url toURL:trashURL error:outError];
 }
 
--(void)renameFileUsingBlock:(KRSyncItem*)item
+-(void)renameFileUsingBlock:(NSString*)filePath
 				newFileName:(NSString*)newFileName
 			 completedBlock:(KRCloudSyncResultBlock)block{
 	NSAssert(block, @"Mustn't be nil");
 	if(!block)
 		return;
 	
-    NSString* filePath = [[[item remoteResource] URL] path];
     filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL* url = [NSURL fileURLWithPath:filePath];
@@ -547,18 +565,46 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 	return;
 }
 
+-(BOOL)removeFileUsingBlock:(NSString*)filePath
+			 completedBlock:(KRCloudSyncResultBlock)block{
+	NSAssert(block, @"Mustn't be nil");
+	if(!block)
+		return NO;
+	
+    filePath = [filePath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    DBPath *path = [[DBPath root] childPath:filePath];
+    DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+    
+    NSError* error;
+    BOOL ret = [fileSystem deletePath:path error:&error];
+    
+    block(ret, error);
+	return YES;
+}
+
 -(void)enableUpdate{
+    if(self.isRegisteredObserver)
+        return;
+    
     DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
 	[fileSystem addObserver:self forPathAndDescendants:[DBPath root] block:^{
         NSLog(@"%@ was changed", [[DBPath root] stringValue]);
         if([self.delegate respondsToSelector:@selector(itemDidChanged:URL:)])
             [self.delegate itemDidChanged:self URL:[NSURL URLWithString:[[DBPath root] stringValue]]];
     }];
+    
+    self.registeredObserver = YES;
 }
 
 -(void)disableUpdate{
+    if(!self.isRegisteredObserver)
+        return;
+    
     DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
 	[fileSystem removeObserver:self];
+    
+    self.registeredObserver = NO;
 }
 
 @end

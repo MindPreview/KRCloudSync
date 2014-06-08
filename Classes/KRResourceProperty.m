@@ -49,7 +49,7 @@
 		return KRSyncItemActionNone;
 	
 	NSTimeInterval interval = [date timeIntervalSinceDate:anotherDate];
-	int roundInterval = lroundf(interval);
+	long roundInterval = lroundf(interval);
 	if(1<=roundInterval)
 		return KRSyncItemActionLocalAccept;
 	else if(roundInterval<=-1)

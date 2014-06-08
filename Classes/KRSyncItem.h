@@ -37,6 +37,11 @@ typedef enum {
 		remoteResource:(KRResourceProperty*)remoteResource
             syncAction:(KRSyncItemAction)action;
 
+-(NSURL*)remoteURL;
+-(NSString*)remotePath;
+-(NSURL*)localURL;
+-(NSString*)localPath;
+
 -(NSString*)description;
 
 @end

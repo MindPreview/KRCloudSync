@@ -84,7 +84,6 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(void)syncWithDropbox{
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
-            NSLog(@"Dropbox service is available");
             [self syncDropboxDocumentFilesUsingBlocks];
         }else{
             NSLog(@"Can't use Dropbox service");
@@ -147,10 +146,10 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(CSTableViewCell*)cellForSyncItem:(KRSyncItem*)item{
     
 //    NSInteger row = [self.syncItems indexOfObject:item];
-    NSString* path = [[[item localResource] URL] path];
+    NSString* path = [item localPath];
     NSInteger row = 0;
     for(KRSyncItem* syncItem in self.syncItems){
-        if([path isEqualToString:[[[syncItem localResource] URL] path]])
+        if([path isEqualToString:[syncItem localPath]])
             break;
         row++;
     }
@@ -288,7 +287,8 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         return;
     }
 
-    [[self.cloudSync service] renameFileUsingBlock:syncItem newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
+    NSString* filePath = [syncItem remotePath];
+    [[self.cloudSync service] renameFileUsingBlock:filePath newFileName:[destPath lastPathComponent] completedBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"renameFile - ret:%@, error:%@", succeeded?@"YES":@"NO", error);
     }];
 }

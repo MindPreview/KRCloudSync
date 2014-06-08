@@ -45,10 +45,6 @@ typedef void (^KRiCloudServiceDownloadResultBlock)(BOOL succeeded, NSUInteger co
 		progressBlock:(KRCloudSyncProgressBlock)progressBlock
 	   completedBlock:(KRCloudSyncCompletedBlock)completed;
 
--(void)renameFileUsingBlock:(KRSyncItem*)item
-				newFileName:(NSString*)newFileName
-			 completedBlock:(KRCloudSyncResultBlock)block;
-
 -(BOOL)addFileUsingBlock:(NSString*)filePath
 		  completedBlock:(KRCloudSyncResultBlock)block;
 -(BOOL)addFile:(NSString*)filePath error:(NSError**)error;

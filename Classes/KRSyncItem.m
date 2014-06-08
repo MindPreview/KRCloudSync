@@ -24,6 +24,22 @@
 	return self;
 }
 
+-(NSURL*)remoteURL{
+    return [_remoteResource URL];
+}
+
+-(NSString*)remotePath{
+    return [[_remoteResource URL] path];
+}
+
+-(NSString*)localPath{
+    return [[_localResource URL] path];
+}
+
+-(NSURL*)localURL{
+    return [_localResource URL];
+}
+
 -(NSString*)description{
 	NSString* action = [self stringFromAction];
 	
