@@ -88,7 +88,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 -(void)checkAndSyncWithDropbox{
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
-            [self syncDropboxDocumentFiles:NO];
+            [self syncDropboxDocumentFiles];
         }else{
             NSLog(@"Can't use Dropbox service");
         }
@@ -115,9 +115,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     }
 }
 
--(void)syncDropboxDocumentFiles:(BOOL)syncWithRemote{
-    [self.cloudSync.factory setShouldSyncWithRemote:syncWithRemote];
-    
+-(void)syncDropboxDocumentFiles{
     KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
         NSLog(@"StartBlock-%@", syncItems);
         self.syncItems = syncItems;
@@ -130,13 +128,20 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         [cell setProgressValue:progress];
     };
     
-	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
+    __weak KRCloudSync *weakCloudSync = self.cloudSync;
+	[_cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
 		[self processSyncedItem:syncItems error:error];
         
-        [[_cloudSync service] enableUpdate];
+        [[weakCloudSync factory] setShouldSyncWithRemote:NO];
+        [[weakCloudSync service] enableUpdate];
     }];
     
     [[_cloudSync service] disableUpdate];
+}
+
+-(void)syncDropboxDocumentFilesWithRemote{
+    [self.cloudSync.factory setShouldSyncWithRemote:YES];
+    [self syncDropboxDocumentFiles];
 }
 
 -(CSTableViewCell*)cellForSyncItem:(KRSyncItem*)item{
@@ -210,7 +215,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{
     NSLog(@"Cloud item changed - service:%@, url:%@", service, url);
-    [self syncDropboxDocumentFiles:YES];
+    [self syncDropboxDocumentFilesWithRemote];
 }
 
 #pragma mark - UITableView source
@@ -247,7 +252,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         NSError* error;
         BOOL ret = [fileManager removeItemAtURL:url error:&error];
         if(ret){
-            [self syncDropboxDocumentFiles:NO];
+            [self syncDropboxDocumentFiles];
         }
     }
 }
@@ -256,7 +261,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Row pressed!!");
+    NSLog(@"%@ row pressed!!", indexPath);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
