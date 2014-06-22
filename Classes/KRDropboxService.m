@@ -69,16 +69,6 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         NSArray* resources = nil;
         DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
         if(!account){
-<<<<<<< HEAD
-            // TODO: must call block func.
-            return;
-        }
-        
-        if(![DBFilesystem sharedFilesystem]){
-            DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
-            [DBFilesystem setSharedFilesystem:fileSystem];
-        }
-=======
             NSDictionary* details = @{NSLocalizedDescriptionKey: @"Invalid dropbox account"};
             error = [NSError errorWithDomain:@"com.mindpreview.cloudsync" code:401 userInfo:details];
         }else{
@@ -86,7 +76,6 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
                 DBFilesystem *fileSystem = [[DBFilesystem alloc] initWithAccount:account];
                 [DBFilesystem setSharedFilesystem:fileSystem];
             }
->>>>>>> b3a8bf049c5df8c2f5d8196beebe14b739e3e341
 
             resources = [self resourcesFromDropbox:[DBPath root] error:&error];
         }
