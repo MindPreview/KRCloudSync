@@ -16,7 +16,6 @@
 		self.cloudService = [[KRCloudService alloc]init];
 		self.fileService = [[KRFileService alloc]init];
 		self.filter = [[KRResourceFilter alloc]init];
-        self.shouldSyncWithRemote = YES;
 	}
 	return self;
 }

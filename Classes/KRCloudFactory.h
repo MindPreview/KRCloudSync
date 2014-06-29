@@ -19,6 +19,5 @@
 @property (nonatomic) KRResourceFilter* filter;
 @property (nonatomic) KRConflictResolver* conflictResolver;
 @property (nonatomic) NSDate* lastSyncTime;
-@property (nonatomic) BOOL shouldSyncWithRemote;
 
 @end

@@ -15,7 +15,6 @@
 @property (nonatomic) KRFileService* fileService;
 @property (nonatomic) KRCloudService* cloudService;
 @property (nonatomic) NSDate* lastSyncTime;
-@property (nonatomic) BOOL shouldSyncWithRemote;
 @end
 
 @implementation KRResourceComparer
@@ -26,7 +25,6 @@
         self.fileService = factory.fileService;
         self.cloudService = factory.cloudService;
         self.lastSyncTime = factory.lastSyncTime;
-        self.shouldSyncWithRemote = factory.shouldSyncWithRemote;
 	}
 	return self;
 }
@@ -47,9 +45,7 @@
 		KRSyncItemAction action = KRSyncItemActionNone;
 		if(!localResource){
             localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
-            if(self.shouldSyncWithRemote){
-                action = KRSyncItemActionRemoteAccept;
-            }else if(!self.lastSyncTime){
+            if(!self.lastSyncTime){
                 action = KRSyncItemActionRemoteAccept;
             }else{
                 NSDate* modifiedDate = [remoteResource modifiedDate];
@@ -63,9 +59,7 @@
 		}else if(!remoteResource){
             remoteResource = [self.cloudService createResourceFromLocalResource:localResource];
 
-            if(self.shouldSyncWithRemote){
-                action = KRSyncItemActionRemoveInLocal;
-            }else if(!self.lastSyncTime){
+            if(!self.lastSyncTime){
                 action = KRSyncItemActionAddToRemote;
             }else{
                 NSDate* modifiedDate = [localResource modifiedDate];
