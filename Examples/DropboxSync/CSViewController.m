@@ -132,7 +132,6 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 	[_cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
 		[self processSyncedItem:syncItems error:error];
         
-        [[weakCloudSync factory] setShouldSyncWithRemote:NO];
         [[weakCloudSync service] enableUpdate];
     }];
     
@@ -140,7 +139,6 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 }
 
 -(void)syncDropboxDocumentFilesWithRemote{
-    [self.cloudSync.factory setShouldSyncWithRemote:YES];
     [self syncDropboxDocumentFiles];
 }
 
