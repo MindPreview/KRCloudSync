@@ -262,7 +262,7 @@
 		if(![url isEqual:item.remoteResource.URL])
 			continue;
 		
-		if(progress<100.f)
+		if(progress<1.f)
 			block(item, progress);
 		else{
 			[self saveSyncItemToLocalUsingBlock:item block:^(BOOL succeeded, NSError* error){

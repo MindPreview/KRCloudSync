@@ -126,6 +126,7 @@ static NSString* createUUID()
 													  object:_query
 													   queue:[NSOperationQueue mainQueue]
 												  usingBlock:notification_block];
+    [_query enableUpdates];
 	[_query startQuery];
 	
 	return YES;
@@ -190,7 +191,7 @@ static NSString* createUUID()
 		NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
 		if([isDownloaded boolValue] &&
 					[self.startDownloadURLs containsObject:url]){
-			_progressBlock(url, 100.f);
+			_progressBlock(url, 1.f);
 			[self.startDownloadURLs removeObject:url];
 			continue;
 		}
@@ -198,7 +199,7 @@ static NSString* createUUID()
 			continue;
 		
 		NSNumber* downloading = [item valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-		float download = [downloading doubleValue];
+		float download = [downloading doubleValue]/100.f;
 		if(0.f<download){
 			_progressBlock(url, download);
 			
@@ -206,7 +207,7 @@ static NSString* createUUID()
 				[self.startDownloadURLs addObject:url];
 			}
 			
-			if(100.f<=download)
+			if(1.f<=download)
 				[self.startDownloadURLs removeObject:url];
 		}else{
 			NSLog(@"Update Item on iCloud:%@", url);
