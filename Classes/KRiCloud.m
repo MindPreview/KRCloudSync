@@ -101,10 +101,10 @@ static NSString* createUUID()
 		return YES;
 	}
 	
-	[_query setPredicate:predicate];
-	// fetch the percent-downloaded key when updating results
-	[_query setValueListAttributes:@[NSMetadataUbiquitousItemPercentDownloadedKey,
-										NSMetadataUbiquitousItemIsDownloadedKey]];
+    [_query setPredicate:predicate];
+    // fetch the percent-downloaded key when updating results
+    [_query setValueListAttributes:@[NSMetadataUbiquitousItemPercentDownloadedKey,
+                                        NSMetadataUbiquitousItemIsDownloadedKey]];
 	
 	
 	__block id notificationId = nil;
@@ -126,8 +126,8 @@ static NSString* createUUID()
 													  object:_query
 													   queue:[NSOperationQueue mainQueue]
 												  usingBlock:notification_block];
-    [_query enableUpdates];
 	[_query startQuery];
+//    [_query enableUpdates];
 	
 	return YES;
 }

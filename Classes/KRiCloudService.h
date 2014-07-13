@@ -33,7 +33,7 @@ typedef void (^KRiCloudServiceDownloadResultBlock)(BOOL succeeded, NSUInteger co
 						   progressBlock:(KRiCloudProgressBlock)progressBlock
 						  completedBlock:(KRiCloudDownloadResultBlock)completedBlock;
 
--(id)initWithDocumentsPath:(NSString*)path filter:(KRResourceFilter*)filter;
+-(id)initWithDocumentsPath:(NSString*)path remote:(NSString*)remotePath filter:(KRResourceFilter*)filter;
 
 -(BOOL)loadResourcesUsingBlock:(KRResourcesCompletedBlock)completed;
 -(BOOL)loadResourcesWithPredicateUsingBlock:(NSPredicate*)predicate

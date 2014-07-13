@@ -10,6 +10,6 @@
 
 @interface KRiCloudFactory : KRCloudFactory
 
--(id)initWithLocalPath:(NSString*)path filters:(NSArray*)filters cloudServiceDelegate:(id)delegate;
+-(id)initWithDocumentsPath:(NSString*)path filters:(NSArray*)filters cloudServiceDelegate:(id)delegate;
 
 @end
