@@ -134,18 +134,10 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
 	if(!completedBlock)
 		return NO;
 	
-    [self syncItems:syncItems progressBlock:progressBlock completedBlock:completedBlock];
-	return YES;
-}
-
--(void)syncItems:(NSArray*)syncItems
-   progressBlock:(KRCloudSyncProgressBlock)progressBlock
-  completedBlock:(KRCloudSyncCompletedBlock)completedBlock{
-    
     NSUInteger count = [syncItems count];
     if(0 == count){
         completedBlock(syncItems, nil);
-        return;
+        return YES;
     }
     
     NSUInteger __block completed = 0;
@@ -194,6 +186,8 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
         
         item.error = error;
     }
+    
+    return YES;
 }
 
 -(BOOL)saveToCloudUsingBlocks:(KRSyncItem*)item

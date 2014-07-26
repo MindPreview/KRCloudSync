@@ -133,12 +133,8 @@
 	return self;
 }
 
--(id)initWithDocumentsPath:(NSString*)path filter:(KRResourceFilter*)filter{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSURL *ubiquityContainer = [fileManager URLForUbiquityContainerIdentifier:nil];
-    NSString* remoteBasePath = [[ubiquityContainer path] stringByAppendingPathComponent:@"Documents"];
-
-	self = [super initWithDocumentsPaths:path remote:remoteBasePath];
+-(id)initWithDocumentsPath:(NSString*)path remote:(NSString*)remotePath filter:(KRResourceFilter*)filter{
+	self = [super initWithDocumentsPaths:path remote:remotePath];
 	if(self){
 		self.filter = filter;
 		_iCloud = [[KRiCloud alloc]init];
@@ -213,21 +209,32 @@
 			if(KRSyncItemActionNone == item.action)
 				continue;
 			
+            BOOL result = NO;
 			NSError* error = nil;
-
-			if(KRSyncItemActionLocalAccept == item.action){
-				if(0 == item.localResource.size.unsignedIntegerValue)
-					continue;
-				
-				[self saveToCloudWithFileCoordinator:fileCoordinator syncItem:item error:&error];
-				item.error = error;
-			}else{
-				if(0 == item.remoteResource.size.unsignedIntegerValue)
-					continue;
-				
-				[self saveToLocalWithFileCoordinator:fileCoordinator syncItem:item error:&error];
-				item.error = error;
-			}
+            switch (item.action) {
+                case KRSyncItemActionLocalAccept:
+                case KRSyncItemActionAddToRemote:
+                    [self saveToCloudWithFileCoordinator:fileCoordinator syncItem:item error:&error];
+                    break;
+                case KRSyncItemActionRemoteAccept:
+                    [self saveToLocalWithFileCoordinator:fileCoordinator syncItem:item error:&error];
+                    break;
+                case KRSyncItemActionRemoveRemoteItem:
+                    result = [self removeFileUsingBlock:item.remotePath completedBlock:^(BOOL succeeded, NSError *error) {
+                        
+                    }];
+                    break;
+                case KRSyncItemActionRemoveInLocal:
+                    result = [self removeFileUsingBlock:item.localPath completedBlock:^(BOOL succeeded, NSError *error) {
+                        
+                    }];
+                    break;
+                case KRSyncItemActionNone:
+                default:
+                    break;
+            }
+            
+            item.error = error;
 		}
 		
 		dispatch_queue_t mainQueue = dispatch_get_main_queue();
@@ -266,7 +273,7 @@
 		if(![url isEqual:item.remoteResource.URL])
 			continue;
 		
-		if(progress<100.f)
+		if(progress<1.f)
 			block(item, progress);
 		else{
 			[self saveSyncItemToLocalUsingBlock:item block:^(BOOL succeeded, NSError* error){

@@ -18,6 +18,9 @@
 @implementation KRCloudSync
 
 +(BOOL)isAvailableService:(KRServiceType)serviceType block:(KRServiceAvailableBlock)block{
+    if(kKRiCloudService == serviceType)
+        return [KRiCloudService isAvailableUsingBlock:block];
+    
     return [KRDropboxService isAvailableUsingBlock:block];
 }
 

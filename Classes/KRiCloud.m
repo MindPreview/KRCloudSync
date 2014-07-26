@@ -25,6 +25,7 @@ static NSString* createUUID()
 
 @interface KRiCloud()
 @property (nonatomic) NSMutableSet* startDownloadURLs;
+@property (nonatomic, copy) KRiCloudProgressBlock progressBlock;
 @end
 
 @implementation KRiCloud
@@ -67,9 +68,8 @@ static NSString* createUUID()
 		_presentedItemOperationQueue = [[NSOperationQueue alloc] init];
 		[_presentedItemOperationQueue setName:[NSString stringWithFormat:@"presenter queue -- %@", self]];
 		[_presentedItemOperationQueue setMaxConcurrentOperationCount:1];
-		
+        
 		[NSFileCoordinator addFilePresenter:self];
-		_shouldUpdateQuery = YES;
 	}
 	return self;
 }
@@ -95,22 +95,15 @@ static NSString* createUUID()
 	NSAssert(block, @"Mustn't be nil");
 	if(!block)
 		return NO;
-
-	if([_query isStarted] && !_shouldUpdateQuery){
-		block(_query, nil);
-		return YES;
-	}
-	
-	[_query setPredicate:predicate];
-	// fetch the percent-downloaded key when updating results
-	[_query setValueListAttributes:@[NSMetadataUbiquitousItemPercentDownloadedKey,
-										NSMetadataUbiquitousItemIsDownloadedKey]];
-	
+    
+    [_query setPredicate:predicate];
+    // fetch the percent-downloaded key when updating results
+    [_query setValueListAttributes:@[NSMetadataUbiquitousItemPercentDownloadedKey,
+                                        NSMetadataUbiquitousItemIsDownloadedKey]];
 	
 	__block id notificationId = nil;
 	typedef void (^notificationObserver_block)(NSNotification *);
 	notificationObserver_block notification_block = ^(NSNotification* note){
-		_shouldUpdateQuery = NO;
 		if(block){
 			[_query disableUpdates];
 			
@@ -127,6 +120,7 @@ static NSString* createUUID()
 													   queue:[NSOperationQueue mainQueue]
 												  usingBlock:notification_block];
 	[_query startQuery];
+    [_query enableUpdates];
 	
 	return YES;
 }
@@ -190,7 +184,7 @@ static NSString* createUUID()
 		NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
 		if([isDownloaded boolValue] &&
 					[self.startDownloadURLs containsObject:url]){
-			_progressBlock(url, 100.f);
+			_progressBlock(url, 1.f);
 			[self.startDownloadURLs removeObject:url];
 			continue;
 		}
@@ -198,7 +192,7 @@ static NSString* createUUID()
 			continue;
 		
 		NSNumber* downloading = [item valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-		float download = [downloading doubleValue];
+		float download = [downloading doubleValue]/100.f;
 		if(0.f<download){
 			_progressBlock(url, download);
 			
@@ -206,7 +200,7 @@ static NSString* createUUID()
 				[self.startDownloadURLs addObject:url];
 			}
 			
-			if(100.f<=download)
+			if(1.f<=download)
 				[self.startDownloadURLs removeObject:url];
 		}else{
 			NSLog(@"Update Item on iCloud:%@", url);
@@ -722,7 +716,6 @@ static NSString* createUUID()
 //	NSLog(@"NSFilePresenter-presentedSubitemDidChangeAtURL:%@", url);
 	// remove a file that has named of url, then sync again.
 	
-	_shouldUpdateQuery = YES;
 	if([_delegate respondsToSelector:@selector(iCloudItemDidChanged:URL:)])
 		[_delegate iCloudItemDidChanged:self URL:url];
 }

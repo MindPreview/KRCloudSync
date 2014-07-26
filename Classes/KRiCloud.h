@@ -32,8 +32,6 @@ typedef void (^KRiCloudProgressBlock)(NSURL* url, double progress);
 	NSMetadataQuery* _query;
 	NSMutableDictionary* _queryContexts;
 	NSOperationQueue* _presentedItemOperationQueue;
-	KRiCloudProgressBlock _progressBlock;
-	BOOL _shouldUpdateQuery;
 }
 
 @property (nonatomic, weak) id<KRiCloudDelegate> delegate;

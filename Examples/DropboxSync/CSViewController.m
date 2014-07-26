@@ -52,7 +52,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     self.navigationItem.leftBarButtonItem = unlinkButton;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFile)];
-    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(syncWithDropbox)];
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithTitle:@"Sync" style:UIBarButtonItemStylePlain target:self action:@selector(checkAndSyncWithDropbox)];
     [self.navigationItem setRightBarButtonItems:@[syncButton, addButton]];
 }
 
@@ -76,29 +76,19 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         NSDictionary *attrs = @{NSFileModificationDate:[NSDate date]};
         ret = [[NSFileManager defaultManager] setAttributes:attrs ofItemAtPath:uniqueFilePath error:&error];
         if(ret){
-            [self syncWithDropbox];
+            [self checkAndSyncWithDropbox];
         }
     }
 }
 
--(void)syncWithDropbox{
+-(void)checkAndSyncWithDropbox{
     [KRCloudSync isAvailableService:kKRDropboxService block:^(BOOL available){
         if(available){
-            [self syncDropboxDocumentFilesUsingBlocks];
+            [self syncDropboxDocumentFiles];
         }else{
             NSLog(@"Can't use Dropbox service");
         }
     }];
-}
-
--(void)syncDropboxDocumentFiles{
-	[self.cloudSync syncUsingBlock:^(NSArray* syncItems, NSError* error){
-        [self processSyncedItem:syncItems error:error];
-
-        [[_cloudSync service] enableUpdate];
-    }];
-    
-    [[_cloudSync service] disableUpdate];
 }
 
 -(void)processSyncedItem:(NSArray*)syncItems error:(NSError*)error{
@@ -121,7 +111,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
     }
 }
 
--(void)syncDropboxDocumentFilesUsingBlocks{
+-(void)syncDropboxDocumentFiles{
     KRCloudSyncStartBlock startBlock = ^(NSArray* syncItems){
         NSLog(@"StartBlock-%@", syncItems);
         self.syncItems = syncItems;
@@ -134,13 +124,18 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         [cell setProgressValue:progress];
     };
     
-	[self.cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
+    __weak KRCloudSync *weakCloudSync = self.cloudSync;
+	[_cloudSync syncUsingBlocks:startBlock progressBlock:progressBlock completedBlock:^(NSArray* syncItems, NSError* error){
 		[self processSyncedItem:syncItems error:error];
         
-        [[_cloudSync service] enableUpdate];
+        [[weakCloudSync service] enableUpdate];
     }];
     
     [[_cloudSync service] disableUpdate];
+}
+
+-(void)syncDropboxDocumentFilesWithRemote{
+    [self syncDropboxDocumentFiles];
 }
 
 -(CSTableViewCell*)cellForSyncItem:(KRSyncItem*)item{
@@ -214,7 +209,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 #pragma mark - KRCloudServiceDelegate
 -(void)itemDidChanged:(KRCloudService *)service URL:(NSURL *)url{
     NSLog(@"Cloud item changed - service:%@, url:%@", service, url);
-    [self syncDropboxDocumentFilesUsingBlocks];
+    [self syncDropboxDocumentFilesWithRemote];
 }
 
 #pragma mark - UITableView source
@@ -251,7 +246,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
         NSError* error;
         BOOL ret = [fileManager removeItemAtURL:url error:&error];
         if(ret){
-            [self syncDropboxDocumentFilesUsingBlocks];
+            [self syncDropboxDocumentFiles];
         }
     }
 }
@@ -260,7 +255,7 @@ NSString* dropboxLinkSucceeded = @"SucceededDropboxLink";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Row pressed!!");
+    NSLog(@"%@ row pressed!!", indexPath);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
