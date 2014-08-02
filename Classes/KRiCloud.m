@@ -427,48 +427,6 @@ static NSString* createUUID()
 								   error:(NSError**)error{
 	__block NSError* innerError = nil;
 	NSError* outError = nil;
-/*
-	NSFileManager* fileManager = [NSFileManager defaultManager];
-	BOOL ret = [fileManager startDownloadingUbiquitousItemAtURL:url error:&outError];
-	
-	NSLog(@"startDownloadingUbiquitousItemAtURL -\nurl:%@\nret:%@, error:%@", url, ret?@"YES":@"NO", outError);
-	if(NO==ret){
-		*error = outError;
-		return ret;
-	}
-*/
-
-/*
-	for(NSMetadataItem *item in [_query results]){
-		NSURL* remoteURL = [item valueForAttribute:NSMetadataItemURLKey];
-		if(![url isEqual:remoteURL])
-			continue;
-		
-		NSLog(@"Download status:%@", url);
-		NSNumber* isDownloading = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadingKey];
-		NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-		NSNumber* perDownloading = [item valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-		
-		NSLog(@"isDownloaded=%@", [isDownloaded boolValue]?@"Yes":@"No");
-		NSLog(@"isDownloading=%@", [isDownloading boolValue]?@"Yes":@"No");
-		NSLog(@"percent downloaded=%f", [perDownloading doubleValue]);
-		
-		while(![isDownloaded boolValue]){
-			isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-			perDownloading = [item valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-			NSLog(@"percent downloaded=%f", [perDownloading doubleValue]);
-			sleep(1);
-		}
-		break;
-	}
-
-	
-	NSFileManager* fileManager = [NSFileManager defaultManager];
-	while(![fileManager fileExistsAtPath:[url path]])
-		sleep(1);
-	
-	NSLog(@"--------- Now file exists:%@", url);
-*/
     [fileCoordinator coordinateReadingItemAtURL:url
 										options:NSFileCoordinatorReadingWithoutChanges
 										  error:&outError
@@ -629,91 +587,91 @@ static NSString* createUUID()
 		_presentedItemURL = [fileManager URLForUbiquityContainerIdentifier:nil];
 	}
 	
-//	NSLog(@"NSFilePresenter-presentedItemURL:%@", _presentedItemURL);
+	NSLog(@"NSFilePresenter-presentedItemURL:%@", _presentedItemURL);
 	return _presentedItemURL;
 }
 
 - (NSOperationQueue *)presentedItemOperationQueue{
-//	NSLog(@"NSFilePresenter-presentedItemOperationQueue");
+	NSLog(@"NSFilePresenter-presentedItemOperationQueue");
     return _presentedItemOperationQueue;
 }
 
 - (void)relinquishPresentedItemToReader:(void (^)(void (^reacquirer)(void))) reader{
-//	NSLog(@"NSFilePresenter-relinquishPresentedItemToReader");
+	NSLog(@"NSFilePresenter-relinquishPresentedItemToReader");
 	[_query disableUpdates];
 	
 	reader(^{
-//		NSLog(@"NSFilePresenter-relinquishPresentedItemToReader - enable");
+		NSLog(@"NSFilePresenter-relinquishPresentedItemToReader - enable");
 		[_query enableUpdates];
 	});
 }
 - (void)relinquishPresentedItemToWriter:(void (^)(void (^reacquirer)(void)))writer;{
-//	NSLog(@"NSFilePresenter-relinquishPresentedItemToWriter");
+	NSLog(@"NSFilePresenter-relinquishPresentedItemToWriter");
 	[_query disableUpdates];
 	
 	writer(^{
-//		NSLog(@"NSFilePresenter-relinquishPresentedItemToWriter - enable");
+		NSLog(@"NSFilePresenter-relinquishPresentedItemToWriter - enable");
 		[_query enableUpdates];
 	});
 }
 
 - (void)savePresentedItemChangesWithCompletionHandler:(void (^)(NSError *errorOrNil))completionHandler{
-//    NSLog(@"NSFilePresenter-savePresentedItemChangesWithCompletionHandler");
+    NSLog(@"NSFilePresenter-savePresentedItemChangesWithCompletionHandler");
 }
 
 - (void)accommodatePresentedItemDeletionWithCompletionHandler:(void (^)(NSError *errorOrNil))completionHandler{
-//    NSLog(@"NSFilePresenter-accommodatePresentedItemDeletionWithCompletionHandler");
+    NSLog(@"NSFilePresenter-accommodatePresentedItemDeletionWithCompletionHandler");
 }
 
 - (void)presentedItemDidMoveToURL:(NSURL *)newURL;{
-//    NSLog(@"NSFilePresenter-presentedItemDidMoveToURL: %@", newURL);
+    NSLog(@"NSFilePresenter-presentedItemDidMoveToURL: %@", newURL);
 	_presentedItemURL = newURL;
 }
 
 // This gets called for local coordinated writes and for unsolicited incoming edits from iCloud. From the header, "Your NSFileProvider may be sent this message without being sent -relinquishPresentedItemToWriter: first. Make your application do the best it can in that case."
 - (void)presentedItemDidChange;{
-//    NSLog(@"NSFilePresenter-presentedItemDidChange");
+    NSLog(@"NSFilePresenter-presentedItemDidChange");
 }
 
 - (void)presentedItemDidGainVersion:(NSFileVersion *)version;{
-//    NSLog(@"NSFilePresenter-presentedItemDidGainVersion");
+    NSLog(@"NSFilePresenter-presentedItemDidGainVersion");
 }
 
 - (void)presentedItemDidLoseVersion:(NSFileVersion *)version;{
-//    NSLog(@"NSFilePresenter-presentedItemDidLoseVersion");
+    NSLog(@"NSFilePresenter-presentedItemDidLoseVersion");
 }
 
 - (void)presentedItemDidResolveConflictVersion:(NSFileVersion *)version;{
-//    NSLog(@"NSFilePresenter-presentedItemDidResolveConflictVersion");
+    NSLog(@"NSFilePresenter-presentedItemDidResolveConflictVersion");
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)url didGainVersion:(NSFileVersion *)version{
-//	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didGainVersion:%@", url, version);
+	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didGainVersion:%@", url, version);
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)url didLoseVersion:(NSFileVersion *)version{
-//	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didLoseVersion:%@", url, version);
+	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didLoseVersion:%@", url, version);
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)url didResolveConflictVersion:(NSFileVersion *)version{
-//	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didResolveConflictVersion:%@", url, version);
+	NSLog(@"NSFilePresenter-presentedSubitemAtURL-url:%@, didResolveConflictVersion:%@", url, version);
 }
 
 - (void)accommodatePresentedSubitemDeletionAtURL:(NSURL *)url completionHandler:(void (^)(NSError *errorOrNil))completionHandler{
-//	NSLog(@"NSFilePresenter-accommodatePresentedSubitemDeletionAtURL-url:%@", url);
+	NSLog(@"NSFilePresenter-accommodatePresentedSubitemDeletionAtURL-url:%@", url);
 	completionHandler(nil);
 }
 
 - (void)presentedSubitemDidAppearAtURL:(NSURL *)url{
-//	NSLog(@"NSFilePresenter-presentedSubitemDidAppearAtURL:%@", url);
+	NSLog(@"NSFilePresenter-presentedSubitemDidAppearAtURL:%@", url);
 }
 
 - (void)presentedSubitemAtURL:(NSURL *)oldURL didMoveToURL:(NSURL *)newURL{
-//	NSLog(@"NSFilePresenter-presentedSubitemAtURL - oldURL:%@, didMoveToURL:%@", oldURL, newURL);
+	NSLog(@"NSFilePresenter-presentedSubitemAtURL - oldURL:%@, didMoveToURL:%@", oldURL, newURL);
 }
 
 - (void)presentedSubitemDidChangeAtURL:(NSURL *)url{
-//	NSLog(@"NSFilePresenter-presentedSubitemDidChangeAtURL:%@", url);
+	NSLog(@"NSFilePresenter-presentedSubitemDidChangeAtURL:%@", url);
 	// remove a file that has named of url, then sync again.
 	
 	if([_delegate respondsToSelector:@selector(iCloudItemDidChanged:URL:)])
