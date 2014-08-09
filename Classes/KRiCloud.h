@@ -21,16 +21,9 @@ typedef void (^KRiCloudProgressBlock)(NSURL* url, double progress);
 
 @protocol KRiCloudDelegate;
 
-@interface KRiCloudContext : NSObject
-@property (nonatomic) id key;
-@property (nonatomic) NSMetadataQuery* query;
-@property (nonatomic, copy) KRiCloudCompletedBlock block;
-@end
-
 @interface KRiCloud : NSObject<NSFilePresenter>{
 	NSURL* _presentedItemURL;
 	NSMetadataQuery* _query;
-	NSMutableDictionary* _queryContexts;
 	NSOperationQueue* _presentedItemOperationQueue;
 }
 
@@ -45,9 +38,6 @@ typedef void (^KRiCloudProgressBlock)(NSURL* url, double progress);
 				 progressBlock:(KRiCloudProgressBlock)block;
 -(void)startDownloadWithURLsUsingBlock:(NSArray*)URLs
 						 progressBlock:(KRiCloudProgressBlock)block;
-
--(BOOL)monitorFilesWithPredicate:(NSPredicate*)predicate
-				  completedBlock:(KRiCloudCompletedBlock)block;
 
 -(BOOL)saveToUbiquityContainer:(id)key
 						   url:(NSURL*)url
@@ -80,11 +70,6 @@ typedef void (^KRiCloudProgressBlock)(NSURL* url, double progress);
 
 -(BOOL)removeFile:(NSString*)fileName completedBlock:(KRiCloudRemoveFileCompletedBlock)block;
 -(BOOL)removeAllFiles:(KRiCloudRemoveFileCompletedBlock)block;
-
--(BOOL)batchLockAndSync:(NSArray*)readingURLs toLocalURLs:(NSArray*)toLocalURLs
-			writingURLs:(NSArray*)writingURLs fromLocalURLs:(NSArray*)fromLocalURLs
-				  error:(NSError**)outError
-		 completedBlock:(KRiCloudBatchSyncCompeletedBlock)block;
 
 -(void)enableUpdate;
 -(void)disableUpdate;

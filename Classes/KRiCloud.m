@@ -20,11 +20,7 @@ static NSString* createUUID()
 	return uuidStr;
 }
 
-@implementation KRiCloudContext
-@end
-
 @interface KRiCloud()
-@property (nonatomic) NSMutableSet* startDownloadURLs;
 @property (nonatomic, copy) KRiCloudProgressBlock progressBlock;
 @end
 
@@ -61,9 +57,6 @@ static NSString* createUUID()
 												 selector:@selector(queryDidUpdateNotification:)
 													 name:NSMetadataQueryDidUpdateNotification
 												   object:_query];
-
-		_queryContexts = [NSMutableDictionary dictionaryWithCapacity:3];
-		_startDownloadURLs = [NSMutableSet setWithCapacity:5];
 		
 		_presentedItemOperationQueue = [[NSOperationQueue alloc] init];
 		[_presentedItemOperationQueue setName:[NSString stringWithFormat:@"presenter queue -- %@", self]];
@@ -86,7 +79,6 @@ static NSString* createUUID()
 	_query = nil;
 
 	_presentedItemURL = nil;
-	_queryContexts = nil;
 	_presentedItemOperationQueue = nil;
 }
 
@@ -99,11 +91,11 @@ static NSString* createUUID()
     [_query setPredicate:predicate];
     // fetch the percent-downloaded key when updating results
     [_query setValueListAttributes:@[NSMetadataUbiquitousItemPercentDownloadedKey,
-                                        NSMetadataUbiquitousItemIsDownloadedKey]];
+                                        NSMetadataUbiquitousItemDownloadingStatusKey]];
 	
 	__block id notificationId = nil;
-	typedef void (^notificationObserver_block)(NSNotification *);
-	notificationObserver_block notification_block = ^(NSNotification* note){
+	typedef void (^notificationObserverBlock)(NSNotification *);
+	notificationObserverBlock notificationBlock = ^(NSNotification* notification){
 		if(block){
 			[_query disableUpdates];
 			
@@ -118,7 +110,9 @@ static NSString* createUUID()
 	notificationId = [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification
 													  object:_query
 													   queue:[NSOperationQueue mainQueue]
-												  usingBlock:notification_block];
+												  usingBlock:notificationBlock];
+    
+    NSAssert([NSThread isMainThread], @"Must be main thread");
 	[_query startQuery];
     [_query enableUpdates];
 	
@@ -131,18 +125,16 @@ static NSString* createUUID()
 
 	NSFileManager* fileManager = [NSFileManager defaultManager];
 	for(NSMetadataItem* item in [query results]) {
-		NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-		if([isDownloaded boolValue])
-			continue;
-		
-		NSURL* url = [item valueForAttribute:NSMetadataItemURLKey];
-		NSError* error = nil;
-		if([fileManager startDownloadingUbiquitousItemAtURL:url error:&error]){
-			if(block){
-				[self.startDownloadURLs addObject:url];
-				block(url, 0.f);
-			}
-		}
+		NSString* status  = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+		if([status isEqualToString:NSMetadataUbiquitousItemDownloadingStatusNotDownloaded]){
+            NSURL* url = [item valueForAttribute:NSMetadataItemURLKey];
+            NSError* error = nil;
+            if([fileManager startDownloadingUbiquitousItemAtURL:url error:&error]){
+                if(block){
+                    block(url, 0.f);
+                }
+            }
+        }
 	}
 }
 
@@ -156,17 +148,15 @@ static NSString* createUUID()
 			if(![url isEqual:[item valueForAttribute:NSMetadataItemURLKey]])
 				continue;
 			
-			NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-			if([isDownloaded boolValue])
-				break;
-			
-			NSError* error = nil;
-			if([fileManager startDownloadingUbiquitousItemAtURL:url error:&error]){
-				if(block){
-					[self.startDownloadURLs addObject:url];
-					block(url, 0.f);
-				}
-			}
+            NSString* status  = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+            if(![status isEqualToString:NSMetadataUbiquitousItemDownloadingStatusCurrent]){
+                NSError* error = nil;
+                if([fileManager startDownloadingUbiquitousItemAtURL:url error:&error]){
+                    if(block){
+                        block(url, 0.f);
+                    }
+                }
+            }
 			break;
 		}
 	}
@@ -181,34 +171,16 @@ static NSString* createUUID()
 	
 	for(NSMetadataItem* item in [query results]){
 		NSURL* url = [item valueForAttribute:NSMetadataItemURLKey];
-		NSNumber* isDownloaded  = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-		if([isDownloaded boolValue] &&
-					[self.startDownloadURLs containsObject:url]){
-			_progressBlock(url, 1.f);
-			[self.startDownloadURLs removeObject:url];
-			continue;
-		}
-		if([isDownloaded boolValue])
-			continue;
-		
-		NSNumber* downloading = [item valueForAttribute:NSMetadataUbiquitousItemPercentDownloadedKey];
-		float download = [downloading doubleValue]/100.f;
-		if(0.f<download){
-			_progressBlock(url, download);
-			
-			if(![self.startDownloadURLs containsObject:url]){
-				[self.startDownloadURLs addObject:url];
-			}
-			
-			if(1.f<=download)
-				[self.startDownloadURLs removeObject:url];
-		}else{
-			NSLog(@"Update Item on iCloud:%@", url);
-
-			NSError* error = nil;
-			NSFileManager* fileManager = [NSFileManager defaultManager];
-			[fileManager startDownloadingUbiquitousItemAtURL:url error:&error];
-		}
+        NSString* status  = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
+        
+        if([status isEqualToString:NSMetadataUbiquitousItemDownloadingStatusNotDownloaded]){
+            NSLog(@"queryDidUpdateNotification - url:%@, status:%@", url, NSMetadataUbiquitousItemDownloadingStatusNotDownloaded);
+            NSFileManager* fileManager = [NSFileManager defaultManager];
+            NSError* error = nil;
+            if([fileManager startDownloadingUbiquitousItemAtURL:url error:&error]){
+                NSLog(@"Start Download - url:%@", url);
+            }
+        }
 	}
 
 	[query enableUpdates];
@@ -217,128 +189,6 @@ static NSString* createUUID()
 -(void)queryDidProgressNotification:(NSNotification*)notification{
 //	NSMetadataQuery* query = [notification object];
 //	NSLog(@"queryDidProgressNotification - newQuery:%@, count:%d", query, [query resultCount]);
-}
-
--(void)raiseCompletedBlock:(KRiCloudContext*)context{
-	NSMetadataQuery* query = context.query;
-	context.block(query, nil);
-}
-
-#pragma mark - monitorFiles
--(BOOL)monitorFilesWithPredicate:(NSPredicate*)predicate completedBlock:(KRiCloudCompletedBlock)block{
-	NSAssert(block, @"Mustn't be nil");
-	if(!block)
-		return NO;
-	
-	NSMetadataQuery* query = [[NSMetadataQuery alloc] init];
-	[query setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
-	[query setPredicate:predicate];
-	
-	KRiCloudContext* context = [[KRiCloudContext alloc]init];
-	context.query = query;
-	context.block = block;
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(monitorFilesQueryDidUpdateNotification:)
-												 name:NSMetadataQueryDidUpdateNotification
-											   object:query];
-	
-	[query startQuery];
-	
-	NSValue* value = [NSValue valueWithNonretainedObject:query];
-	[_queryContexts setObject:context forKey:value];
-	return YES;
-}
-
--(void)monitorFilesQueryDidUpdateNotification:(NSNotification *)notification {
-	NSMetadataQuery* query = [notification object];
-    [query disableUpdates];
-    [query stopQuery];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSMetadataQueryDidUpdateNotification
-                                                  object:query];
-    
-	NSValue* value = [NSValue valueWithNonretainedObject:query];
-	KRiCloudContext* context = [_queryContexts objectForKey:value];
-    [self raiseCompletedBlock:context];
-	
-	[_queryContexts removeObjectForKey:query];
-}
-
-#pragma mark - batch sync
--(BOOL)batchLockAndSync:(NSArray*)readingURLs toLocalURLs:(NSArray*)toLocalURLs
-			writingURLs:(NSArray*)writingURLs fromLocalURLs:(NSArray*)fromLocalURLs
-				  error:(NSError**)outError
-		 completedBlock:(KRiCloudBatchSyncCompeletedBlock)block{
-	NSAssert(block, @"Mustn't be nil");
-	if(!block)
-		return NO;
-	
-	NSAssert([readingURLs count]==[toLocalURLs count], @"Must be equal");
-	NSAssert([writingURLs count]==[fromLocalURLs count], @"Must be equal");
-	if([readingURLs count]!=[toLocalURLs count])
-		return NO;
-	if([writingURLs count]!=[fromLocalURLs count])
-		return NO;
-	
-#ifdef DEBUG
-	if([readingURLs count])
-		NSLog(@"readingURLs:%@", readingURLs);
-	if([writingURLs count])
-		NSLog(@"writingURLs:%@", writingURLs);
-#endif
-	
-	NSMutableArray* toLocalErrors = [NSMutableArray arrayWithCapacity:[readingURLs count]];
-	NSMutableArray* fromLocalErrors = [NSMutableArray arrayWithCapacity:[writingURLs count]];
-	
-	NSFileCoordinator* fileCoordinator = [[NSFileCoordinator alloc]initWithFilePresenter:self];
-	[fileCoordinator prepareForReadingItemsAtURLs:readingURLs options:NSFileCoordinatorReadingWithoutChanges
-							   writingItemsAtURLs:writingURLs options:NSFileCoordinatorWritingForReplacing
-											error:outError
-									   byAccessor:^(void(^prepareCompletionHandler)(void)){
-										   
-										   [self batchSync:fileCoordinator
-											   readingURLs:readingURLs toLocalURLs:toLocalURLs toLocalErrors:toLocalErrors
-											   writingURLs:writingURLs fromLocalURLs:fromLocalURLs fromLocalErrors:fromLocalErrors];
-										   
-										   block(readingURLs, toLocalErrors, fromLocalURLs, fromLocalErrors);
-									   }];
-	
-	return YES;
-}
-
--(void)batchSync:(NSFileCoordinator*)fileCoordinator
-	 readingURLs:(NSArray*)readingURLs toLocalURLs:(NSArray*)toLocalURLs toLocalErrors:(NSMutableArray*)toLocalErrors
-	 writingURLs:(NSArray*)writingURLs fromLocalURLs:(NSArray*)fromLocalURLs fromLocalErrors:(NSMutableArray*)fromLocalErrors{
-	
-	NSUInteger count = [readingURLs count];
-	for(NSUInteger i=0; i<count; i++){
-		NSError* error = nil;
-		BOOL ret = [self saveToDocumentWithFileCoordinator:fileCoordinator
-												  url:[readingURLs objectAtIndex:i]
-									   destinationURL:[toLocalURLs objectAtIndex:i]
-												error:&error];
-		if(!ret || [error code])
-			[toLocalErrors addObject:error];
-		else
-			[toLocalErrors addObject:[NSNull null]];
-	}
-	NSAssert([toLocalURLs count] == [toLocalErrors count], @"Must be equl");
-	
-	count = [writingURLs count];
-	for(NSUInteger i=0; i<count; i++){
-		NSError* error = nil;
-		BOOL ret = [self saveToUbiquityContainerWithFileCoordinator:fileCoordinator
-																url:[fromLocalURLs objectAtIndex:i]
-													 destinationURL:[writingURLs objectAtIndex:i]
-															  error:&error];
-		if(!ret || [error code])
-			[fromLocalErrors addObject:error];
-		else
-			[fromLocalErrors addObject:[NSNull null]];
-	}
-	NSAssert([fromLocalURLs count] == [fromLocalErrors count], @"Must be equl");
 }
 
 #pragma mark - enable/disable update
