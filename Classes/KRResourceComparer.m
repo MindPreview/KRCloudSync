@@ -45,17 +45,7 @@
 		KRSyncItemAction action = KRSyncItemActionNone;
 		if(!localResource){
             localResource = [self.fileService createLocalResourceFromRemoteResource:remoteResource];
-            if(!self.lastSyncTime){
-                action = KRSyncItemActionRemoteAccept;
-            }else{
-                NSDate* modifiedDate = [remoteResource modifiedDate];
-                NSComparisonResult result = [self.lastSyncTime compare:modifiedDate];
-                if(NSOrderedAscending == result){
-                    action = KRSyncItemActionRemoteAccept;
-                }else{
-                    action = KRSyncItemActionRemoveRemoteItem;
-                }
-            }
+            action = KRSyncItemActionRemoteAccept;
 		}else if(!remoteResource){
             remoteResource = [self.cloudService createResourceFromLocalResource:localResource];
 
