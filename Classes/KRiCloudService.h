@@ -52,5 +52,6 @@ typedef void (^KRiCloudServiceDownloadResultBlock)(BOOL succeeded, NSUInteger co
 -(BOOL)removeFileUsingBlock:(NSString*)fileName
 			 completedBlock:(KRCloudSyncResultBlock)block;
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block;
 
 @end

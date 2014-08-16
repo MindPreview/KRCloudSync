@@ -590,4 +590,24 @@ typedef void (^KRDropboxServiceResultBlock)(BOOL succeeded, NSError* error);
     self.registeredObserver = NO;
 }
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	dispatch_async(queue, ^{
+        BOOL ret = NO;
+        NSString* filePath = [localPath stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        DBPath *path = [[DBPath root] childPath:filePath];
+        DBFilesystem* fileSystem = [DBFilesystem sharedFilesystem];
+        
+        DBError* error = nil;
+        NSString* link = [fileSystem fetchShareLinkForPath:path shorten:YES error:&error];
+        if(![error code])
+            ret = YES;
+        NSURL* url = [NSURL URLWithString:link];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			block(url, ret, error);
+		});
+	});
+}
+
 @end

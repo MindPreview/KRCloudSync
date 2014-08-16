@@ -91,4 +91,8 @@
 	return YES;
 }
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block{
+    [self.service publishingURLUsingBlock:localPath block:block];
+}
+
 @end

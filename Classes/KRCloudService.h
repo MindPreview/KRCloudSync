@@ -44,6 +44,8 @@
 
 -(KRResourceProperty*)createResourceFromLocalResource:(KRResourceProperty*)resource;
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block;
+
 @end
 
 

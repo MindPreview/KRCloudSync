@@ -112,7 +112,7 @@ static NSString* createUUID()
 													   queue:[NSOperationQueue mainQueue]
 												  usingBlock:notificationBlock];
     
-    NSAssert([NSThread isMainThread], @"Must be main thread");
+//    NSAssert([NSThread isMainThread], @"Must be main thread");
 	[_query startQuery];
     [_query enableUpdates];
 	

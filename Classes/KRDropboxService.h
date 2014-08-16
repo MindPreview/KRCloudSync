@@ -15,5 +15,6 @@
 
 -(id)initWithDocumentsPaths:(NSString*)path remote:(NSString *)remotePath filter:(KRResourceFilter*)filter;
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block;
 
 @end

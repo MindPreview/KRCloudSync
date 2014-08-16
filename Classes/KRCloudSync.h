@@ -48,4 +48,6 @@ typedef enum {
 		completedBlock:(KRCloudSyncCompletedBlock)completedBlock;
 
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block;
+
 @end

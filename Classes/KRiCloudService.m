@@ -418,6 +418,24 @@
 	[_iCloud disableUpdate];
 }
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	dispatch_async(queue, ^{
+		NSError* error = nil;
+        BOOL ret = NO;
+        NSURL* ubiquityURL = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+        ubiquityURL = [ubiquityURL URLByAppendingPathComponent:@"Documents"];
+        /// FIXME: Should get relative path of localPath
+        ubiquityURL = [ubiquityURL URLByAppendingPathComponent:[localPath lastPathComponent]];
+        NSURL* url = [[NSFileManager defaultManager] URLForPublishingUbiquitousItemAtURL:ubiquityURL expirationDate:nil error:&error];
+        if(![error code])
+            ret = YES;
+        
+		dispatch_async(dispatch_get_main_queue(), ^{
+			block(url, ret, error);
+		});
+	});
+}
 
 #pragma mark - KRiCloud delegate
 -(void)iCloudItemDidChanged:(KRiCloud *)iCloud URL:(NSURL *)url{

@@ -75,4 +75,7 @@
                                                      size:[resource size]];
 }
 
+-(void)publishingURLUsingBlock:(NSString*)localPath block:(KRCloudSyncPublishingURLBlock)block{
+}
+
 @end
